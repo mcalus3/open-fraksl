@@ -1,8 +1,8 @@
 export const initialState = {
-    appState: {
-        drawerVisible: false
-    },
-    fractalState: {
-        x: 0
-    }
+  appState: {
+    drawerVisible: false
+  },
+  fractalState: {
+    x: 0
+  }
 };
