@@ -1,6 +1,8 @@
+export type State = typeof initialState;
+
 export const initialState = {
   appState: {
-    drawerVisible: false
+    drawerVisible: true
   },
   fractalState: {
     x: 0

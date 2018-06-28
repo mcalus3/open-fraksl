@@ -1,5 +1,5 @@
 import * as React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -8,13 +8,14 @@ import Divider from "@material-ui/core/Divider";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
 
-const styles = (theme: any) => ({
-  root: {
-    width: "100%",
-    maxWidth: 250,
-    backgroundColor: theme.palette.background.paper
-  }
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    root: {
+      width: "100%",
+      maxWidth: 250,
+      backgroundColor: theme.palette.background.paper
+    }
+  });
 
 function SimpleList(props: any) {
   const { classes } = props;

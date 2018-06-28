@@ -2,22 +2,22 @@ import * as React from "react";
 import "./App.css";
 import NavBar from "./components/appComponents/NavBar";
 import Drawer from "./components/appComponents/Drawer";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
 
-const styles = {
+const styles = createStyles({
   root: {
     flexGrow: 1,
-    height: 430,
     zIndex: 1,
-    overflow: "hidden" as "hidden",
-    position: "relative" as "relative",
-    display: "flex" as "flex"
+    overflow: "hidden",
+    display: "flex"
   }
-};
+});
 
-function App(props: any) {
+type Props = {} & WithStyles<typeof styles>;
+
+function App(props: Props) {
   return (
-    <div className={props.root}>
+    <div className={props.classes.root}>
       <NavBar />
       <Drawer />
     </div>

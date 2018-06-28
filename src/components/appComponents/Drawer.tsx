@@ -1,44 +1,48 @@
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import * as React from "react";
 import MenuList from "./MenuList";
-import { withStyles } from "@material-ui/core/styles";
+import {
+  withStyles,
+  createStyles,
+  WithStyles,
+  Theme
+} from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import { connect } from "react-redux";
+import { State } from "../../stateManagement/model";
 
 const drawerWidth = 240;
 
-const styles = (theme: any) => ({
-  root: {
-    position: "relative" as "relative",
-    width: drawerWidth
-  },
-  toolbar: theme.mixins.toolbar
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    drawerPaper: {
+      // position: "relative",
+      width: drawerWidth
+    },
+    toolbar: theme.mixins.toolbar
+  });
 
-const SwipeableTemporaryDrawer = (props: any) => {
+type Props = { openDrawer: boolean } & WithStyles<typeof styles>;
+
+const drawer = (props: Props) => {
   const { classes } = props;
   return (
-    <SwipeableDrawer
-      open={true}
-      onClose={toggleDrawer("left", false)}
-      onOpen={toggleDrawer("left", true)}
+    <Drawer
+      variant={"persistent"}
+      open={props.openDrawer}
       classes={{
-        paper: classes.root
+        paper: classes.drawerPaper
       }}
     >
       <div className={classes.toolbar} />
-      <div
-        tabIndex={0}
-        role="button"
-        onClick={toggleDrawer("left", false)}
-        onKeyDown={toggleDrawer("left", false)}
-      >
+      <div tabIndex={0} role="button">
         <MenuList />
       </div>
-    </SwipeableDrawer>
+    </Drawer>
   );
 };
 
-const toggleDrawer = (side: any, open: any) => () => {
-  console.log(side, open);
-};
+const mapStateToProps = (state: State) => ({
+  openDrawer: state.appState.drawerVisible
+});
 
-export default withStyles(styles)(SwipeableTemporaryDrawer);
+export default connect(mapStateToProps)(withStyles(styles)(drawer));

@@ -6,42 +6,68 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
 
-import { withStyles } from "@material-ui/core/styles";
+import {
+  withStyles,
+  createStyles,
+  Theme,
+  WithStyles
+} from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { Action } from "../../stateManagement/rootReducer";
+import {
+  Actions,
+  AppActionTypes
+} from "../../stateManagement/appState/appActions";
+import { State } from "../../stateManagement/model";
+import { IAction } from "../../stateManagement/utils";
 
-const styles = (theme: any) => ({
-  flex: {
-    flex: 1
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  },
-  root: {
-    flexGrow: 1,
-    zIndex: theme.zIndex.drawer + 1
-  }
-});
+const styles = (theme: Theme) =>
+  createStyles({
+    flex: {
+      flex: 1
+    },
+    menuButton: {
+      marginLeft: -12,
+      marginRight: 20
+    },
+    AppBar: {
+      flexGrow: 1,
+      zIndex: theme.zIndex.drawer + 101
+    }
+  });
+type Props = { onToggleDrawer: () => IAction<AppActionTypes> } & WithStyles<
+  typeof styles
+>;
 
-const NavBar = (props: any) => {
+const NavBar = (props: Props) => {
   const { classes } = props;
   return (
-    <div className={classes.root}>
-      <AppBar position="absolute">
-        <Toolbar>
-          <IconButton
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="Menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="title" color="inherit" className={classes.flex}>
-            open-fraksl
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <AppBar position="absolute" className={classes.AppBar}>
+      <Toolbar>
+        <IconButton
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="Menu"
+          onClick={props.onToggleDrawer}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="title" color="inherit" className={classes.flex}>
+          open-fraksl
+        </Typography>
+      </Toolbar>
+    </AppBar>
   );
 };
 
-export default withStyles(styles)(NavBar);
+const mapStateToProps = (state: State) => ({});
+
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
+  onToggleDrawer: () => dispatch(Actions.ToggleDrawer())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(NavBar));
