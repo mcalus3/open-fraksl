@@ -1,8 +1,9 @@
 import * as React from "react";
 import "./App.css";
-import NavBar from "./components/appComponents/NavBar";
-import Drawer from "./components/appComponents/Drawer";
+import NavBar from "./appComponents/NavBar";
+import Drawer from "./appComponents/Drawer";
 import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
+import withRoot from "./withRoot";
 
 const styles = createStyles({
   root: {
@@ -24,4 +25,4 @@ function App(props: Props) {
   );
 }
 
-export default withStyles(styles)(App);
+export default withRoot(withStyles(styles)(App));

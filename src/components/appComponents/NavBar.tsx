@@ -14,7 +14,7 @@ import {
 } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { Action } from "../../stateManagement/rootReducer";
+import { Action } from "../../stateManagement/ReduxRoot";
 import {
   Actions,
   AppActionTypes
