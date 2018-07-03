@@ -13,9 +13,12 @@ import {
   WithStyles
 } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { Action } from "../../stateManagement/ReduxRoot";
-import { Actions } from "../../stateManagement/appState/appActions";
+import {
+  Actions,
+  AppActionTypes
+} from "../../stateManagement/appState/appActions";
 import { State } from "../../stateManagement/model";
+import { IAction } from "../../stateManagement/utils";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -31,7 +34,9 @@ const styles = (theme: Theme) =>
       zIndex: theme.zIndex.drawer + 101
     }
   });
-type Props = { onToggleDrawer: () => Action } & WithStyles<typeof styles>;
+type Props = { onToggleDrawer: () => IAction<AppActionTypes> } & WithStyles<
+  typeof styles
+>;
 
 const NavBar = (props: Props) => {
   const { classes } = props;

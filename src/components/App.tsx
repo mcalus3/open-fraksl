@@ -4,6 +4,7 @@ import NavBar from "./appComponents/NavBar";
 import Drawer from "./appComponents/Drawer";
 import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
 import withRoot from "./withRoot";
+import Stage from "./fractalComponents/Stage";
 
 const styles = createStyles({
   root: {
@@ -19,8 +20,9 @@ type Props = {} & WithStyles<typeof styles>;
 function App(props: Props) {
   return (
     <div className={props.classes.root}>
-      <NavBar />
       <Drawer />
+      <NavBar />
+      <Stage />
     </div>
   );
 }

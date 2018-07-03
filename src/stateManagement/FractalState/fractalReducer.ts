@@ -8,6 +8,8 @@ const fractalReducer = (
   switch (action.type) {
     case FractalActionTypes.setX:
       return { ...state, x: action.payload };
+    case FractalActionTypes.setY:
+      return { ...state, y: action.payload };
 
     default:
       return state;
