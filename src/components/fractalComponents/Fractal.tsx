@@ -1,71 +1,23 @@
-import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import * as React from "react";
-
-import {
-  withStyles,
-  createStyles,
-  Theme,
-  WithStyles
-} from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import {
-  Actions,
-  AppActionTypes
-} from "../../stateManagement/appState/appActions";
+import { Container } from "react-pixi-fiber";
 import { State } from "../../stateManagement/model";
-import { IAction } from "../../stateManagement/utils";
+import Rectangle from "./Rectangle";
 
-const styles = (theme: Theme) =>
-  createStyles({
-    flex: {
-      flex: 1
-    },
-    menuButton: {
-      marginLeft: -12,
-      marginRight: 20
-    },
-    AppBar: {
-      flexGrow: 1,
-      zIndex: theme.zIndex.drawer + 101
-    }
-  });
-type Props = { onToggleDrawer: () => IAction<AppActionTypes> } & WithStyles<
-  typeof styles
->;
+type Props = { width: number; height: number };
 
-const NavBar = (props: Props) => {
-  const { classes } = props;
+const Fractal: any = (props: Props) => {
   return (
-    <AppBar position="absolute" className={classes.AppBar}>
-      <Toolbar>
-        <IconButton
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="Menu"
-          onClick={props.onToggleDrawer}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="title" color="inherit" className={classes.flex}>
-          open-fraksl
-        </Typography>
-      </Toolbar>
-    </AppBar>
+    <Container x={300} y={300} rotation={0.5}>
+      <Rectangle fill={0} x={100} y={100} width={300} height={300} />
+      {/* <Fractal /> */}
+    </Container>
   );
 };
 
-const mapStateToProps = (state: State) => ({});
-
-const mapDispatchToProps = (dispatch: any) => ({
-  onToggleDrawer: () => dispatch(Actions.ToggleDrawer())
+const mapStateToProps = (state: State) => ({
+  width: state.appState.screenWidth,
+  height: state.appState.screenHeight
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(styles)(NavBar));
+export default connect(mapStateToProps)(Fractal);

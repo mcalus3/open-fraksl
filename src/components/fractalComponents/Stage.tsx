@@ -1,28 +1,22 @@
 import * as React from "react";
 
-import {
-  withStyles,
-  createStyles,
-  Theme,
-  WithStyles
-} from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Stage } from "react-pixi-fiber";
 import { State } from "../../stateManagement/model";
+import Fractal from "./Fractal";
 
 const OPTIONS = {
   backgroundColor: 0x1099bb
 };
 
-const styles = (theme: Theme) =>
-  createStyles({
-    content: {}
-  });
-type Props = { width: number; height: number } & WithStyles<typeof styles>;
+type Props = { width: number; height: number };
 
 const FractalStage = (props: Props) => {
-  // const { classes } = props;
-  return <Stage options={OPTIONS} width={props.width} height={props.height} />;
+  return (
+    <Stage options={OPTIONS} width={props.width} height={props.height}>
+      <Fractal />
+    </Stage>
+  );
 };
 
 const mapStateToProps = (state: State) => ({
@@ -35,4 +29,4 @@ const mapDispatchToProps = (dispatch: any) => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(FractalStage));
+)(FractalStage);
