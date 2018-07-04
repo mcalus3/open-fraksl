@@ -4,20 +4,54 @@ import { Container } from "react-pixi-fiber";
 import { State } from "../../stateManagement/model";
 import Rectangle from "./Rectangle";
 
-type Props = { width: number; height: number };
+type extProps = {
+  width: number;
+  height: number;
+  depth: number;
+};
 
-const Fractal: any = (props: Props) => {
-  return (
-    <Container x={300} y={300} rotation={0.5}>
-      <Rectangle fill={0} x={100} y={100} width={300} height={300} />
-      {/* <Fractal /> */}
+type Props = {
+  x: number;
+  y: number;
+  rot: number;
+} & extProps;
+
+const Fractal: React.SFC<Props> = (props: Props) => {
+  const pivot: PIXI.Point = new PIXI.Point(props.width / 2, props.height / 2);
+
+  return lastLevelReached(props) ? (
+    <Container />
+  ) : (
+    <Container x={props.x} y={props.y} rotation={props.rot} pivot={pivot}>
+      <Rectangle
+        fill={Math.floor(Math.random() * 0xffffff)}
+        x={0}
+        y={0}
+        width={props.width}
+        height={props.height}
+      />
+      <ConnectedFractal
+        width={props.width}
+        height={props.height}
+        depth={props.depth + 1}
+      />
     </Container>
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  width: state.appState.screenWidth,
-  height: state.appState.screenHeight
+const mapStateToProps = (state: State, ownProps: extProps) => ({
+  x: ownProps.width / 2 + state.fractalState.x,
+  y: ownProps.height / 2 + state.fractalState.y,
+  width: ownProps.width * state.fractalState.zoom,
+  height: ownProps.height * state.fractalState.zoom,
+  depth: ownProps.depth,
+  rot: state.fractalState.rot
 });
 
-export default connect(mapStateToProps)(Fractal);
+const ConnectedFractal = connect(mapStateToProps)(Fractal);
+
+export default ConnectedFractal;
+
+function lastLevelReached(props: Props) {
+  return props.depth > 1000 || props.width < 3 || props.height < 3;
+}

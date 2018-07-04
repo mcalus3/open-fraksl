@@ -14,7 +14,7 @@ type Props = { width: number; height: number };
 const FractalStage = (props: Props) => {
   return (
     <Stage options={OPTIONS} width={props.width} height={props.height}>
-      <Fractal />
+      <Fractal width={props.width} height={props.height} depth={0} />
     </Stage>
   );
 };
