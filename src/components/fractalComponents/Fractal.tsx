@@ -24,7 +24,7 @@ const Fractal: React.SFC<Props> = (props: Props) => {
   ) : (
     <Container x={props.x} y={props.y} rotation={props.rot} pivot={pivot}>
       <Rectangle
-        fill={Math.floor(Math.random() * 0xffffff)}
+        fill={Math.floor((1 / props.depth) * 0xffffff)}
         x={0}
         y={0}
         width={props.width}
@@ -53,5 +53,5 @@ const ConnectedFractal = connect(mapStateToProps)(Fractal);
 export default ConnectedFractal;
 
 function lastLevelReached(props: Props) {
-  return props.depth > 1000 || props.width < 3 || props.height < 3;
+  return props.depth > 500 || props.width < 3 || props.height < 3;
 }

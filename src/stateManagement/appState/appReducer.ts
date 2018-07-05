@@ -1,10 +1,15 @@
 import { AppActions, AppActionTypes } from "./appActions";
-import { initialState } from "../model";
+import { initialState, AppState } from "../model";
 
-const appReducer = (state = initialState.appState, action: AppActions) => {
+const appReducer = (
+  state: AppState = initialState.appState,
+  action: AppActions
+) => {
   switch (action.type) {
     case AppActionTypes.toggleDrawer:
       return { ...state, drawerVisible: !state.drawerVisible };
+    case AppActionTypes.toggleDrawer:
+      return { ...state, controlPanelVisible: !state.controlPanelVisible };
     case AppActionTypes.resize:
       return {
         ...state,

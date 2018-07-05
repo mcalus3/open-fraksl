@@ -1,8 +1,8 @@
 import { FractalActions, FractalActionTypes } from "./fractalActions";
-import { initialState } from "../model";
+import { initialState, FractalState } from "../model";
 
 const fractalReducer = (
-  state = initialState.fractalState,
+  state: FractalState = initialState.fractalState,
   action: FractalActions
 ) => {
   switch (action.type) {
@@ -10,6 +10,10 @@ const fractalReducer = (
       return { ...state, x: action.payload };
     case FractalActionTypes.setY:
       return { ...state, y: action.payload };
+    case FractalActionTypes.setRot:
+      return { ...state, rot: action.payload };
+    case FractalActionTypes.setZ:
+      return { ...state, zoom: action.payload };
 
     default:
       return state;

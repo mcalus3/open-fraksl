@@ -5,6 +5,7 @@ import Drawer from "./appComponents/Drawer";
 import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
 import withRoot from "./withRoot";
 import Stage from "./fractalComponents/Stage";
+import ControlPanel from "./fractalComponents/ControlPanel";
 
 const styles = createStyles({
   root: {
@@ -23,6 +24,7 @@ function App(props: Props) {
       <Drawer />
       <NavBar />
       <Stage />
+      <ControlPanel />
     </div>
   );
 }
