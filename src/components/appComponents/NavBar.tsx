@@ -15,7 +15,7 @@ import {
 import { connect } from "react-redux";
 import { Action } from "../../stateManagement/ReduxRoot";
 import { Actions } from "../../stateManagement/appState/appActions";
-import { State } from "../../stateManagement/model";
+import { State } from "../../stateManagement/StateModel";
 
 const styles = (theme: Theme) =>
   createStyles({

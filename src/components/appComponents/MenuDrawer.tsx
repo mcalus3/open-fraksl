@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import { connect } from "react-redux";
-import { State } from "../../stateManagement/model";
+import { State } from "../../stateManagement/StateModel";
 
 const drawerWidth = 240;
 
@@ -22,7 +22,7 @@ const styles = (theme: Theme) =>
 
 type Props = { openDrawer: boolean } & WithStyles<typeof styles>;
 
-const drawer = (props: Props) => {
+const menuDrawer = (props: Props) => {
   const { classes } = props;
   return (
     <Drawer
@@ -44,4 +44,4 @@ const mapStateToProps = (state: State) => ({
   openDrawer: state.appState.drawerVisible
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(drawer));
+export default connect(mapStateToProps)(withStyles(styles)(menuDrawer));

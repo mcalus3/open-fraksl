@@ -8,7 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { combineReducers } from "redux";
 import appReducer from "./appState/appReducer";
 import fractalReducer from "./FractalState/fractalReducer";
-import { State } from "./model";
+import { State } from "./StateModel";
 import { FractalActions } from "./FractalState/fractalActions";
 import { AppActions, Actions } from "./appState/appActions";
 

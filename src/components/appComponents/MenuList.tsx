@@ -2,11 +2,8 @@ import * as React from "react";
 import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -23,25 +20,20 @@ function SimpleList(props: any) {
     <div className={classes.root}>
       <List component="nav">
         <ListItem button={true}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </ListItem>
-        <ListItem button={true}>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
+          <ListItemText primary="Settings" />
         </ListItem>
       </List>
       <Divider />
       <List component="nav">
         <ListItem button={true}>
-          <ListItemText primary="Trash" />
+          <ListItemText primary="About" />
         </ListItem>
-        <ListItem button={true} component="a" href="#simple-list">
-          <ListItemText primary="Spam" />
+        <ListItem
+          button={true}
+          component="a"
+          href="https://github.com/mcalus3/open-fraksl"
+        >
+          <ListItemText primary="Go to Github page" />
         </ListItem>
       </List>
     </div>

@@ -1,5 +1,5 @@
 import { AppActions, AppActionTypes } from "./appActions";
-import { initialState, AppState } from "../model";
+import { initialState, AppState } from "../StateModel";
 
 const appReducer = (
   state: AppState = initialState.appState,

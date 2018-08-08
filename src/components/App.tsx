@@ -1,11 +1,11 @@
 import * as React from "react";
 import "./App.css";
 import NavBar from "./appComponents/NavBar";
-import Drawer from "./appComponents/Drawer";
+import MenuDrawer from "./appComponents/MenuDrawer";
 import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
 import withRoot from "./withRoot";
 import Stage from "./fractalComponents/Stage";
-import ControlPanel from "./fractalComponents/ControlPanel";
+import ControlDrawer from "./appComponents/ControlDrawer";
 
 const styles = createStyles({
   root: {
@@ -21,10 +21,10 @@ type Props = {} & WithStyles<typeof styles>;
 function App(props: Props) {
   return (
     <div className={props.classes.root}>
-      <Drawer />
+      <MenuDrawer />
       <NavBar />
       <Stage />
-      <ControlPanel />
+      <ControlDrawer />
     </div>
   );
 }
