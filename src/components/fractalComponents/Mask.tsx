@@ -9,6 +9,7 @@ export const behavior = {
     {},
     newProps: { draw: PIXI.Graphics }
   ) => {
+    instance.addChild(newProps.draw);
     instance.mask = newProps.draw;
     return instance;
   }

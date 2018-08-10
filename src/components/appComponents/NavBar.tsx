@@ -28,7 +28,7 @@ const styles = (theme: Theme) =>
     },
     AppBar: {
       flexGrow: 1,
-      zIndex: theme.zIndex.drawer + 101
+      display: "block"
     }
   });
 type Props = { onToggleDrawer: () => Action } & WithStyles<typeof styles>;
@@ -36,7 +36,7 @@ type Props = { onToggleDrawer: () => Action } & WithStyles<typeof styles>;
 const NavBar = (props: Props) => {
   const { classes } = props;
   return (
-    <AppBar position="absolute" className={classes.AppBar}>
+    <AppBar position="static" className={classes.AppBar}>
       <Toolbar>
         <IconButton
           className={classes.menuButton}

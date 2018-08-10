@@ -23,12 +23,13 @@ type Props = {
 
 const Fractal: React.SFC<Props> = (props: Props) => {
   const pivot: PIXI.Point = new PIXI.Point(props.width / 2, props.height / 2);
+  const maskRect = drawRect(0, 0, props.width, props.height, 0) as any;
 
   return lastLevelReached(props) ? (
     <Container />
   ) : (
     <Container x={props.x} y={props.y} rotation={props.rot} pivot={pivot}>
-      <Mask draw={drawRect(0, 0, props.width, props.height, 0)}>
+      <Mask draw={maskRect}>
         <Rectangle
           fill={Math.floor((1 / props.depth) * 0xffffff)}
           x={0}

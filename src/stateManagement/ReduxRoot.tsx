@@ -10,7 +10,7 @@ import appReducer from "./appState/appReducer";
 import fractalReducer from "./FractalState/fractalReducer";
 import { State } from "./StateModel";
 import { FractalActions } from "./FractalState/fractalActions";
-import { AppActions, Actions } from "./appState/appActions";
+import { AppActions } from "./appState/appActions";
 
 const logger = (createLogger as any)();
 
@@ -27,10 +27,10 @@ const rootReducer = combineReducers<State>({
 
 const store = createStore(rootReducer, {}, middleware) as Store<State>;
 
-window.addEventListener("resize", () => {
-  store.dispatch(Actions.Resize(window.innerWidth, window.innerHeight));
-});
-store.dispatch(Actions.Resize(window.innerWidth, window.innerHeight));
+// window.addEventListener("resize", () => {
+//   store.dispatch(Actions.Resize(window.innerWidth, window.innerHeight));
+// });
+// store.dispatch(Actions.Resize(window.innerWidth, window.innerHeight));
 
 function ReduxRoot() {
   return (

@@ -1,30 +1,46 @@
 import * as React from "react";
 import "./App.css";
 import NavBar from "./appComponents/NavBar";
-import MenuDrawer from "./appComponents/MenuDrawer";
-import { withStyles, createStyles, WithStyles } from "@material-ui/core/styles";
 import withRoot from "./withRoot";
 import Stage from "./fractalComponents/Stage";
+import MenuDrawer from "./appComponents/MenuDrawer";
 import ControlDrawer from "./appComponents/ControlDrawer";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
+import { Action } from "../stateManagement/ReduxRoot";
 
-const styles = createStyles({
-  root: {
-    flexGrow: 1,
-    zIndex: 1,
-    overflow: "hidden",
-    display: "flex"
-  }
-});
+const styles = () =>
+  createStyles({
+    root: {
+      display: "flex",
+      flexFlow: "column",
+      position: "absolute",
+      left: 0,
+      top: 0,
+      width: "100%",
+      height: "100%"
+    },
+    content: {
+      display: "flex",
+      flexGrow: 1
+    }
+  });
 
-type Props = {} & WithStyles<typeof styles>;
+type Props = { resize: (w: number, h: number) => Action } & WithStyles<
+  typeof styles
+>;
 
 function App(props: Props) {
+  const { classes } = props;
+
   return (
-    <div className={props.classes.root}>
-      <MenuDrawer />
+    <div className={classes.root}>
       <NavBar />
-      <Stage />
-      <ControlDrawer />
+      <MenuDrawer />
+      <div className={classes.content}>
+        <div />
+        <Stage />
+        <ControlDrawer />
+      </div>
     </div>
   );
 }

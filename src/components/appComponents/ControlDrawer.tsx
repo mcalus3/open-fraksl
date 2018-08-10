@@ -5,24 +5,25 @@ import {
   WithStyles,
   Theme
 } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
 import { connect } from "react-redux";
 import { State } from "../../stateManagement/StateModel";
 import ControlPanel from "./ControlPanel";
 import FractalSelection from "./FractalSelection";
+import { Paper } from "@material-ui/core";
 
 const drawerWidth = 240;
 
 const styles = (theme: Theme) =>
   createStyles({
-    drawerPaper: {
-      width: drawerWidth
-    },
-    toolbar: theme.mixins.toolbar,
     paper: {
-      ...theme.mixins.gutters(),
-      paddingTop: theme.spacing.unit * 2,
-      paddingBottom: theme.spacing.unit * 2
+      display: "flex",
+      flexFlow: "column",
+      flexGrow: 0,
+      width: drawerWidth,
+      anchor: "right",
+      position: "relative",
+      float: "right",
+      height: "100%"
     }
   });
 
@@ -34,18 +35,14 @@ const ControlDrawer = (props: Props) => {
   const { classes } = props;
 
   return (
-    <Drawer
-      anchor={"right"}
-      variant={"permanent"}
-      open={props.openControlDrawer}
+    <Paper
       classes={{
-        paper: classes.drawerPaper
+        root: classes.paper
       }}
     >
-      <div className={classes.toolbar} />
       <ControlPanel />
       <FractalSelection />
-    </Drawer>
+    </Paper>
   );
 };
 
