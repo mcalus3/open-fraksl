@@ -1,22 +1,27 @@
-import * as React from "react";
-import { withStyles, createStyles, Theme } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+import * as React from 'react';
+import {
+  withStyles,
+  WithStyles,
+  createStyles,
+  Theme
+} from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = (theme: Theme) =>
   createStyles({
-    root: {
-      width: "100%",
-      maxWidth: 250,
+    list: {
       backgroundColor: theme.palette.background.paper
     }
   });
 
-function SimpleList(props: any) {
+type Props = {} & WithStyles<typeof styles>;
+
+function SimpleList(props: Props) {
   const { classes } = props;
   return (
-    <div className={classes.root}>
+    <div className={classes.list}>
       <List component="nav">
         <ListItem button={true}>
           <ListItemText primary="Settings" />

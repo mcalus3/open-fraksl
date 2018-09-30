@@ -1,12 +1,12 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { State } from "../../stateManagement/StateModel";
-import { Typography } from "@material-ui/core";
-import { Actions } from "../../stateManagement/FractalState/fractalActions";
-import { Action } from "../../stateManagement/ReduxRoot";
-import { ParameterDefinition } from "../../stateManagement/FractalModels";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { State } from '../../../stateManagement/StateModel';
+import { Typography } from '@material-ui/core';
+import { Actions } from '../../../stateManagement/FractalState/fractalActions';
+import { Action } from '../../appComponents/StateProvider';
+import { ParameterDefinition } from '../../../stateManagement/FractalModels';
 
-const Slider: React.ComponentClass<any> = require("@material-ui/lab/Slider")
+const Slider: React.ComponentClass<any> = require('@material-ui/lab/Slider')
   .default;
 
 type Props = {

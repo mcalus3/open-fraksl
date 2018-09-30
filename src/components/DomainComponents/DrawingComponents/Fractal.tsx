@@ -1,7 +1,7 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { State } from "../../stateManagement/StateModel";
-import { getFractalDefinition } from "../../stateManagement/utils";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { State } from '../../../stateManagement/StateModel';
+import { getFractalDefinition } from '../../../stateManagement/utils';
 
 type Props = {
   width: number;

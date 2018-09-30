@@ -1,12 +1,12 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { Stage } from "react-pixi-fiber";
-import { State } from "../../stateManagement/StateModel";
-import Fractal from "./Fractal";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core/styles";
-import { Actions } from "../../stateManagement/appState/appActions";
-import { Action } from "../../stateManagement/ReduxRoot";
-const sizeMe: any = require("react-sizeme");
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Stage } from 'react-pixi-fiber';
+import { State } from '../../../stateManagement/StateModel';
+import Fractal from '../DrawingComponents/Fractal';
+import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
+import { Actions } from '../../../stateManagement/appState/appActions';
+import { Action } from '../../../stateManagement/StateProvider';
+const sizeMe: any = require('react-sizeme');
 
 const OPTIONS = {
   backgroundColor: 0x1099bb
@@ -18,7 +18,9 @@ const styles = () =>
       flexGrow: 1,
       flexShrink: 1,
       minWidth: 0,
-      minHeight: 0
+      minHeight: 0,
+      borderStyle: 'dashed',
+      borderWidth: 'medium'
     }
   });
 

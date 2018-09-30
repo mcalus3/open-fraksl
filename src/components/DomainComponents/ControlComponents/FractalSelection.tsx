@@ -1,24 +1,18 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   withStyles,
   createStyles,
   WithStyles,
   Theme
-} from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import { State } from "../../stateManagement/StateModel";
-import { Paper, Typography, List } from "@material-ui/core";
-import { fractalModels } from "../../stateManagement/FractalModels";
-import FractalSelector from "./FractalSelector";
-
-const drawerWidth = 240;
+} from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { State } from '../../../stateManagement/StateModel';
+import { Paper, Typography, List } from '@material-ui/core';
+import { fractalModels } from '../../../stateManagement/FractalModels';
+import FractalSelector from './FractalSelector';
 
 const styles = (theme: Theme) =>
   createStyles({
-    drawerPaper: {
-      width: drawerWidth
-    },
-    toolbar: theme.mixins.toolbar,
     paper: {
       ...theme.mixins.gutters(),
       paddingTop: theme.spacing.unit * 2,
@@ -38,11 +32,11 @@ const FractalSelection = (props: Props) => {
   ));
 
   return (
-    <Paper className={classes.paper} elevation={1}>
+    <Paper className={classes.paper}>
       <Typography variant="headline" component="h3">
         Fractal Selection
       </Typography>
-      <List component="nav">{fractalSelectors}</List>{" "}
+      <List component="nav">{fractalSelectors}</List>{' '}
     </Paper>
   );
 };

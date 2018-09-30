@@ -1,34 +1,27 @@
-import AppBar from "@material-ui/core/AppBar";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import * as React from "react";
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import * as React from 'react';
 
 import {
   withStyles,
   createStyles,
   Theme,
   WithStyles
-} from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import { Action } from "../../stateManagement/ReduxRoot";
-import { Actions } from "../../stateManagement/appState/appActions";
-import { State } from "../../stateManagement/StateModel";
+} from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { Action } from './StateProvider';
+import { Actions } from '../../stateManagement/appState/appActions';
+import { State } from '../../stateManagement/StateModel';
 
 const styles = (theme: Theme) =>
   createStyles({
-    flex: {
-      flex: 1
-    },
     menuButton: {
       marginLeft: -12,
       marginRight: 20
-    },
-    AppBar: {
-      flexGrow: 1,
-      display: "block"
     }
   });
 type Props = { onToggleDrawer: () => Action } & WithStyles<typeof styles>;
@@ -36,7 +29,7 @@ type Props = { onToggleDrawer: () => Action } & WithStyles<typeof styles>;
 const NavBar = (props: Props) => {
   const { classes } = props;
   return (
-    <AppBar position="static" className={classes.AppBar}>
+    <AppBar position="static">
       <Toolbar>
         <IconButton
           className={classes.menuButton}
@@ -46,7 +39,7 @@ const NavBar = (props: Props) => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="title" color="inherit" className={classes.flex}>
+        <Typography variant="title" color="inherit">
           open-fraksl
         </Typography>
       </Toolbar>

@@ -1,10 +1,10 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { Container } from "react-pixi-fiber";
-import { State } from "../../stateManagement/StateModel";
-import Rectangle from "./Rectangle";
-import { Mask } from "./Mask";
-import { drawRect } from "./utils";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Container } from 'react-pixi-fiber';
+import { State } from '../../../stateManagement/StateModel';
+import Rectangle from './Rectangle';
+import { Mask } from './Mask';
+import { drawRect } from '../utils';
 
 type extProps = {
   width: number;
@@ -51,17 +51,17 @@ const mapStateToProps = (state: State, ownProps: extProps) => ({
   x:
     ownProps.width / 2 +
     ownProps.width *
-      state.fractalState.parameters["x"] *
+      state.fractalState.parameters['x'] *
       ((ownProps.depth || 0) % 2 === 0 ? 1 : -1),
   y:
     ownProps.height / 2 +
     ownProps.height *
-      state.fractalState.parameters["y"] *
+      state.fractalState.parameters['y'] *
       ((ownProps.depth || 0) % 2 === 0 ? 1 : -1),
-  width: ownProps.width * state.fractalState.parameters["zoom"],
-  height: ownProps.height * state.fractalState.parameters["zoom"],
+  width: ownProps.width * state.fractalState.parameters['zoom'],
+  height: ownProps.height * state.fractalState.parameters['zoom'],
   depth: ownProps.depth || 0,
-  rot: state.fractalState.parameters["rot"]
+  rot: state.fractalState.parameters['rot']
 });
 
 const ConnectedFractal = connect(mapStateToProps)(Fractal);

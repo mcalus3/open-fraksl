@@ -1,25 +1,19 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   withStyles,
   createStyles,
   WithStyles,
   Theme
-} from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import { State } from "../../stateManagement/StateModel";
-import { Paper, Typography } from "@material-ui/core";
-import ParameterControl from "./ParameterControl";
-import { getFractalDefinition } from "../../stateManagement/utils";
-import { ParameterDefinition } from "../../stateManagement/FractalModels";
-
-const drawerWidth = 240;
+} from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { State } from '../../../stateManagement/StateModel';
+import { Paper, Typography } from '@material-ui/core';
+import ParameterControl from './ParameterControl';
+import { getFractalDefinition } from '../../../stateManagement/utils';
+import { ParameterDefinition } from '../../../stateManagement/FractalModels';
 
 const styles = (theme: Theme) =>
   createStyles({
-    drawerPaper: {
-      width: drawerWidth
-    },
-    toolbar: theme.mixins.toolbar,
     paper: {
       ...theme.mixins.gutters(),
       paddingTop: theme.spacing.unit * 2,
@@ -45,7 +39,7 @@ const ControlPanel = (props: Props) => {
   };
 
   return (
-    <Paper className={classes.paper} elevation={1}>
+    <Paper className={classes.paper}>
       <Typography variant="headline" component="h3">
         Control Panel
       </Typography>

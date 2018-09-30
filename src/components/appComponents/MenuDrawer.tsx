@@ -1,21 +1,23 @@
-import * as React from "react";
-import MenuList from "./MenuList";
-import { withStyles, WithStyles } from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import { State } from "../../stateManagement/StateModel";
-import { Actions } from "../../stateManagement/appState/appActions";
-import { Action } from "../../stateManagement/ReduxRoot";
+import * as React from 'react';
+import MenuList from './MenuList';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { State } from '../../stateManagement/StateModel';
+import { Actions } from '../../stateManagement/appState/appActions';
+import { Action } from './StateProvider';
 import {
   SwipeableDrawer,
   List,
   ListItem,
   ListItemText
-} from "@material-ui/core";
-import Divider from "@material-ui/core/Divider";
+} from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+
+const version = require('../../../package.json').version;
 
 const styles = {
   drawer: {
-    width: 250
+    maxWidth: 250
   }
 };
 
@@ -39,7 +41,7 @@ const menuDrawer = (props: Props) => {
       >
         <List component="nav">
           <ListItem>
-            <ListItemText primary="open-fraksl" secondary="v0.0.11" />
+            <ListItemText primary="open-fraksl" secondary={version} />
           </ListItem>
         </List>
         <Divider />

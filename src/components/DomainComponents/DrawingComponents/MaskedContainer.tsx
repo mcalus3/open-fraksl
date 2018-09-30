@@ -1,9 +1,9 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { connect } from "react-redux";
-import { Stage } from "react-pixi-fiber";
-import { State } from "../../stateManagement/StateModel";
-import Fractal from "./Fractal";
+import { connect } from 'react-redux';
+import { Stage } from 'react-pixi-fiber';
+import { State } from '../../../stateManagement/StateModel';
+import Fractal from './Fractal';
 
 const OPTIONS = {
   backgroundColor: 0x1099bb

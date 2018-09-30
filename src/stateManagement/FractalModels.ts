@@ -1,5 +1,5 @@
-import PyramidFractal from "../components/fractalComponents/PyramidFractal";
-import OneMirrorFractal from "../components/fractalComponents/OneMirrorFractal";
+import PyramidFractal from '../components/DomainComponents/DrawingComponents/PyramidFractal';
+import OneMirrorFractal from '../components/DomainComponents/DrawingComponents/OneMirrorFractal';
 
 export type ParameterDefinition = {
   name: string;
@@ -17,28 +17,28 @@ export type FractalDefinition = {
 };
 
 export const pyramidFractal: FractalDefinition = {
-  name: "pyramid fractal",
+  name: 'pyramid fractal',
   parameters: {
     x: {
-      name: "x",
+      name: 'x',
       min: -1,
       max: 1,
       default: 0
     },
     y: {
-      name: "y",
+      name: 'y',
       min: -1,
       max: 1,
       default: 0
     },
     rot: {
-      name: "rot",
+      name: 'rot',
       min: 0,
       max: 2 * Math.PI,
       default: 0.1
     },
     zoom: {
-      name: "zoom",
+      name: 'zoom',
       min: 0,
       max: 0.99,
       default: 0.8
@@ -48,28 +48,28 @@ export const pyramidFractal: FractalDefinition = {
 };
 
 export const oneMirrorFractal: FractalDefinition = {
-  name: "one mirror fractal",
+  name: 'one mirror fractal',
   parameters: {
     x: {
-      name: "x",
+      name: 'x',
       min: -1,
       max: 1,
       default: 0
     },
     y: {
-      name: "y",
+      name: 'y',
       min: -1,
       max: 1,
       default: 0
     },
     rot: {
-      name: "rot",
+      name: 'rot',
       min: 0,
       max: 2 * Math.PI,
       default: 0.1
     },
     zoom: {
-      name: "zoom",
+      name: 'zoom',
       min: 0,
       max: 0.99,
       default: 0.8

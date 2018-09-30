@@ -1,29 +1,23 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   withStyles,
   createStyles,
   WithStyles,
   Theme
-} from "@material-ui/core/styles";
-import { connect } from "react-redux";
-import { State } from "../../stateManagement/StateModel";
-import ControlPanel from "./ControlPanel";
-import FractalSelection from "./FractalSelection";
-import { Paper } from "@material-ui/core";
-
-const drawerWidth = 240;
+} from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+import { State } from '../../../stateManagement/StateModel';
+import ControlPanel from './ControlPanel';
+import FractalSelection from './FractalSelection';
+import { Paper } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
     paper: {
-      display: "flex",
-      flexFlow: "column",
-      flexGrow: 0,
-      width: drawerWidth,
-      anchor: "right",
-      position: "relative",
-      float: "right",
-      height: "100%"
+      anchor: 'right',
+      float: 'right',
+      maxWidth: '50%',
+      overflowY: 'auto'
     }
   });
 

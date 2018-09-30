@@ -1,9 +1,9 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { ListItem, ListItemText } from "@material-ui/core";
-import { Actions } from "../../stateManagement/FractalState/fractalActions";
-import { State } from "../../stateManagement/StateModel";
-import { Action } from "../../stateManagement/ReduxRoot";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { ListItem, ListItemText } from '@material-ui/core';
+import { Actions } from '../../../stateManagement/FractalState/fractalActions';
+import { State } from '../../../stateManagement/StateModel';
+import { Action } from '../../appComponents/StateProvider';
 
 type Props = {
   name?: string;
