@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Stage } from 'react-pixi-fiber';
 import { State } from '../../../stateManagement/StateModel';
-import Fractal from '../DrawingComponents/Fractal';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import { Actions } from '../../../stateManagement/appState/appActions';
-import { Action } from '../../../stateManagement/StateProvider';
+import { Action } from '../../appComponents/StateProvider';
 const sizeMe: any = require('react-sizeme');
 
 const OPTIONS = {
@@ -18,9 +16,7 @@ const styles = () =>
       flexGrow: 1,
       flexShrink: 1,
       minWidth: 0,
-      minHeight: 0,
-      borderStyle: 'dashed',
-      borderWidth: 'medium'
+      minHeight: 0
     }
   });
 
@@ -36,22 +32,38 @@ type Props = { resize: (w: number, h: number) => Action } & WithStyles<
 > &
   SizeMeProps;
 
-const FractalStage = (props: Props) => {
-  props.resize(props.size.width, props.size.height);
-  const { classes } = props;
+class FractalStage extends React.Component<Props> {
+  private canvasRef: any;
+  private canvas: PIXI.Application;
+  constructor(props: Props) {
+    super(props);
+    this.canvasRef = React.createRef();
+  }
 
-  return (
-    <div className={classes.stage}>
-      <Stage
-        options={OPTIONS}
-        width={props.size.width}
-        height={props.size.height - 4}
-      >
-        <Fractal />
-      </Stage>
-    </div>
-  );
-};
+  public componentDidMount() {
+    this.canvas = new PIXI.Application(
+      this.props.size.width,
+      this.props.size.height,
+      { backgroundColor: OPTIONS.backgroundColor }
+    );
+    this.canvasRef.current.appendChild(this.canvas.view);
+  }
+
+  public render() {
+    const { classes } = this.props;
+
+    this.props.resize(this.props.size.width, this.props.size.height);
+
+    return <div className={classes.stage} ref={this.canvasRef} />;
+  }
+
+  public componentDidUpdate() {
+    this.canvas.renderer.resize(
+      this.props.size.width,
+      this.props.size.height - 3
+    );
+  }
+}
 
 const mapStateToProps = (
   state: State,
