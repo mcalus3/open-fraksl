@@ -11,7 +11,7 @@ import { State } from '../../stateManagement/StateModel';
 import { FractalActions } from '../../stateManagement/FractalState/fractalActions';
 import { AppActions } from '../../stateManagement/appState/appActions';
 
-const logger = (createLogger as any)();
+const logger = createLogger();
 
 let middleware = applyMiddleware(logger, thunk);
 

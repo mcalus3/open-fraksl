@@ -12,6 +12,7 @@ import {
   ListItemText
 } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import { Dispatch } from 'redux';
 
 const version = require('../../../package.json').version;
 
@@ -56,7 +57,7 @@ const mapStateToProps = (state: State) => ({
   openDrawer: state.appState.drawerVisible
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch<Action>) => ({
   toggle: () => {
     dispatch(Actions.ToggleDrawer());
   }
