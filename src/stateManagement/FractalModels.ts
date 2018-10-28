@@ -1,6 +1,3 @@
-import PyramidFractal from '../components/DomainComponents/DrawingComponents/PyramidFractal';
-import OneMirrorFractal from '../components/DomainComponents/DrawingComponents/OneMirrorFractal';
-
 export type ParameterDefinition = {
   name: string;
   min: number;
@@ -11,9 +8,6 @@ export type ParameterDefinition = {
 export type FractalDefinition = {
   name: string;
   parameters: { [key: string]: ParameterDefinition };
-  renderer: React.ComponentClass<Pick<any, never> & any> & {
-    WrappedComponent: React.ComponentType<any>;
-  };
 };
 
 export const pyramidFractal: FractalDefinition = {
@@ -40,11 +34,10 @@ export const pyramidFractal: FractalDefinition = {
     zoom: {
       name: 'zoom',
       min: 0,
-      max: 0.99,
-      default: 0.8
+      max: 100,
+      default: 50
     }
-  },
-  renderer: PyramidFractal
+  }
 };
 
 export const oneMirrorFractal: FractalDefinition = {
@@ -74,8 +67,7 @@ export const oneMirrorFractal: FractalDefinition = {
       max: 0.99,
       default: 0.8
     }
-  },
-  renderer: OneMirrorFractal
+  }
 };
 
 export const fractalModels = [pyramidFractal, oneMirrorFractal];

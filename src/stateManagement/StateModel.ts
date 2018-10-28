@@ -1,5 +1,5 @@
-import { initializeFractal } from "./utils";
-import { pyramidFractal } from "./FractalModels";
+import { initializeFractal } from './utils';
+import { pyramidFractal } from './FractalModels';
 
 export type AppState = typeof initialState.appState;
 
@@ -16,9 +16,7 @@ export type State = {
 export const initialState = {
   appState: {
     drawerVisible: false,
-    controlPanelVisible: true,
-    screenWidth: 0,
-    screenHeight: 0
+    controlPanelVisible: true
   },
   fractalState: initializeFractal(pyramidFractal)
 };

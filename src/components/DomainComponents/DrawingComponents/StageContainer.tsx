@@ -2,8 +2,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { State } from '../../../stateManagement/StateModel';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
-import { Actions } from '../../../stateManagement/appState/appActions';
+import { Actions } from '../../../stateManagement/FractalState/fractalActions';
 import { Action } from '../../appComponents/StateProvider';
+import Fractal from './NewFractal';
+import * as PIXI from 'pixi.js';
 const sizeMe: any = require('react-sizeme');
 
 const OPTIONS = {
@@ -34,34 +36,37 @@ type Props = { resize: (w: number, h: number) => Action } & WithStyles<
 
 class FractalStage extends React.Component<Props> {
   private canvasRef: any;
-  private canvas: PIXI.Application;
+  private pixiApp: PIXI.Application;
+
   constructor(props: Props) {
     super(props);
     this.canvasRef = React.createRef();
   }
 
   public componentDidMount() {
-    this.canvas = new PIXI.Application(
+    this.pixiApp = new PIXI.Application(
       this.props.size.width,
       this.props.size.height,
       { backgroundColor: OPTIONS.backgroundColor }
     );
-    this.canvasRef.current.appendChild(this.canvas.view);
+    this.canvasRef.current.appendChild(this.pixiApp.view);
   }
 
   public render() {
     const { classes } = this.props;
-
-    this.props.resize(this.props.size.width, this.props.size.height);
-
-    return <div className={classes.stage} ref={this.canvasRef} />;
+    return (
+      <div className={classes.stage} ref={this.canvasRef}>
+        <Fractal pixiApp={this.pixiApp} />
+      </div>
+    );
   }
 
   public componentDidUpdate() {
-    this.canvas.renderer.resize(
+    this.pixiApp.renderer.resize(
       this.props.size.width,
-      this.props.size.height - 3
+      this.props.size.height - 4
     );
+    this.props.resize(this.props.size.width, this.props.size.height - 4);
   }
 }
 
