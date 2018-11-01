@@ -4,7 +4,7 @@ import { State } from '../../../stateManagement/StateModel';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 import { Actions } from '../../../stateManagement/FractalState/fractalActions';
 import { Action } from '../../appComponents/StateProvider';
-import Fractal from './NewFractal';
+import FractalLoader from './FractalLoader';
 import * as PIXI from 'pixi.js';
 const sizeMe: any = require('react-sizeme');
 
@@ -56,7 +56,7 @@ class FractalStage extends React.Component<Props> {
     const { classes } = this.props;
     return (
       <div className={classes.stage} ref={this.canvasRef}>
-        <Fractal pixiApp={this.pixiApp} />
+        <FractalLoader pixiApp={this.pixiApp} />
       </div>
     );
   }
