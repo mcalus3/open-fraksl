@@ -35,13 +35,8 @@ type Props = { resize: (w: number, h: number) => Action } & WithStyles<
   SizeMeProps;
 
 class FractalStage extends React.Component<Props> {
-  private canvasRef: any;
+  private canvasRef = React.createRef<HTMLDivElement>();
   private pixiApp: PIXI.Application;
-
-  constructor(props: Props) {
-    super(props);
-    this.canvasRef = React.createRef();
-  }
 
   public componentDidMount() {
     this.pixiApp = new PIXI.Application(
@@ -49,7 +44,9 @@ class FractalStage extends React.Component<Props> {
       this.props.size.height,
       { backgroundColor: OPTIONS.backgroundColor }
     );
-    this.canvasRef.current.appendChild(this.pixiApp.view);
+    if (this.canvasRef.current) {
+      this.canvasRef.current.appendChild(this.pixiApp.view);
+    }
   }
 
   public render() {
@@ -70,13 +67,7 @@ class FractalStage extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (
-  state: State,
-  ownProps: { size: { width: number; height: number } }
-) => ({
-  width: ownProps.size.width,
-  height: ownProps.size.height
-});
+const mapStateToProps = (state: State, ownProps: SizeMeProps) => ({});
 
 const mapDispatchToProps = (dispatch: any) => ({
   resize: (w: number, h: number) => {

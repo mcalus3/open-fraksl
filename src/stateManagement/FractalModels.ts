@@ -1,3 +1,13 @@
+import renderOneMirrorFractal from 'src/components/DomainComponents/DrawingComponents/OneMirrorFractal';
+import renderPyramidFractal from 'src/components/DomainComponents/DrawingComponents/PyramidFractalRenderer';
+
+export type FractalElementsTree = {
+  element: PIXI.Sprite;
+  children: FractalElementsTree[];
+};
+
+export type Params = { [key: string]: number };
+
 export type ParameterDefinition = {
   name: string;
   min: number;
@@ -8,6 +18,11 @@ export type ParameterDefinition = {
 export type FractalDefinition = {
   name: string;
   parameters: { [key: string]: ParameterDefinition };
+  renderingFunction: (
+    pixiApp: PIXI.Application,
+    treeElement: FractalElementsTree,
+    params: { [key: string]: number }
+  ) => void;
 };
 
 export const pyramidFractal: FractalDefinition = {
@@ -37,7 +52,8 @@ export const pyramidFractal: FractalDefinition = {
       max: 100,
       default: 50
     }
-  }
+  },
+  renderingFunction: renderPyramidFractal
 };
 
 export const oneMirrorFractal: FractalDefinition = {
@@ -59,15 +75,16 @@ export const oneMirrorFractal: FractalDefinition = {
       name: 'rot',
       min: 0,
       max: 2 * Math.PI,
-      default: 0.1
+      default: 0.2
     },
     zoom: {
       name: 'zoom',
       min: 0,
-      max: 0.99,
-      default: 0.8
+      max: 100,
+      default: 70
     }
-  }
+  },
+  renderingFunction: renderOneMirrorFractal
 };
 
 export const fractalModels = [pyramidFractal, oneMirrorFractal];

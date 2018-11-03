@@ -11,7 +11,7 @@ type Props = {
 };
 
 const FractalSelector = (props: Props) => {
-  const cf = (e: any) => {
+  const cf = (e: React.FormEvent) => {
     return props.changeFractal !== undefined && props.name !== undefined
       ? props.changeFractal(props.name)
       : undefined;

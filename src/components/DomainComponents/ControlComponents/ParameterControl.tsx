@@ -12,11 +12,11 @@ const Slider: React.ComponentClass<any> = require('@material-ui/lab/Slider')
 type Props = {
   parameter: ParameterDefinition;
   value: number;
-  changeParameter: (e: any, v: number) => Action;
+  changeParameter: (n: string, v: number) => Action;
 };
 
 const ParameterControl = (props: Props) => {
-  const cp = (e: MouseEvent, v: number) =>
+  const cp = (e: React.FormEvent, v: number) =>
     props.changeParameter(props.parameter.name, v);
 
   return (

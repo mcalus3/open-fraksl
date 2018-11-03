@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Stage from '../DomainComponents/DrawingComponents/StageContainer';
+import FractalStage from '../DomainComponents/DrawingComponents/FractalStage';
 import ControlDrawer from '../DomainComponents/ControlComponents/ControlDrawer';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
 
@@ -21,7 +21,7 @@ const ContentContainer = (props: Props) => {
 
   return (
     <div className={classes.container}>
-      <Stage />
+      <FractalStage />
       <ControlDrawer />
     </div>
   );
