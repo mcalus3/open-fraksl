@@ -1,5 +1,5 @@
-import renderOneMirrorFractal from 'src/components/DomainComponents/DrawingComponents/OneMirrorFractal';
-import renderPyramidFractal from 'src/components/DomainComponents/DrawingComponents/PyramidFractalRenderer';
+import renderOneMirrorFractal from './DrawingComponents/OneMirrorFractal';
+import renderPyramidFractal from './DrawingComponents/PyramidFractalRenderer';
 
 export type FractalElementsTree = {
   element: PIXI.Sprite;
@@ -21,7 +21,7 @@ export type FractalDefinition = {
   renderingFunction: (
     pixiApp: PIXI.Application,
     treeElement: FractalElementsTree,
-    params: { [key: string]: number }
+    params: any // { [key: string]: number }
   ) => void;
 };
 

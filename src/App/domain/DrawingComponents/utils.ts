@@ -1,4 +1,4 @@
-import { Params, FractalElementsTree } from 'src/stateManagement/FractalModels';
+import { Params, FractalElementsTree } from '../FractalModels';
 
 export function endConditionFulfilled(params: Params): boolean {
   const zoom = Math.pow(params.zoom, params.depth);

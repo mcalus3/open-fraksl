@@ -1,5 +1,6 @@
-import { FractalElementsTree } from 'src/stateManagement/FractalModels';
+import { FractalElementsTree } from '../FractalModels';
 import { endConditionFulfilled, unmountChildren } from './utils';
+import * as PIXI from 'pixi.js';
 
 type Params = {
   x: number;
@@ -11,7 +12,7 @@ type Params = {
   depth: number;
 };
 
-export default function renderOneMirrorFractal(
+export default function renderPyramidFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
   params: Params
@@ -21,36 +22,39 @@ export default function renderOneMirrorFractal(
   } else {
     applyTransformation(treeElement.element as PIXI.Sprite, params);
 
-    renderChildren(pixiApp, treeElement, params);
+    renderChildren(pixiApp, treeElement.children, params);
   }
 }
 
 function applyTransformation(sprite: PIXI.Sprite, params: Params) {
+  const zoom = Math.pow(params.zoom, params.depth);
+
   sprite.tint = 0xffffff / params.depth;
 
   sprite.anchor.set(0.5);
-  sprite.x = params.width / 2 + params.x;
-  sprite.y = params.height / 2 + params.y;
+  sprite.x = params.width / 2 + params.x * params.depth;
+  sprite.y = params.height / 2 + params.y * params.depth;
 
-  sprite.rotation = params.rot;
-  sprite.scale = new PIXI.Point(params.width / 10, params.height / 10);
+  sprite.rotation = params.rot * params.depth;
+  sprite.scale = new PIXI.Point(
+    (params.width * zoom) / 10,
+    (params.height * zoom) / 10
+  );
 }
 
 function renderChildren(
   pixiApp: PIXI.Application,
-  element: FractalElementsTree,
+  elements: FractalElementsTree[],
   params: Params
 ) {
-  if (element.children.length === 0) {
+  if (elements.length === 0) {
     const newSprite = new PIXI.Sprite(PIXI.Texture.WHITE);
-    element.element.addChild(newSprite);
-    element.children[0] = { element: newSprite, children: [] };
+    pixiApp.stage.addChild(newSprite);
+    elements[0] = { element: newSprite, children: [] };
   }
 
-  renderOneMirrorFractal(pixiApp, element.children[0], {
+  renderPyramidFractal(pixiApp, elements[0], {
     ...params,
-    width: params.width * params.zoom,
-    height: params.height * params.zoom,
     depth: params.depth + 1
   });
 }

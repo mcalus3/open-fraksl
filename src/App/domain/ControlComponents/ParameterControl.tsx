@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { State } from '../../../stateManagement/StateModel';
 import { Typography } from '@material-ui/core';
-import { Actions } from '../../../stateManagement/FractalState/fractalActions';
-import { Action } from '../../appComponents/StateProvider';
-import { ParameterDefinition } from '../../../stateManagement/FractalModels';
+import { ParameterDefinition } from '../FractalModels';
+import fractalSlice from '../fractalReducer';
 
 const Slider: React.ComponentClass<any> = require('@material-ui/lab/Slider')
   .default;
@@ -12,7 +10,7 @@ const Slider: React.ComponentClass<any> = require('@material-ui/lab/Slider')
 type Props = {
   parameter: ParameterDefinition;
   value: number;
-  changeParameter: (n: string, v: number) => Action;
+  changeParameter: (n: string, v: number) => any;
 };
 
 const ParameterControl = (props: Props) => {
@@ -37,7 +35,7 @@ const ParameterControl = (props: Props) => {
 };
 
 const mapStateToProps = (
-  state: State,
+  state: any,
   ownProps: { param: ParameterDefinition; value: number }
 ) => ({
   parameter: ownProps.param,
@@ -46,7 +44,7 @@ const mapStateToProps = (
 
 const mapDispatchToProps = (dispatch: any) => ({
   changeParameter: (name: string, v: number) => {
-    dispatch(Actions.setParameter(name, v));
+    dispatch(fractalSlice.actions.setParameter({ name: name, value: v }));
   }
 });
 

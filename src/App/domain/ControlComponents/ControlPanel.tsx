@@ -6,11 +6,10 @@ import {
   Theme
 } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { State } from '../../../stateManagement/StateModel';
 import { Paper, Typography } from '@material-ui/core';
 import ParameterControl from './ParameterControl';
-import { getFractalDefinition } from '../../../stateManagement/utils';
-import { ParameterDefinition } from '../../../stateManagement/FractalModels';
+import { getFractalDefinition } from '../fractalReducer';
+import { ParameterDefinition } from '../FractalModels';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -48,7 +47,7 @@ const ControlPanel = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: any) => ({
   parameterDefinitions: getFractalDefinition(state.fractalState.name)
     .parameters,
   parameterValues: state.fractalState.parameters

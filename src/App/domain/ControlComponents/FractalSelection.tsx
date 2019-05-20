@@ -6,9 +6,8 @@ import {
   Theme
 } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { State } from '../../../stateManagement/StateModel';
 import { Paper, Typography, List } from '@material-ui/core';
-import { fractalModels } from '../../../stateManagement/FractalModels';
+import { fractalModels } from '../FractalModels';
 import FractalSelector from './FractalSelector';
 
 const styles = (theme: Theme) =>
@@ -41,7 +40,7 @@ const FractalSelection = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: State) => ({
+const mapStateToProps = (state: any) => ({
   currentFractal: state.fractalState.name
 });
 

@@ -19,12 +19,14 @@ const theme = createMuiTheme({
       dark: '#a90000',
       contrastText: '#fff'
     }
+  },
+  typography: {
+    useNextVariants: true
   }
 });
 
 function withThemeProvider(Component: React.ComponentType) {
   function WithThemeProvider(props: object) {
-    // MuiThemeProvider makes the theme available down the React tree in the react context
     return (
       <MuiThemeProvider theme={theme}>
         <CssBaseline />

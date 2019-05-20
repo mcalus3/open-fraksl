@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { ListItem, ListItemText } from '@material-ui/core';
-import { Actions } from '../../../stateManagement/FractalState/fractalActions';
-import { State } from '../../../stateManagement/StateModel';
-import { Action } from '../../appComponents/StateProvider';
+import fractalSlice from '../fractalReducer';
 
 type Props = {
   name?: string;
-  changeFractal?: (name: string) => Action;
+  changeFractal?: (name: string) => any;
 };
 
 const FractalSelector = (props: Props) => {
@@ -24,13 +22,13 @@ const FractalSelector = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: State, ownProps: { name: string }) => ({
+const mapStateToProps = (state: any, ownProps: { name: string }) => ({
   name: ownProps.name
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
   changeFractal: (fractalName: string) => {
-    dispatch(Actions.ChangeFractal(fractalName));
+    dispatch(fractalSlice.actions.setFractal({ name: fractalName }));
   }
 });
 

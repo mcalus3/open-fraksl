@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { State } from '../../../stateManagement/StateModel';
-import { FractalElementsTree } from 'src/stateManagement/FractalModels';
-import { getFractalDefinition } from 'src/stateManagement/utils';
+import { FractalElementsTree } from '../FractalModels';
+import { getFractalDefinition } from '../fractalReducer';
+import * as PIXI from 'pixi.js';
 
 type Props = {
   pixiApp: PIXI.Application;
@@ -36,7 +36,7 @@ class FractalLoader extends React.Component<Props> {
 }
 
 const mapStateToProps = (
-  state: State,
+  state: any,
   ownProps: { pixiApp: PIXI.Application }
 ) => ({
   pixiApp: ownProps.pixiApp,

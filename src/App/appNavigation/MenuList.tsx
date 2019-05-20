@@ -18,8 +18,7 @@ const styles = (theme: Theme) =>
 
 type Props = {} & WithStyles<typeof styles>;
 
-function SimpleList(props: Props) {
-  const { classes } = props;
+function SimpleList({ classes }: Props) {
   return (
     <div className={classes.list}>
       <List component="nav">

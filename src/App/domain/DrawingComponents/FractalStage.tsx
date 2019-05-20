@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { State } from '../../../stateManagement/StateModel';
 import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
-import { Actions } from '../../../stateManagement/FractalState/fractalActions';
-import { Action } from '../../appComponents/StateProvider';
 import FractalLoader from './FractalLoader';
+import fractalSlice from '../fractalReducer';
 import * as PIXI from 'pixi.js';
 const sizeMe: any = require('react-sizeme');
 
@@ -29,21 +27,21 @@ type SizeMeProps = {
   };
 };
 
-type Props = { resize: (w: number, h: number) => Action } & WithStyles<
+type Props = { resize: (w: number, h: number) => any } & WithStyles<
   typeof styles
 > &
   SizeMeProps;
 
 class FractalStage extends React.Component<Props> {
   private canvasRef = React.createRef<HTMLDivElement>();
-  private pixiApp: PIXI.Application;
+  private pixiApp: PIXI.Application = new PIXI.Application();
 
   public componentDidMount() {
-    this.pixiApp = new PIXI.Application(
-      this.props.size.width,
-      this.props.size.height,
-      { backgroundColor: OPTIONS.backgroundColor }
-    );
+    this.pixiApp = new PIXI.Application({
+      width: this.props.size.width,
+      height: this.props.size.height,
+      backgroundColor: OPTIONS.backgroundColor
+    });
     if (this.canvasRef.current) {
       this.canvasRef.current.appendChild(this.pixiApp.view);
     }
@@ -67,11 +65,11 @@ class FractalStage extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: State, ownProps: SizeMeProps) => ({});
+const mapStateToProps = (state: any, ownProps: SizeMeProps) => ({});
 
 const mapDispatchToProps = (dispatch: any) => ({
   resize: (w: number, h: number) => {
-    dispatch(Actions.Resize(w, h));
+    dispatch(fractalSlice.actions.resizeStage({ width: w, height: h }));
   }
 });
 

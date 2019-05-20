@@ -6,7 +6,6 @@ import {
   Theme
 } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import { State } from '../../../stateManagement/StateModel';
 import ControlPanel from './ControlPanel';
 import FractalSelection from './FractalSelection';
 import { Paper } from '@material-ui/core';
@@ -40,8 +39,8 @@ const ControlDrawer = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  openControlDrawer: state.appState.controlPanelVisible
+const mapStateToProps = (state: any) => ({
+  openControlDrawer: state.navigationState.controlPanelVisible
 });
 
 export default connect(mapStateToProps)(withStyles(styles)(ControlDrawer));
