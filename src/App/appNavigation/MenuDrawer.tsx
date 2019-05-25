@@ -1,48 +1,30 @@
-import * as React from 'react';
-import MenuList from './MenuList';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-// @ts-ignore
-import { useSelector, useDispatch } from 'react-redux';
-import { State } from '../StateProvider';
-import navigationSlice, { ToggleDrawerAction } from './navigationReducer';
+import React from 'react';
 import {
   SwipeableDrawer,
   List,
   ListItem,
-  ListItemText
+  ListItemText,
+  Divider
 } from '@material-ui/core';
-import Divider from '@material-ui/core/Divider';
+
+import MenuList from './MenuList';
 
 const packageJson = require('../../../package.json');
 const version = packageJson.version;
 const name = packageJson.name;
 
-const styles = {
-  drawer: {
-    maxWidth: 250
-  }
+type Props = {
+  drawerVisible: boolean;
+  setDrawerVisible: (value: boolean) => void;
 };
 
-type Props = WithStyles<typeof styles>;
-
-const MenuDrawer = ({ classes }: Props) => {
-  const isDrawerOpened = useSelector(
-    (state: State) => state.navigationState.drawerVisible
-  );
-
-  const dispatch = useDispatch();
-  const toggle: () => ToggleDrawerAction = () =>
-    dispatch(navigationSlice.actions.toggleDrawer());
-
+function MenuDrawer({ drawerVisible, setDrawerVisible }: Props) {
   return (
     <div>
       <SwipeableDrawer
-        open={isDrawerOpened}
-        onClose={toggle}
-        onOpen={toggle}
-        classes={{
-          paper: classes.drawer
-        }}
+        open={drawerVisible}
+        onClose={() => setDrawerVisible(!drawerVisible)}
+        onOpen={() => setDrawerVisible(!drawerVisible)}
       >
         <List component="nav">
           <ListItem>
@@ -55,6 +37,6 @@ const MenuDrawer = ({ classes }: Props) => {
       </SwipeableDrawer>
     </div>
   );
-};
+}
 
-export default withStyles(styles)(MenuDrawer);
+export default MenuDrawer;

@@ -1,9 +1,9 @@
 import { Params, FractalElementsTree } from '../FractalModels';
 
 export function endConditionFulfilled(params: Params): boolean {
-  const zoom = Math.pow(params.zoom, params.depth);
+  const totalZoom = Math.pow(params.zoom, params.depth);
   return (
-    Math.min(params.height * zoom, params.width * zoom) < 1 ||
+    Math.min(params.height * totalZoom, params.width * totalZoom) < 1 ||
     params.depth > 5000
   );
 }

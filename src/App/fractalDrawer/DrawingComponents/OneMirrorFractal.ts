@@ -1,6 +1,7 @@
+import * as PIXI from 'pixi.js';
+
 import { FractalElementsTree } from '../FractalModels';
 import { endConditionFulfilled, unmountChildren } from './utils';
-import * as PIXI from 'pixi.js';
 
 type Params = {
   x: number;

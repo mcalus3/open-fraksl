@@ -1,9 +1,6 @@
-import {
-  CssBaseline,
-  MuiThemeProvider,
-  createMuiTheme
-} from '@material-ui/core';
-import * as React from 'react';
+import React from 'react';
+import { CssBaseline, createMuiTheme } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -19,19 +16,16 @@ const theme = createMuiTheme({
       dark: '#a90000',
       contrastText: '#fff'
     }
-  },
-  typography: {
-    useNextVariants: true
   }
 });
 
 function withThemeProvider(Component: React.ComponentType) {
   function WithThemeProvider(props: object) {
     return (
-      <MuiThemeProvider theme={theme}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <Component {...props} />
-      </MuiThemeProvider>
+      </ThemeProvider>
     );
   }
 

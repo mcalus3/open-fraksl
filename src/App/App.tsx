@@ -1,32 +1,28 @@
-import * as React from 'react';
+import React from 'react';
+import { makeStyles } from '@material-ui/styles';
+
 import NavBar from './appNavigation/NavBar';
+import ContentContainer from './fractalDrawer/FractalDrawer';
 import withThemeProvider from './ThemeProvider';
-import withStateProvider from './StateProvider';
-import MenuDrawer from './appNavigation/MenuDrawer';
-import { createStyles, WithStyles, withStyles } from '@material-ui/core/styles';
-import ContentContainer from './domain/ContentContainer';
 
-const styles = () =>
-  createStyles({
-    root: {
-      display: 'flex',
-      flexFlow: 'column',
-      position: 'absolute',
-      width: '100%',
-      height: '100%'
-    }
-  });
+const useStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexFlow: 'column',
+    position: 'absolute',
+    width: '100%',
+    height: '100%'
+  }
+});
 
-type Props = {} & WithStyles<typeof styles>;
-
-function App({ classes }: Props) {
+const App = () => {
+  const classes = useStyles();
   return (
     <div className={classes.root}>
       <NavBar />
-      <MenuDrawer />
       <ContentContainer />
     </div>
   );
-}
+};
 
-export default withStateProvider(withThemeProvider(withStyles(styles)(App)));
+export default withThemeProvider(App);
