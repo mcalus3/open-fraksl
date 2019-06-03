@@ -56,8 +56,7 @@ function useMountPixiApp(
   size: Size,
   canvasRef: MutableRefObject<HTMLDivElement | null>
 ) {
-  // eslint-disable-next-line
-  const [pixiApp, _] = useState<PIXI.Application>(getPixiApp(size));
+  const pixiApp = usePixiApp(size);
   useEffect(() => {
     canvasRef.current!.appendChild(pixiApp.view);
   }, [canvasRef, pixiApp]);
@@ -79,13 +78,17 @@ function useResizeCanvasDiv(
   }, [size.width, size.height, pixiApp, dispatch]);
 }
 
-function getPixiApp(size: Size): () => PIXI.Application {
-  return () =>
-    new PIXI.Application({
-      width: size.width,
-      height: size.height,
-      backgroundColor: OPTIONS.backgroundColor
-    });
+function usePixiApp(size: Size): PIXI.Application {
+  // eslint-disable-next-line
+  const [pixiApp, _] = useState<PIXI.Application>(
+    () =>
+      new PIXI.Application({
+        width: size.width,
+        height: size.height,
+        backgroundColor: OPTIONS.backgroundColor
+      })
+  );
+  return pixiApp;
 }
 
 export default FractalStage;

@@ -43,7 +43,7 @@ export const pyramidFractal: FractalDefinition = {
     rot: {
       name: 'rot',
       min: 0,
-      max: 2 * Math.PI,
+      max: Math.PI,
       default: 0.1
     },
     zoom: {
@@ -74,7 +74,7 @@ export const oneMirrorFractal: FractalDefinition = {
     rot: {
       name: 'rot',
       min: 0,
-      max: 2 * Math.PI,
+      max: Math.PI,
       default: 0.2
     },
     zoom: {
