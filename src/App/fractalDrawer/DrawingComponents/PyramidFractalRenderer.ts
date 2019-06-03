@@ -20,7 +20,7 @@ export default function renderPyramidFractal(
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
-    applyTransformation(treeElement.element as PIXI.Sprite, params);
+    applyTransformation(treeElement.element, params);
 
     renderChildren(pixiApp, treeElement.children, params);
   }
@@ -37,8 +37,8 @@ function applyTransformation(sprite: PIXI.Sprite, params: Params) {
 
   sprite.rotation = params.rot * params.depth;
   sprite.scale = new PIXI.Point(
-    (params.width * zoom) / 10,
-    (params.height * zoom) / 10
+    (params.width * zoom) / 16,
+    (params.height * zoom) / 16
   );
 }
 
@@ -49,6 +49,8 @@ function renderChildren(
 ) {
   if (elements.length === 0) {
     const newSprite = new PIXI.Sprite(PIXI.Texture.WHITE);
+    newSprite.x = -16;
+    newSprite.y = -16;
     pixiApp.stage.addChild(newSprite);
     elements[0] = { element: newSprite, children: [] };
   }
