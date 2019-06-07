@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+
 import ControlPanel from './ControlPanel';
 import FractalSelection from './FractalSelection';
 import { Paper } from '@material-ui/core';
+import TextureUploader from './TextureUploader';
 
 const useStyles = makeStyles({
   paper: {
@@ -21,6 +23,7 @@ function ControlDrawer() {
     <Paper className={classes.paper}>
       <ControlPanel />
       <FractalSelection />
+      <TextureUploader />
     </Paper>
   );
 }

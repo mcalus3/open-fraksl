@@ -1,3 +1,4 @@
+import * as PIXI from 'pixi.js';
 import {
   pyramidFractal,
   FractalDefinition,
@@ -6,14 +7,16 @@ import {
 
 export const fractalInitialState = initializeFractal(pyramidFractal);
 
-type FractalParams = { zoom: number; [key: string]: number };
+export type FractalParams = { zoom: number; [key: string]: number };
 export type FractalState = {
   name: string;
   parameters: FractalParams;
+  texture: PIXI.Texture;
 };
 
 export const SetParameter = 'SET_PARAMETER';
 export const SetFractal = 'SET_FRACTAL';
+export const SetFractalTexture = 'SET_FRACTAL_TEXTURE';
 export const ResizeStage = 'RESIZE_STAGE';
 
 export type SetParameterAction = {
@@ -26,6 +29,11 @@ export type SetFractalAction = {
   payload: { name: string };
 };
 
+export type SetFractalTextureAction = {
+  type: typeof SetFractalTexture;
+  payload: { texture: PIXI.Texture };
+};
+
 export type ResizeStageAction = {
   type: typeof ResizeStage;
   payload: { width: number; height: number };
@@ -34,16 +42,19 @@ export type ResizeStageAction = {
 export type FractalAction =
   | SetParameterAction
   | SetFractalAction
-  | ResizeStageAction;
+  | ResizeStageAction
+  | SetFractalTextureAction;
 
 export function initializeFractal(fractalDef: FractalDefinition): FractalState {
-  const parameterObject: FractalParams = { zoom: 0 };
+  const parameterObject: FractalParams = { zoom: 0, width: 0, height: 0 };
   Object.keys(fractalDef.parameters).forEach(element => {
     parameterObject[element] = fractalDef.parameters[element].default;
   });
+
   return {
     name: fractalDef.name,
-    parameters: parameterObject
+    parameters: parameterObject,
+    texture: PIXI.Texture.WHITE
   };
 }
 
@@ -62,6 +73,10 @@ function fractalReducer(state: FractalState, action: FractalAction) {
 
     case SetFractal:
       newState = initializeFractal(getFractalDefinition(action.payload.name));
+      return newState;
+
+    case SetFractalTexture:
+      newState = { ...state, texture: action.payload.texture };
       return newState;
 
     case ResizeStage:

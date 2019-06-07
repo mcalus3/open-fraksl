@@ -21,7 +21,8 @@ export type FractalDefinition = {
   renderingFunction: (
     pixiApp: PIXI.Application,
     treeElement: FractalElementsTree,
-    params: any // { [key: string]: number }
+    params: any, // { [key: string]: number }
+    texture: PIXI.Texture
   ) => void;
 };
 

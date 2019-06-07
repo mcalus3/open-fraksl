@@ -41,7 +41,8 @@ function useRenderFractal(pixiApp: PIXI.Application) {
             zoom: currentParams.zoom / (currentParams.zoom + 1),
             width: Math.floor(pixiApp.screen.width),
             height: Math.floor(pixiApp.screen.height)
-          }
+          },
+          targetState.texture
         );
       }
     });
