@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { Paper, Typography } from '@material-ui/core';
+import { Typography, InputLabel } from '@material-ui/core';
 
 import ParameterControl from './ParameterControl';
 import { getFractalDefinition } from '../fractalReducer';
@@ -9,14 +9,12 @@ import { useFractalReducer } from '../FractalContext';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      ...theme.mixins.gutters(),
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2)
+      marginBottom: theme.spacing(3)
     }
   })
 );
 
-function ControlPanel() {
+function ParametersPanel() {
   const classes = useStyles();
   const { state } = useFractalReducer();
   const parameterDefinitions = getFractalDefinition(state.name).parameters;
@@ -32,13 +30,11 @@ function ControlPanel() {
   };
 
   return (
-    <Paper className={classes.paper}>
-      <Typography variant="h5" component="h3">
-        Control Panel
-      </Typography>
+    <div className={classes.paper}>
+      <InputLabel> Transformation parameters</InputLabel>
       {renderSliders()}
-    </Paper>
+    </div>
   );
 }
 
-export default ControlPanel;
+export default ParametersPanel;

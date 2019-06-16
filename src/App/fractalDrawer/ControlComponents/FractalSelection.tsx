@@ -1,35 +1,55 @@
 import * as React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Paper, Typography, List } from '@material-ui/core';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
+import { useFractalReducer } from '../FractalContext';
+import { SetFractalAction, SetFractal } from '../fractalReducer';
 import { fractalModels } from '../FractalModels';
-import FractalSelector from './FractalSelector';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      ...theme.mixins.gutters(),
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2)
+      marginBottom: theme.spacing(3)
     }
   })
 );
 
-function FractalSelection() {
+function ColorSelection() {
   const classes = useStyles();
+  const { state, dispatch } = useFractalReducer();
 
-  const fractalSelectors = fractalModels.map(f => (
-    <FractalSelector name={f.name} key={f.name} />
+  function handleChange(
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) {
+    const action: SetFractalAction = {
+      type: SetFractal,
+      payload: { name: event.target.value as string }
+    };
+    dispatch(action);
+  }
+
+  const fractalSelectors = fractalModels.map(model => (
+    <MenuItem value={model.name}>{model.name}</MenuItem>
   ));
 
   return (
-    <Paper className={classes.paper}>
-      <Typography variant="h5" component="h3">
-        Fractal Selection
-      </Typography>
-      <List component="nav">{fractalSelectors}</List>{' '}
-    </Paper>
+    <div className={classes.paper}>
+      <InputLabel htmlFor="choose-fractal">choose fractal</InputLabel>
+      <Select
+        value={state.name}
+        onChange={handleChange}
+        inputProps={{
+          name: 'choose fractal',
+          id: 'choose-fractal'
+        }}
+      >
+        {fractalSelectors}{' '}
+      </Select>
+    </div>
   );
 }
 
-export default FractalSelection;
+export default ColorSelection;

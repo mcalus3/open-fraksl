@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Paper, Typography } from '@material-ui/core';
+import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import * as PIXI from 'pixi.js';
 
 import { useFractalReducer } from '../FractalContext';
@@ -9,9 +9,7 @@ import { SetFractalTextureAction, SetFractalTexture } from '../fractalReducer';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      ...theme.mixins.gutters(),
-      paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2)
+      marginBottom: theme.spacing(3)
     },
     input: { width: '100px' }
   })
@@ -19,41 +17,77 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function TextureUploader() {
   const classes = useStyles();
-  const onImageLoad = useImageLoad();
+  const { state, dispatch } = useFractalReducer();
+  const fileSelector = useFileSelector();
 
   return (
-    <Paper className={classes.paper}>
-      <Typography variant="h6" component="h4">
-        Upload own image:
-      </Typography>
-      <input
-        type="file"
-        name="pic"
-        accept="image/*"
-        onChange={onImageLoad}
-        className={classes.input}
-      />
-    </Paper>
+    <div className={classes.paper}>
+      <InputLabel htmlFor="choose-texture"> choose texture</InputLabel>
+      <Select
+        value={state.texture.name}
+        inputProps={{
+          name: 'choose texture',
+          id: 'choose-texture'
+        }}
+      >
+        <MenuItem value={'rectangle'}>
+          <div
+            onClick={() => {
+              const action: SetFractalTextureAction = {
+                type: SetFractalTexture,
+                payload: { name: 'rectangle', texture: PIXI.Texture.WHITE }
+              };
+              dispatch(action);
+            }}
+          >
+            rectangle
+          </div>
+        </MenuItem>
+        <MenuItem value="custom">
+          <div
+            onClick={() => {
+              fileSelector.click();
+            }}
+          >
+            upload own image
+          </div>
+        </MenuItem>
+      </Select>
+    </div>
   );
 }
 
 function useImageLoad() {
   const { dispatch } = useFractalReducer();
   return (e: any) => {
-    var f = e.target.files[0];
-    var fr = new FileReader();
+    e.preventDefault();
+    var file = e.target.files[0];
+    var fileReader = new FileReader();
 
-    fr.onload = function(ev2: any) {
-      console.dir(ev2);
+    fileReader.onload = function(event: any) {
+      console.log('4');
       const action: SetFractalTextureAction = {
         type: SetFractalTexture,
-        payload: { texture: PIXI.Texture.from(ev2.target.result) }
+        payload: {
+          name: 'custom',
+          texture: PIXI.Texture.from(event.target.result)
+        }
       };
       dispatch(action);
     };
 
-    fr.readAsDataURL(f);
+    fileReader.readAsDataURL(file);
   };
+}
+
+function useFileSelector() {
+  const onImageLoad = useImageLoad();
+  const fileSelector = document.createElement('input');
+  fileSelector.setAttribute('type', 'file');
+  fileSelector.setAttribute('accept', 'image/*');
+  fileSelector.onchange = onImageLoad;
+
+  return fileSelector;
 }
 
 export default TextureUploader;

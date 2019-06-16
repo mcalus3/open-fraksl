@@ -6,10 +6,12 @@ import React, {
   Dispatch
 } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import FractalRenderer from './FractalRenderer';
+import { Paper } from '@material-ui/core';
 import * as PIXI from 'pixi.js';
 //@ts-ignore
 import useDimensions from 'react-use-dimensions';
+
+import FractalRenderer from './FractalRenderer';
 import { useFractalReducer } from '../FractalContext';
 import {
   ResizeStage,
@@ -45,9 +47,9 @@ function FractalStage() {
 
   return (
     <div className={classes.stage} ref={sizeRef}>
-      <div className={classes.stage} ref={canvasRef}>
+      <Paper className={classes.stage} ref={canvasRef}>
         <FractalRenderer pixiApp={pixiApp} />
-      </div>
+      </Paper>
     </div>
   );
 }
