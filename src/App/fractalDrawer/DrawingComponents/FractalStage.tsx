@@ -6,7 +6,7 @@ import React, {
   Dispatch
 } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import FractalLoader from './FractalLoader';
+import FractalRenderer from './FractalRenderer';
 import * as PIXI from 'pixi.js';
 //@ts-ignore
 import useDimensions from 'react-use-dimensions';
@@ -46,7 +46,7 @@ function FractalStage() {
   return (
     <div className={classes.stage} ref={sizeRef}>
       <div className={classes.stage} ref={canvasRef}>
-        <FractalLoader pixiApp={pixiApp} />
+        <FractalRenderer pixiApp={pixiApp} />
       </div>
     </div>
   );
