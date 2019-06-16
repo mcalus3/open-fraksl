@@ -1,6 +1,7 @@
 import { FractalElementsTree } from '../FractalModels';
 import { endConditionFulfilled, unmountChildren } from './utils';
 import * as PIXI from 'pixi.js';
+import { ColorPicker } from '../ColorPalettes';
 
 type Params = {
   x: number;
@@ -16,25 +17,27 @@ export default function renderPyramidFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
   params: Params,
-  Texture: PIXI.Texture
+  Texture: PIXI.Texture,
+  colorPicker: ColorPicker
 ) {
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
-    applyTransformation(treeElement.element, params, Texture);
+    applyTransformation(treeElement.element, params, Texture, colorPicker);
 
-    renderChildren(pixiApp, treeElement.children, params, Texture);
+    renderChildren(pixiApp, treeElement.children, params, Texture, colorPicker);
   }
 }
 
 function applyTransformation(
   sprite: PIXI.Sprite,
   params: Params,
-  texture: PIXI.Texture
+  texture: PIXI.Texture,
+  colorPicker: ColorPicker
 ) {
   const zoom = Math.pow(params.zoom, params.depth);
 
-  sprite.tint = 0xffffff / params.depth;
+  sprite.tint = colorPicker(params.depth);
 
   sprite.anchor.set(0.5);
   sprite.x = params.width / 2 + params.x * params.depth;
@@ -51,7 +54,8 @@ function renderChildren(
   pixiApp: PIXI.Application,
   elements: FractalElementsTree[],
   params: Params,
-  Texture: PIXI.Texture
+  Texture: PIXI.Texture,
+  colorPicker: ColorPicker
 ) {
   if (elements.length === 0) {
     const newSprite = new PIXI.Sprite(Texture);
@@ -68,6 +72,7 @@ function renderChildren(
       ...params,
       depth: params.depth + 1
     },
-    Texture
+    Texture,
+    colorPicker
   );
 }

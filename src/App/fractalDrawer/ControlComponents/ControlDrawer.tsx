@@ -5,6 +5,7 @@ import ControlPanel from './ControlPanel';
 import FractalSelection from './FractalSelection';
 import { Paper } from '@material-ui/core';
 import TextureUploader from './TextureUploader';
+import ColorSelection from './ColorSelection';
 
 const useStyles = makeStyles({
   paper: {
@@ -23,6 +24,7 @@ function ControlDrawer() {
     <Paper className={classes.paper}>
       <ControlPanel />
       <FractalSelection />
+      <ColorSelection />
       <TextureUploader />
     </Paper>
   );

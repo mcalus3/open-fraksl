@@ -4,6 +4,7 @@ import {
   FractalDefinition,
   fractalModels
 } from './FractalModels';
+import { ColorDefinition, colorPalettes } from './ColorPalettes';
 
 export const fractalInitialState = initializeFractal(pyramidFractal);
 
@@ -12,11 +13,13 @@ export type FractalState = {
   name: string;
   parameters: FractalParams;
   texture: PIXI.Texture;
+  color: ColorDefinition;
 };
 
 export const SetParameter = 'SET_PARAMETER';
 export const SetFractal = 'SET_FRACTAL';
 export const SetFractalTexture = 'SET_FRACTAL_TEXTURE';
+export const SetFractalColor = 'SET_FRACTAL_COLOR';
 export const ResizeStage = 'RESIZE_STAGE';
 
 export type SetParameterAction = {
@@ -34,6 +37,11 @@ export type SetFractalTextureAction = {
   payload: { texture: PIXI.Texture };
 };
 
+export type SetFractalColorAction = {
+  type: typeof SetFractalColor;
+  payload: { name: string };
+};
+
 export type ResizeStageAction = {
   type: typeof ResizeStage;
   payload: { width: number; height: number };
@@ -43,6 +51,7 @@ export type FractalAction =
   | SetParameterAction
   | SetFractalAction
   | ResizeStageAction
+  | SetFractalColorAction
   | SetFractalTextureAction;
 
 export function initializeFractal(fractalDef: FractalDefinition): FractalState {
@@ -54,7 +63,8 @@ export function initializeFractal(fractalDef: FractalDefinition): FractalState {
   return {
     name: fractalDef.name,
     parameters: parameterObject,
-    texture: PIXI.Texture.WHITE
+    texture: PIXI.Texture.WHITE,
+    color: colorPalettes[0]
   };
 }
 
@@ -82,6 +92,11 @@ function fractalReducer(state: FractalState, action: FractalAction) {
     case ResizeStage:
       newState.parameters.width = action.payload.width;
       newState.parameters.height = action.payload.height;
+      return newState;
+    case SetFractalColor:
+      newState.color =
+        colorPalettes.find(palette => palette.name === action.payload.name) ||
+        colorPalettes[0];
       return newState;
   }
 }

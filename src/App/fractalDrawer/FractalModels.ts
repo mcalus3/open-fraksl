@@ -1,5 +1,6 @@
 import renderOneMirrorFractal from './DrawingComponents/OneMirrorFractal';
 import renderPyramidFractal from './DrawingComponents/PyramidFractalRenderer';
+import { ColorPicker } from './ColorPalettes';
 
 export type FractalElementsTree = {
   element: PIXI.Sprite;
@@ -22,7 +23,8 @@ export type FractalDefinition = {
     pixiApp: PIXI.Application,
     treeElement: FractalElementsTree,
     params: any, // { [key: string]: number }
-    texture: PIXI.Texture
+    texture: PIXI.Texture,
+    colorPicker: ColorPicker
   ) => void;
 };
 

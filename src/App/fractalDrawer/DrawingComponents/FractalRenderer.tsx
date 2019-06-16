@@ -35,7 +35,8 @@ function useRenderFractal(pixiApp: PIXI.Application) {
             width: Math.floor(pixiApp.screen.width),
             height: Math.floor(pixiApp.screen.height)
           },
-          targetState.texture
+          targetState.texture,
+          targetState.color.pick
         );
       }
     });
