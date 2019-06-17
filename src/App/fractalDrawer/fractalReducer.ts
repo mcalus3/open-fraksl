@@ -1,13 +1,12 @@
-import * as PIXI from 'pixi.js';
 import {
-  pyramidFractal,
+  spiralFractal,
   FractalDefinition,
   fractalModels
 } from './FractalModels';
 import { ColorDefinition, colorPalettes } from './ColorPalettes';
 import { fractalTextures, FractalTexture } from './FractalTextures';
 
-export const fractalInitialState = initializeFractal(pyramidFractal);
+export const fractalInitialState = initializeFractal(spiralFractal);
 
 export type FractalParams = { zoom: number; [key: string]: number };
 export type FractalState = {
@@ -35,7 +34,7 @@ export type SetFractalAction = {
 
 export type SetFractalTextureAction = {
   type: typeof SetFractalTexture;
-  payload: { name: string; texture: PIXI.Texture };
+  payload: FractalTexture;
 };
 
 export type SetFractalColorAction = {

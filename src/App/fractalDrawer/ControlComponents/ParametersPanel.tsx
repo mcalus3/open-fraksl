@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { Typography, InputLabel } from '@material-ui/core';
+import { InputLabel } from '@material-ui/core';
 
 import ParameterControl from './ParameterControl';
 import { getFractalDefinition } from '../fractalReducer';

@@ -1,7 +1,7 @@
+import * as PIXI from 'pixi.js';
+
 import { FractalElementsTree } from '../FractalModels';
 import { endConditionFulfilled, unmountChildren } from './utils';
-import * as PIXI from 'pixi.js';
-import { ColorPicker } from '../ColorPalettes';
 
 type Params = {
   x: number;
@@ -16,63 +16,43 @@ type Params = {
 export default function renderPyramidFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: Params,
-  Texture: PIXI.Texture,
-  colorPicker: ColorPicker
+  params: Params
 ) {
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
-    applyTransformation(treeElement.element, params, Texture, colorPicker);
+    applyTransformation(treeElement.element as PIXI.Sprite, params);
 
-    renderChildren(pixiApp, treeElement.children, params, Texture, colorPicker);
+    renderChildren(pixiApp, treeElement, params);
   }
 }
 
-function applyTransformation(
-  sprite: PIXI.Sprite,
-  params: Params,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
-) {
-  const zoom = Math.pow(params.zoom, params.depth);
-
-  sprite.tint = colorPicker(params.depth);
+function applyTransformation(sprite: PIXI.Sprite, params: Params) {
+  sprite.tint = 0xffffff / params.depth;
 
   sprite.anchor.set(0.5);
-  sprite.x = params.width / 2 + params.x * params.depth;
-  sprite.y = params.height / 2 + params.y * params.depth;
+  sprite.x = params.width / 2 + params.x;
+  sprite.y = params.height / 2 + params.y;
 
-  sprite.rotation = params.rot * params.depth;
-  sprite.scale = new PIXI.Point(
-    (params.width * zoom) / texture.width,
-    (params.height * zoom) / texture.height
-  );
+  sprite.rotation = params.rot;
+  sprite.scale = new PIXI.Point(params.width / 10, params.height / 10);
 }
 
 function renderChildren(
   pixiApp: PIXI.Application,
-  elements: FractalElementsTree[],
-  params: Params,
-  Texture: PIXI.Texture,
-  colorPicker: ColorPicker
+  element: FractalElementsTree,
+  params: Params
 ) {
-  if (elements.length === 0) {
-    const newSprite = new PIXI.Sprite(Texture);
-    newSprite.x = params.width;
-    newSprite.y = params.height;
-    pixiApp.stage.addChild(newSprite);
-    elements[0] = { element: newSprite, children: [] };
+  if (element.children.length === 0) {
+    const newSprite = new PIXI.Sprite(PIXI.Texture.WHITE);
+    element.element.addChild(newSprite);
+    element.children[0] = { element: newSprite, children: [] };
   }
 
-  renderPyramidFractal(
-    pixiApp,
-    elements[0],
-    {
-      ...params,
-      depth: params.depth + 1
-    },
-    Texture,
-    colorPicker
-  );
+  renderPyramidFractal(pixiApp, element.children[0], {
+    ...params,
+    width: params.width * params.zoom,
+    height: params.height * params.zoom,
+    depth: params.depth + 1
+  });
 }

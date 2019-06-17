@@ -1,5 +1,5 @@
-import renderOneMirrorFractal from './DrawingComponents/OneMirrorFractal';
 import renderPyramidFractal from './DrawingComponents/PyramidFractalRenderer';
+import renderSpiralFractal from './DrawingComponents/SpiralFractalRenderer';
 import { ColorPicker } from './ColorPalettes';
 
 export type FractalElementsTree = {
@@ -28,8 +28,8 @@ export type FractalDefinition = {
   ) => void;
 };
 
-export const pyramidFractal: FractalDefinition = {
-  name: 'pyramid fractal',
+export const spiralFractal: FractalDefinition = {
+  name: 'spiral fractal',
   parameters: {
     x: {
       name: 'x',
@@ -56,11 +56,11 @@ export const pyramidFractal: FractalDefinition = {
       default: 50
     }
   },
-  renderingFunction: renderPyramidFractal
+  renderingFunction: renderSpiralFractal
 };
 
-export const oneMirrorFractal: FractalDefinition = {
-  name: 'one mirror fractal',
+export const PyramidFractal: FractalDefinition = {
+  name: 'pyramid fractal',
   parameters: {
     x: {
       name: 'x',
@@ -87,7 +87,7 @@ export const oneMirrorFractal: FractalDefinition = {
       default: 70
     }
   },
-  renderingFunction: renderOneMirrorFractal
+  renderingFunction: renderPyramidFractal
 };
 
-export const fractalModels = [pyramidFractal, oneMirrorFractal];
+export const fractalModels = [spiralFractal, PyramidFractal];

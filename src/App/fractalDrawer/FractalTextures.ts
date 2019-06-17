@@ -10,4 +10,26 @@ export const rectangle: FractalTexture = {
   texture: PIXI.Texture.WHITE
 };
 
-export const fractalTextures: FractalTexture[] = [rectangle];
+export const ellipsis: FractalTexture = {
+  name: 'ellipsis',
+  texture: getEllipsisTexture()
+};
+
+export const fractalTextures: FractalTexture[] = [rectangle, ellipsis];
+
+function getEllipsisTexture() {
+  const quality = 1000;
+  const canvas = document.createElement('canvas');
+  canvas.width = quality;
+  canvas.height = quality;
+
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+  ctx.beginPath();
+  ctx.arc(quality / 2, quality / 2, quality / 2.01, 0, 2 * Math.PI, false);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = '#FFFFFF';
+  ctx.stroke();
+
+  return PIXI.Texture.from(canvas);
+}

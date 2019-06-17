@@ -5,6 +5,12 @@ import * as PIXI from 'pixi.js';
 
 import { useFractalReducer } from '../FractalContext';
 import { SetFractalTextureAction, SetFractalTexture } from '../fractalReducer';
+import { fractalTextures, FractalTexture } from '../FractalTextures';
+
+type MyChangeEvent = React.ChangeEvent<{
+  name?: string;
+  value: unknown;
+}>;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,6 +26,26 @@ function TextureUploader() {
   const { state, dispatch } = useFractalReducer();
   const fileSelector = useFileSelector();
 
+  function handleChange(event: MyChangeEvent) {
+    const action: SetFractalTextureAction = {
+      type: SetFractalTexture,
+      payload: event.target.value as FractalTexture
+    };
+    dispatch(action);
+  }
+
+  const textureSelectors = fractalTextures.map(texture => (
+    <MenuItem value={texture.name}>
+      <div
+        onMouseOver={e => {
+          handleChange({ target: { value: texture } } as MyChangeEvent);
+        }}
+      >
+        {texture.name}
+      </div>
+    </MenuItem>
+  ));
+
   return (
     <div className={classes.paper}>
       <InputLabel htmlFor="choose-texture"> choose texture</InputLabel>
@@ -30,19 +56,7 @@ function TextureUploader() {
           id: 'choose-texture'
         }}
       >
-        <MenuItem value={'rectangle'}>
-          <div
-            onClick={() => {
-              const action: SetFractalTextureAction = {
-                type: SetFractalTexture,
-                payload: { name: 'rectangle', texture: PIXI.Texture.WHITE }
-              };
-              dispatch(action);
-            }}
-          >
-            rectangle
-          </div>
-        </MenuItem>
+        {textureSelectors}
         <MenuItem value="custom">
           <div
             onClick={() => {
@@ -65,7 +79,6 @@ function useImageLoad() {
     var fileReader = new FileReader();
 
     fileReader.onload = function(event: any) {
-      console.log('4');
       const action: SetFractalTextureAction = {
         type: SetFractalTexture,
         payload: {

@@ -8,6 +8,11 @@ import { colorPalettes } from '../ColorPalettes';
 import { useFractalReducer } from '../FractalContext';
 import { SetFractalColorAction, SetFractalColor } from '../fractalReducer';
 
+type MyChangeEvent = React.ChangeEvent<{
+  name?: string;
+  value: unknown;
+}>;
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
@@ -20,9 +25,7 @@ function ColorSelection() {
   const classes = useStyles();
   const { state, dispatch } = useFractalReducer();
 
-  function handleChange(
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) {
+  function handleChange(event: MyChangeEvent) {
     const action: SetFractalColorAction = {
       type: SetFractalColor,
       payload: { name: event.target.value as string }
@@ -31,7 +34,15 @@ function ColorSelection() {
   }
 
   const colorSelectors = colorPalettes.map(palette => (
-    <MenuItem value={palette.name}>{palette.name}</MenuItem>
+    <MenuItem value={palette.name}>
+      <div
+        onMouseOver={e => {
+          handleChange({ target: { value: palette.name } } as MyChangeEvent);
+        }}
+      >
+        {palette.name}
+      </div>
+    </MenuItem>
   ));
 
   return (
@@ -45,26 +56,10 @@ function ColorSelection() {
           id: 'color-palette'
         }}
       >
-        {colorSelectors}{' '}
+        {colorSelectors}
       </Select>
     </div>
   );
 }
 
 export default ColorSelection;
-
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     root: {
-//       display: 'flex',
-//       flexWrap: 'wrap',
-//     },
-//     formControl: {
-//       margin: theme.spacing(1),
-//       minWidth: 120,
-//     },
-//     selectEmpty: {
-//       marginTop: theme.spacing(2),
-//     },
-//   }),
-// );

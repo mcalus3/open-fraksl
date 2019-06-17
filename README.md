@@ -1,19 +1,21 @@
-Simple fractal generator by mcalus3. Try it now! https://open-fraksl.surge.sh/
+Simple fractal generator by mcalus3. Try it now! https://openfraksl.netlify.com/
 
-**open-fraksl** is my attempt to create a pretty, interesting and simple web application.
-I tried to give the user the feeling of creating his own fractal and exploring vast fractal world.
+**open-fraksl** is a tool for you to create beautiful, yet simple generative art. Its aim is to allow user to explore unlimited possibilities of shaping his own fractals.
 
 ## Libriaries and dependencies
 
-**open-fraksl** wouldn't be possible without these great projects:
-React
-Redux
-Material ui
-Create-React-App
-create-react-app-typescript
-create-react-app-material-typescript-redux
-Pixi.js
-react-pixi-fiber
+**open-fraksl** wouldn't be possible without these great open-source projects:
+
+react  
+typescript  
+material-ui  
+Create-React-App  
+create-react-app-typescript  
+create-react-app-material-typescript-redux  
+pixi.js  
+pixi-heaven  
+gsap  
+react-use-dimensions
 
 Thanks!
 
