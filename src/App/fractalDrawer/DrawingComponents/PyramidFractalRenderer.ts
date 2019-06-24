@@ -1,7 +1,8 @@
 import * as PIXI from 'pixi.js';
 
 import { FractalElementsTree } from '../FractalModels';
-import { endConditionFulfilled, unmountChildren } from './utils';
+import { endConditionFulfilled, unmountChildren } from './drawingUtils';
+import { ColorPicker } from '../ColorPalettes';
 
 type Params = {
   x: number;
@@ -16,19 +17,31 @@ type Params = {
 export default function renderPyramidFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: Params
+  params: Params,
+  texture: PIXI.Texture,
+  colorPicker: ColorPicker
 ) {
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
-    applyTransformation(treeElement.element as PIXI.Sprite, params);
+    applyTransformation(
+      treeElement.element as PIXI.Sprite,
+      params,
+      texture,
+      colorPicker
+    );
 
-    renderChildren(pixiApp, treeElement, params);
+    renderChildren(pixiApp, treeElement, params, texture, colorPicker);
   }
 }
 
-function applyTransformation(sprite: PIXI.Sprite, params: Params) {
-  sprite.tint = 0xffffff / params.depth;
+function applyTransformation(
+  sprite: PIXI.Sprite,
+  params: Params,
+  texture: PIXI.Texture,
+  colorPicker: ColorPicker
+) {
+  sprite.tint = colorPicker(params.depth);
 
   sprite.anchor.set(0.5);
   sprite.x = params.width / 2 + params.x;
@@ -41,18 +54,26 @@ function applyTransformation(sprite: PIXI.Sprite, params: Params) {
 function renderChildren(
   pixiApp: PIXI.Application,
   element: FractalElementsTree,
-  params: Params
+  params: Params,
+  texture: PIXI.Texture,
+  colorPicker: ColorPicker
 ) {
   if (element.children.length === 0) {
-    const newSprite = new PIXI.Sprite(PIXI.Texture.WHITE);
+    const newSprite = new PIXI.Sprite(texture);
     element.element.addChild(newSprite);
     element.children[0] = { element: newSprite, children: [] };
   }
 
-  renderPyramidFractal(pixiApp, element.children[0], {
-    ...params,
-    width: params.width * params.zoom,
-    height: params.height * params.zoom,
-    depth: params.depth + 1
-  });
+  renderPyramidFractal(
+    pixiApp,
+    element.children[0],
+    {
+      ...params,
+      width: params.width * params.zoom,
+      height: params.height * params.zoom,
+      depth: params.depth + 1
+    },
+    texture,
+    colorPicker
+  );
 }

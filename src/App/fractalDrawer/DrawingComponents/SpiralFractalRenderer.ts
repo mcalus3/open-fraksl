@@ -1,5 +1,5 @@
 import { FractalElementsTree } from '../FractalModels';
-import { endConditionFulfilled, unmountChildren } from './utils';
+import { endConditionFulfilled, unmountChildren } from './drawingUtils';
 import * as PIXI from 'pixi.js';
 import { ColorPicker } from '../ColorPalettes';
 
@@ -17,15 +17,15 @@ export default function renderSpiralFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
   params: Params,
-  Texture: PIXI.Texture,
+  texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
-    applyTransformation(treeElement.element, params, Texture, colorPicker);
+    applyTransformation(treeElement.element, params, texture, colorPicker);
 
-    renderChildren(pixiApp, treeElement.children, params, Texture, colorPicker);
+    renderChildren(pixiApp, treeElement.children, params, texture, colorPicker);
   }
 }
 

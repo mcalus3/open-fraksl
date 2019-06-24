@@ -83,10 +83,16 @@ function fractalReducer(state: FractalState, action: FractalAction) {
 
     case SetFractal:
       newState = initializeFractal(getFractalDefinition(action.payload.name));
+      Object.assign(newState.parameters, state.parameters);
+      newState.color = state.color;
+      newState.texture = state.texture;
       return newState;
 
     case SetFractalTexture:
-      newState = { ...state, texture: action.payload };
+      if (action.payload.name !== state.texture.name) {
+        newState.texture = action.payload;
+        newState.parameters.zoom = 0;
+      }
       return newState;
 
     case ResizeStage:

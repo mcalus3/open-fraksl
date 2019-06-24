@@ -32,7 +32,9 @@ function ColorSelection() {
   }
 
   const fractalSelectors = fractalModels.map(model => (
-    <MenuItem value={model.name}>{model.name}</MenuItem>
+    <MenuItem value={model.name} key={model.name}>
+      {model.name}
+    </MenuItem>
   ));
 
   return (

@@ -35,9 +35,9 @@ function TextureUploader() {
   }
 
   const textureSelectors = fractalTextures.map(texture => (
-    <MenuItem value={texture.name}>
+    <MenuItem value={texture.name} key={texture.name}>
       <div
-        onMouseOver={e => {
+        onClick={e => {
           handleChange({ target: { value: texture } } as MyChangeEvent);
         }}
       >

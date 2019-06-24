@@ -34,7 +34,7 @@ function ColorSelection() {
   }
 
   const colorSelectors = colorPalettes.map(palette => (
-    <MenuItem value={palette.name}>
+    <MenuItem value={palette.name} key={palette.name}>
       <div
         onMouseOver={e => {
           handleChange({ target: { value: palette.name } } as MyChangeEvent);
