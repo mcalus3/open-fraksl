@@ -87,7 +87,9 @@ function usePixiApp(size: Size): PIXI.Application {
       new PIXI.Application({
         width: size.width,
         height: size.height,
-        backgroundColor: OPTIONS.backgroundColor
+        backgroundColor: OPTIONS.backgroundColor,
+        autoDensity: true,
+        resolution: window.devicePixelRatio
       })
   );
   return pixiApp;

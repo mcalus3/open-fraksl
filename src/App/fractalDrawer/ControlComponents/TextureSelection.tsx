@@ -51,6 +51,13 @@ function TextureSelection() {
       <InputLabel htmlFor="choose-texture"> choose texture</InputLabel>
       <Select
         value={state.texture.name}
+        onChange={e => {
+          handleChange({
+            target: {
+              value: fractalTextures.find(t => t.name === e.target.value)
+            }
+          } as MyChangeEvent);
+        }}
         inputProps={{
           name: 'choose texture',
           id: 'choose-texture'
