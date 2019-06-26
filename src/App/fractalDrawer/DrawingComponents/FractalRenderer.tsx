@@ -6,8 +6,8 @@ import { getFractalDefinition } from '../fractalReducer';
 import { useFractalReducer } from '../FractalContext';
 import { TweenLite, Power3 } from 'gsap';
 
-const starterElement = {
-  element: new PIXI.Sprite(PIXI.Texture.WHITE),
+const starterElement: FractalElementsTree = {
+  sprite: new PIXI.Sprite(PIXI.Texture.WHITE),
   children: []
 };
 

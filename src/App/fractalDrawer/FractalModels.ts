@@ -3,7 +3,7 @@ import renderSpiralFractal from './DrawingComponents/SpiralFractalRenderer';
 import { ColorPicker } from './ColorPalettes';
 
 export type FractalElementsTree = {
-  element: PIXI.Sprite;
+  sprite: PIXI.Sprite;
   children: FractalElementsTree[];
 };
 

@@ -25,7 +25,7 @@ export default function renderPyramidFractal(
     unmountChildren(treeElement);
   } else {
     applyTransformation(
-      treeElement.element as PIXI.Sprite,
+      treeElement.sprite as PIXI.Sprite,
       params,
       texture,
       colorPicker
@@ -63,8 +63,8 @@ function renderChildren(
 ) {
   if (element.children.length === 0) {
     const newSprite = new PIXI.Sprite(texture);
-    element.element.addChild(newSprite);
-    element.children[0] = { element: newSprite, children: [] };
+    element.sprite.addChild(newSprite);
+    element.children[0] = { sprite: newSprite, children: [] };
   }
 
   renderPyramidFractal(

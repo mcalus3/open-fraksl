@@ -11,8 +11,8 @@ export function endConditionFulfilled(params: Params): boolean {
 export function unmountChildren(treeElement: FractalElementsTree) {
   treeElement.children.forEach(child => {
     unmountChildren(child);
-    if (child.element.parent) {
-      child.element.parent.removeChild(child.element);
+    if (child.sprite.parent) {
+      child.sprite.parent.removeChild(child.sprite);
     }
   });
   treeElement.children = [];

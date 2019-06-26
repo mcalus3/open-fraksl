@@ -23,7 +23,7 @@ export default function renderSpiralFractal(
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
-    applyTransformation(treeElement.element, params, texture, colorPicker);
+    applyTransformation(treeElement.sprite, params, texture, colorPicker);
 
     renderChildren(pixiApp, treeElement.children, params, texture, colorPicker);
   }
@@ -65,7 +65,7 @@ function renderChildren(
     newSprite.x = params.width;
     newSprite.y = params.height;
     pixiApp.stage.addChild(newSprite);
-    elements[0] = { element: newSprite, children: [] };
+    elements[0] = { sprite: newSprite, children: [] };
   }
 
   renderSpiralFractal(
