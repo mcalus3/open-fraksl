@@ -91,7 +91,6 @@ function fractalReducer(state: FractalState, action: FractalAction) {
     case SetFractalTexture:
       if (action.payload.name !== state.texture.name) {
         newState.texture = action.payload;
-        newState.parameters.zoom = 0;
       }
       return newState;
 

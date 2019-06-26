@@ -18,7 +18,7 @@ export const ellipsis: FractalTexture = {
 export const fractalTextures: FractalTexture[] = [rectangle, ellipsis];
 
 function getEllipsisTexture() {
-  const quality = 1000;
+  const quality = 500;
   const canvas = document.createElement('canvas');
   canvas.width = quality;
   canvas.height = quality;
@@ -27,7 +27,7 @@ function getEllipsisTexture() {
 
   ctx.beginPath();
   ctx.arc(quality / 2, quality / 2, quality / 2.01, 0, 2 * Math.PI, false);
-  ctx.lineWidth = 5;
+  ctx.lineWidth = (5 * quality) / 1000;
   ctx.strokeStyle = '#FFFFFF';
   ctx.stroke();
 

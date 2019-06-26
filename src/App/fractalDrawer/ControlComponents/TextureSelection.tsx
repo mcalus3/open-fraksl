@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function TextureUploader() {
+function TextureSelection() {
   const classes = useStyles();
   const { state, dispatch } = useFractalReducer();
   const fileSelector = useFileSelector();
@@ -37,7 +37,7 @@ function TextureUploader() {
   const textureSelectors = fractalTextures.map(texture => (
     <MenuItem value={texture.name} key={texture.name}>
       <div
-        onClick={e => {
+        onMouseOver={e => {
           handleChange({ target: { value: texture } } as MyChangeEvent);
         }}
       >
@@ -103,4 +103,4 @@ function useFileSelector() {
   return fileSelector;
 }
 
-export default TextureUploader;
+export default TextureSelection;

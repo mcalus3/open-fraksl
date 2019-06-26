@@ -42,6 +42,9 @@ function applyTransformation(
   colorPicker: ColorPicker
 ) {
   sprite.tint = colorPicker(params.depth);
+  if (sprite.texture !== texture) {
+    sprite.texture = texture;
+  }
 
   sprite.anchor.set(0.5);
   sprite.x = params.width / 2 + params.x;

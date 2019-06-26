@@ -38,6 +38,9 @@ function applyTransformation(
   const zoom = Math.pow(params.zoom, params.depth);
 
   sprite.tint = colorPicker(params.depth);
+  if (sprite.texture !== texture) {
+    sprite.texture = texture;
+  }
 
   sprite.anchor.set(0.5);
   sprite.x = params.width / 2 + params.x * params.depth;

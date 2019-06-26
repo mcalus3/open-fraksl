@@ -4,7 +4,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import ParametersPanel from './ParametersPanel';
 import FractalSelection from './FractalSelection';
 import { Paper } from '@material-ui/core';
-import TextureUploader from './TextureUploader';
+import TextureSelection from './TextureSelection';
 import ColorSelection from './ColorSelection';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,7 +30,7 @@ function ControlDrawer() {
       <ParametersPanel />
       <FractalSelection />
       <ColorSelection />
-      <TextureUploader />
+      <TextureSelection />
     </Paper>
   );
 }
