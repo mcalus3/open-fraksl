@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { FractalElementsTree } from '../FractalModels';
-import { endConditionFulfilled, unmountChildren } from './drawingUtils';
+import { unmountChildren } from './drawingUtils';
 import { ColorPicker } from '../ColorPalettes';
 
 type Params = {
@@ -21,7 +21,7 @@ export default function renderPyramidFractal(
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
-  if (endConditionFulfilled(params)) {
+  if (endConditionFilfulled(params)) {
     unmountChildren(treeElement);
   } else {
     applyTransformation(
@@ -51,7 +51,10 @@ function applyTransformation(
   sprite.y = params.height / 2 + params.y;
 
   sprite.rotation = params.rot;
-  sprite.scale = new PIXI.Point(params.width / 10, params.height / 10);
+  sprite.scale = new PIXI.Point(
+    params.width / texture.width,
+    params.height / texture.height
+  );
 }
 
 function renderChildren(
@@ -63,7 +66,10 @@ function renderChildren(
 ) {
   if (element.children.length === 0) {
     const newSprite = new PIXI.Sprite(texture);
-    element.sprite.addChild(newSprite);
+    newSprite.x = pixiApp.stage.width;
+    newSprite.y = pixiApp.stage.height;
+
+    pixiApp.stage.addChild(newSprite);
     element.children[0] = { sprite: newSprite, children: [] };
   }
 
@@ -79,4 +85,8 @@ function renderChildren(
     texture,
     colorPicker
   );
+}
+
+function endConditionFilfulled(params: Params) {
+  return Math.min(params.height, params.width) < 1 || params.depth > 5000;
 }

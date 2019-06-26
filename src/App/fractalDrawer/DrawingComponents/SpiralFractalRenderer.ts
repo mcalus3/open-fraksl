@@ -57,13 +57,14 @@ function renderChildren(
   pixiApp: PIXI.Application,
   elements: FractalElementsTree[],
   params: Params,
-  Texture: PIXI.Texture,
+  texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
   if (elements.length === 0) {
-    const newSprite = new PIXI.Sprite(Texture);
+    const newSprite = new PIXI.Sprite(texture);
     newSprite.x = params.width;
     newSprite.y = params.height;
+
     pixiApp.stage.addChild(newSprite);
     elements[0] = { sprite: newSprite, children: [] };
   }
@@ -75,7 +76,7 @@ function renderChildren(
       ...params,
       depth: params.depth + 1
     },
-    Texture,
+    texture,
     colorPicker
   );
 }

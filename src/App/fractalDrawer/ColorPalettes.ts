@@ -10,7 +10,7 @@ const blackAndWhite: ColorPicker = (order: number) => {
 };
 
 const calusPalette: ColorPicker = (order: number) => {
-  return 0xffffff / order;
+  return 0xffffff / (order + 1);
 };
 
 const gumballPalette: ColorPicker = (order: number) => {
