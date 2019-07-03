@@ -11,7 +11,7 @@ const starterElement: FractalElementsTree = {
   children: []
 };
 
-function useRenderFractal(pixiApp: PIXI.Application) {
+function useFractalRenderer(pixiApp: PIXI.Application) {
   const { state: targetState } = useFractalReducer();
   const [previousParams, setPreviousParams] = useState(targetState.parameters);
   let currentParams = previousParams;
@@ -48,7 +48,7 @@ type Props = {
 };
 
 function FractalRenderer({ pixiApp }: Props) {
-  useRenderFractal(pixiApp);
+  useFractalRenderer(pixiApp);
   return null;
 }
 

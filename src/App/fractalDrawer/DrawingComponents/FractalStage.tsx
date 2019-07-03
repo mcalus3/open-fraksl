@@ -1,12 +1,5 @@
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  MutableRefObject,
-  Dispatch
-} from 'react';
+import React, { useState, Dispatch, useCallback, useLayoutEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Paper } from '@material-ui/core';
 import * as PIXI from 'pixi.js';
 //@ts-ignore
 import useDimensions from 'react-use-dimensions';
@@ -19,10 +12,6 @@ import {
   ResizeStageAction
 } from '../fractalReducer';
 
-const OPTIONS = {
-  backgroundColor: 0x1099bb
-};
-
 const useStyles = makeStyles({
   stage: {
     flexGrow: 1,
@@ -32,67 +21,60 @@ const useStyles = makeStyles({
   }
 });
 
-type Size = {
-  width: number;
-  height: number;
-};
-
 function FractalStage() {
   const classes = useStyles();
   const { dispatch } = useFractalReducer();
-  const canvasRef = useRef<HTMLDivElement | null>(null);
-  const [sizeRef, { width, height }] = useDimensions();
-  const pixiApp = useMountPixiApp({ width, height }, canvasRef);
-  useResizeCanvasDiv({ width, height }, pixiApp, dispatch);
+  const { pixiApp, canvasRef } = usePixiApp();
+  const sizeRef = usePixiAppResize(pixiApp, dispatch);
 
   return (
     <div className={classes.stage} ref={sizeRef}>
-      <Paper className={classes.stage} ref={canvasRef}>
+      <div className={classes.stage} ref={canvasRef}>
         <FractalRenderer pixiApp={pixiApp} />
-      </Paper>
+      </div>
     </div>
   );
 }
 
-function useMountPixiApp(
-  size: Size,
-  canvasRef: MutableRefObject<HTMLDivElement | null>
-) {
-  const pixiApp = usePixiApp(size);
-  useEffect(() => {
-    canvasRef.current!.appendChild(pixiApp.view);
-  }, [canvasRef, pixiApp]);
-  return pixiApp;
-}
-
-function useResizeCanvasDiv(
-  size: Size,
-  pixiApp: PIXI.Application,
-  dispatch: Dispatch<FractalAction>
-) {
-  useEffect(() => {
-    pixiApp.renderer.resize(size.width, size.height - 5);
-    const action: ResizeStageAction = {
-      type: ResizeStage,
-      payload: { width: size.width, height: size.height }
-    };
-    dispatch(action);
-  }, [size.width, size.height, pixiApp, dispatch]);
-}
-
-function usePixiApp(size: Size): PIXI.Application {
+function usePixiApp() {
+  const [_canvasRef, _setCanvasRef] = useState<HTMLDivElement | null>(null);
   // eslint-disable-next-line
   const [pixiApp, _] = useState<PIXI.Application>(
     () =>
       new PIXI.Application({
-        width: size.width,
-        height: size.height,
-        backgroundColor: OPTIONS.backgroundColor,
+        backgroundColor: 0x1099bb,
         autoDensity: true,
         resolution: window.devicePixelRatio
       })
   );
-  return pixiApp;
+  const canvasRef = useCallback(node => {
+    _setCanvasRef(node);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (_canvasRef) {
+      _canvasRef.appendChild(pixiApp.view);
+    }
+  }, [_canvasRef, pixiApp.view]);
+  return { pixiApp, canvasRef };
+}
+
+function usePixiAppResize(
+  pixiApp: PIXI.Application,
+  dispatch: Dispatch<FractalAction>
+) {
+  const [ref, { height }, node] = useDimensions();
+  const width = node ? node.clientWidth : 0;
+
+  useLayoutEffect(() => {
+    pixiApp.renderer.resize(width, height - 5);
+    const action: ResizeStageAction = {
+      type: ResizeStage,
+      payload: { width, height }
+    };
+    dispatch(action);
+  }, [width, height, pixiApp, dispatch]);
+  return ref;
 }
 
 export default FractalStage;
