@@ -1,16 +1,50 @@
-import { FractalElementsTree } from '../FractalModels';
-import { endConditionFulfilled, unmountChildren } from './drawingUtils';
+import { FractalElementsTree, FractalDefinition } from './index';
+import {
+  smallerThanOnePixel,
+  unmountChildren
+} from './common/sharedRenderingFunctions';
 import * as PIXI from 'pixi.js';
-import { ColorPicker } from '../ColorPalettes';
+import { ColorPicker } from './common/ColorPalettes';
 
 type Params = {
   x: number;
   y: number;
-  rot: number;
+  rotation: number;
   zoom: number;
   width: number;
   height: number;
   depth: number;
+};
+
+export const spiralFractal: FractalDefinition = {
+  name: 'spiral fractal',
+  parameters: {
+    x: {
+      name: 'x',
+      min: -1,
+      max: 1,
+      default: 0
+    },
+    y: {
+      name: 'y',
+      min: -1,
+      max: 1,
+      default: 0
+    },
+    rotation: {
+      name: 'rotation',
+      min: 0,
+      max: Math.PI,
+      default: 0.1
+    },
+    zoom: {
+      name: 'zoom',
+      min: 0,
+      max: 100,
+      default: 1
+    }
+  },
+  renderingFunction: renderSpiralFractal
 };
 
 export default function renderSpiralFractal(
@@ -20,7 +54,7 @@ export default function renderSpiralFractal(
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
-  if (endConditionFulfilled(params)) {
+  if (smallerThanOnePixel(params)) {
     unmountChildren(treeElement);
   } else {
     applyTransformation(treeElement.sprite, params, texture, colorPicker);
@@ -35,7 +69,7 @@ function applyTransformation(
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
-  const zoom = Math.pow(params.zoom, params.depth);
+  const zoom = Math.pow(params.zoom / (params.zoom + 1), params.depth);
 
   sprite.tint = colorPicker(params.depth);
   if (sprite.texture !== texture) {
@@ -46,7 +80,7 @@ function applyTransformation(
   sprite.x = params.width / 2 + params.x * params.depth;
   sprite.y = params.height / 2 + params.y * params.depth;
 
-  sprite.rotation = params.rot * params.depth;
+  sprite.rotation = params.rotation * params.depth;
   sprite.scale = new PIXI.Point(
     (params.width * zoom) / texture.width,
     (params.height * zoom) / texture.height

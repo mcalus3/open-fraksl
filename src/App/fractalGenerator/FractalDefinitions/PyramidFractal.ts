@@ -1,17 +1,48 @@
 import * as PIXI from 'pixi.js';
 
-import { FractalElementsTree } from '../FractalModels';
-import { unmountChildren } from './drawingUtils';
-import { ColorPicker } from '../ColorPalettes';
+import { FractalElementsTree, FractalDefinition } from './index';
+import { unmountChildren } from './common/sharedRenderingFunctions';
+import { ColorPicker } from './common/ColorPalettes';
 
 type Params = {
   x: number;
   y: number;
-  rot: number;
+  rotation: number;
   zoom: number;
   width: number;
   height: number;
   depth: number;
+};
+
+export const PyramidFractal: FractalDefinition = {
+  name: 'pyramid fractal',
+  parameters: {
+    x: {
+      name: 'x',
+      min: -1,
+      max: 1,
+      default: 0
+    },
+    y: {
+      name: 'y',
+      min: -1,
+      max: 1,
+      default: 0
+    },
+    rotation: {
+      name: 'rotation',
+      min: 0,
+      max: Math.PI,
+      default: 0.2
+    },
+    zoom: {
+      name: 'zoom',
+      min: 0,
+      max: 100,
+      default: 70
+    }
+  },
+  renderingFunction: renderPyramidFractal
 };
 
 export default function renderPyramidFractal(
@@ -50,7 +81,7 @@ function applyTransformation(
   sprite.x = params.width / 2 + params.x;
   sprite.y = params.height / 2 + params.y;
 
-  sprite.rotation = params.rot;
+  sprite.rotation = params.rotation;
   sprite.scale = new PIXI.Point(
     params.width / texture.width,
     params.height / texture.height
@@ -78,8 +109,8 @@ function renderChildren(
     element.children[0],
     {
       ...params,
-      width: params.width * params.zoom,
-      height: params.height * params.zoom,
+      width: (params.width * params.zoom) / (params.zoom + 1),
+      height: (params.height * params.zoom) / (params.zoom + 1),
       depth: params.depth + 1
     },
     texture,

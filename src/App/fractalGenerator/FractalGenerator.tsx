@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import ControlDrawer from './ControlComponents/ControlDrawer';
 import FractalStage from './DrawingComponents/FractalStage';
-import FractalStateProvider from './FractalContext';
+import FractalStateProvider from './StateManagement/FractalContextProvider';
 
 const useStyles = makeStyles({
   container: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   }
 });
 
-function FractalDrawer() {
+function FractalGenerator() {
   const classes = useStyles();
 
   return (
@@ -28,4 +28,4 @@ function FractalDrawer() {
   );
 }
 
-export default FractalDrawer;
+export default FractalGenerator;

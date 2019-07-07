@@ -1,12 +1,14 @@
+import fractalModels, { FractalDefinition } from '../FractalDefinitions';
 import {
-  spiralFractal,
-  FractalDefinition,
-  fractalModels
-} from './FractalModels';
-import { ColorDefinition, colorPalettes } from './ColorPalettes';
-import { fractalTextures, FractalTexture } from './FractalTextures';
+  ColorDefinition,
+  colorPalettes
+} from '../FractalDefinitions/common/ColorPalettes';
+import {
+  fractalTextures,
+  FractalTexture
+} from '../FractalDefinitions/common/FractalTextures';
 
-export const fractalInitialState = initializeFractal(spiralFractal);
+export const fractalInitialState = initializeFractal(fractalModels[0]);
 
 export type FractalParams = { zoom: number; [key: string]: number };
 export type FractalState = {

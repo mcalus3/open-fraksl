@@ -5,12 +5,12 @@ import * as PIXI from 'pixi.js';
 import useDimensions from 'react-use-dimensions';
 
 import FractalRenderer from './FractalRenderer';
-import { useFractalReducer } from '../FractalContext';
+import { useFractalReducer } from '../StateManagement/FractalContextProvider';
 import {
   ResizeStage,
   FractalAction,
   ResizeStageAction
-} from '../fractalReducer';
+} from '../StateManagement/fractalReducer';
 
 const useStyles = makeStyles({
   stage: {

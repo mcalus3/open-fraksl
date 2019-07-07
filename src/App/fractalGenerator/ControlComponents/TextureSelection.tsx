@@ -3,9 +3,12 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import * as PIXI from 'pixi.js';
 
-import { useFractalReducer } from '../FractalContext';
-import { SetFractalTextureAction, SetFractalTexture } from '../fractalReducer';
-import { fractalTextures, FractalTexture } from '../FractalTextures';
+import { useFractalReducer } from '../StateManagement/FractalContextProvider';
+import { SetFractalTextureAction, SetFractalTexture } from '../StateManagement/fractalReducer';
+import {
+  fractalTextures,
+  FractalTexture
+} from '../FractalDefinitions/common/FractalTextures';
 
 type MyChangeEvent = React.ChangeEvent<{
   name?: string;

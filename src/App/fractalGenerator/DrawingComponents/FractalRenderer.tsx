@@ -1,9 +1,9 @@
 import { useRef, useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
 
-import { FractalElementsTree } from '../FractalModels';
-import { getFractalDefinition } from '../fractalReducer';
-import { useFractalReducer } from '../FractalContext';
+import { FractalElementsTree } from '../FractalDefinitions';
+import { getFractalDefinition } from '../StateManagement/fractalReducer';
+import { useFractalReducer } from '../StateManagement/FractalContextProvider';
 import { TweenLite, Power3 } from 'gsap';
 
 const starterElement: FractalElementsTree = {
@@ -20,7 +20,7 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
     TweenLite.to(currentParams, 1, {
       x: targetState.parameters.x,
       y: targetState.parameters.y,
-      rot: targetState.parameters.rot,
+      rotation: targetState.parameters.rotation,
       zoom: targetState.parameters.zoom,
       ease: Power3.easeOut,
       onUpdate: () => {
@@ -31,7 +31,7 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
           {
             ...currentParams,
             depth: 1,
-            zoom: currentParams.zoom / (currentParams.zoom + 1),
+            zoom: currentParams.zoom,
             width: Math.floor(pixiApp.screen.width),
             height: Math.floor(pixiApp.screen.height)
           },

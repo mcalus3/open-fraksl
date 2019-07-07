@@ -3,9 +3,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
-import { useFractalReducer } from '../FractalContext';
-import { SetFractalAction, SetFractal } from '../fractalReducer';
-import { fractalModels } from '../FractalModels';
+import { useFractalReducer } from '../StateManagement/FractalContextProvider';
+import { SetFractalAction, SetFractal } from '../StateManagement/fractalReducer';
+import fractalModels from '../FractalDefinitions';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core';
 

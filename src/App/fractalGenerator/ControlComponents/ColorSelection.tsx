@@ -4,9 +4,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
-import { colorPalettes } from '../ColorPalettes';
-import { useFractalReducer } from '../FractalContext';
-import { SetFractalColorAction, SetFractalColor } from '../fractalReducer';
+import { colorPalettes } from '../FractalDefinitions/common/ColorPalettes';
+import { useFractalReducer } from '../StateManagement/FractalContextProvider';
+import { SetFractalColorAction, SetFractalColor } from '../StateManagement/fractalReducer';
 
 type MyChangeEvent = React.ChangeEvent<{
   name?: string;

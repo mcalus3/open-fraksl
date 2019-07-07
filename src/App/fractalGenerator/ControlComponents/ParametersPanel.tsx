@@ -2,9 +2,9 @@ import * as React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import { InputLabel } from '@material-ui/core';
 
-import ParameterControl from './ParameterControl';
-import { getFractalDefinition } from '../fractalReducer';
-import { useFractalReducer } from '../FractalContext';
+import ParameterControl from './ParameterSlider';
+import { getFractalDefinition } from '../StateManagement/fractalReducer';
+import { useFractalReducer } from '../StateManagement/FractalContextProvider';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,7 +24,14 @@ function ParametersPanel() {
     const sliders = Object.keys(parameterDefinitions).map(key => {
       const def = parameterDefinitions[key];
       const val = parameterValues[key];
-      return <ParameterControl parameter={def} key={def.name} value={val} />;
+      return (
+        <ParameterControl
+          parameter={def}
+          key={def.name}
+          value={val}
+          variableName={key}
+        />
+      );
     });
     return sliders;
   };

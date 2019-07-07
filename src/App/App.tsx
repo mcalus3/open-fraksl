@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 import NavBar from './appNavigation/NavBar';
-import ContentContainer from './fractalDrawer/FractalDrawer';
+import FractalGenerator from './fractalGenerator/FractalGenerator';
 import withThemeProvider from './ThemeProvider';
 
 const useStyles = makeStyles({
@@ -20,7 +20,7 @@ const App = () => {
   return (
     <div className={classes.root}>
       <NavBar />
-      <ContentContainer />
+      <FractalGenerator />
     </div>
   );
 };
