@@ -1,20 +1,22 @@
 import * as PIXI from 'pixi.js';
 
-import { FractalElementsTree, FractalDefinition } from './index';
+import { FractalElementsTree } from './index';
 import { unmountChildren } from './common/sharedRenderingFunctions';
 import { ColorPicker } from './common/ColorPalettes';
 
-type Params = {
-  x: number;
-  y: number;
-  rotation: number;
-  zoom: number;
-  width: number;
-  height: number;
-  depth: number;
-};
+export type PyramidFractalParams =
+  | {
+      x: number;
+      y: number;
+      rotation: number;
+      zoom: number;
+      width: number;
+      height: number;
+      depth: number;
+    }
+  | { [key: string]: number };
 
-export const PyramidFractal: FractalDefinition = {
+const PyramidFractal = {
   name: 'pyramid fractal',
   parameters: {
     x: {
@@ -45,10 +47,10 @@ export const PyramidFractal: FractalDefinition = {
   renderingFunction: renderPyramidFractal
 };
 
-export default function renderPyramidFractal(
+function renderPyramidFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: Params,
+  params: PyramidFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -68,7 +70,7 @@ export default function renderPyramidFractal(
 
 function applyTransformation(
   sprite: PIXI.Sprite,
-  params: Params,
+  params: PyramidFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -91,7 +93,7 @@ function applyTransformation(
 function renderChildren(
   pixiApp: PIXI.Application,
   element: FractalElementsTree,
-  params: Params,
+  params: PyramidFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -118,6 +120,9 @@ function renderChildren(
   );
 }
 
-function endConditionFilfulled(params: Params) {
+function endConditionFilfulled(params: PyramidFractalParams) {
   return Math.min(params.height, params.width) < 1 || params.depth > 5000;
 }
+
+export default renderPyramidFractal;
+export { PyramidFractal };

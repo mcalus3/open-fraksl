@@ -4,7 +4,10 @@ import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import * as PIXI from 'pixi.js';
 
 import { useFractalReducer } from '../StateManagement/FractalContextProvider';
-import { SetFractalTextureAction, SetFractalTexture } from '../StateManagement/fractalReducer';
+import {
+  SetFractalTextureAction,
+  SetFractalTexture
+} from '../StateManagement/fractalActions';
 import {
   fractalTextures,
   FractalTexture

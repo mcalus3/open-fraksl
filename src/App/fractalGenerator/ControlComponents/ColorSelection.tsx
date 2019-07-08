@@ -6,7 +6,10 @@ import Select from '@material-ui/core/Select';
 
 import { colorPalettes } from '../FractalDefinitions/common/ColorPalettes';
 import { useFractalReducer } from '../StateManagement/FractalContextProvider';
-import { SetFractalColorAction, SetFractalColor } from '../StateManagement/fractalReducer';
+import {
+  SetFractalColorAction,
+  SetFractalColor
+} from '../StateManagement/fractalActions';
 
 type MyChangeEvent = React.ChangeEvent<{
   name?: string;

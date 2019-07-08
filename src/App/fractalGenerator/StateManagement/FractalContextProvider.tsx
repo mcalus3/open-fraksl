@@ -1,9 +1,9 @@
 import * as React from 'react';
 import fractalReducer, {
   FractalState,
-  FractalAction,
   fractalInitialState
 } from './fractalReducer';
+import { FractalAction } from './fractalActions';
 
 type CountProviderProps = { children: React.ReactNode };
 

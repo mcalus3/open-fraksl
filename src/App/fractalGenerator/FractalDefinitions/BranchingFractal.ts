@@ -1,10 +1,22 @@
 import * as PIXI from 'pixi.js';
 
-import { FractalElementsTree, FractalDefinition } from './index';
+import { FractalElementsTree } from './index';
 import { unmountChildren } from './common/sharedRenderingFunctions';
 import { ColorPicker } from './common/ColorPalettes';
 
-export const branchingFractal: FractalDefinition = {
+export type BranchingFractalParams =
+  | {
+      x: number;
+      y: number;
+      rotation: number;
+      zoom: number;
+      width: number;
+      height: number;
+      depth: number;
+    }
+  | { [key: string]: number };
+
+const branchingFractal = {
   name: 'branching fractal',
   parameters: {
     x: {
@@ -35,22 +47,10 @@ export const branchingFractal: FractalDefinition = {
   renderingFunction: renderBranchingFractal
 };
 
-type Params = {
-  x: number;
-  y: number;
-  rotation: number;
-  zoom: number;
-  width: number;
-  height: number;
-  depth: number;
-  prevX: number;
-  prevY: number;
-};
-
-export default function renderBranchingFractal(
+function renderBranchingFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: Params,
+  params: BranchingFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -68,7 +68,7 @@ export default function renderBranchingFractal(
 
 function applyTransformation(
   sprite: PIXI.Sprite,
-  params: Params,
+  params: BranchingFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -109,7 +109,7 @@ function applyTransformation(
 function renderChildren(
   pixiApp: PIXI.Application,
   element: FractalElementsTree,
-  params: Params,
+  params: BranchingFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -152,9 +152,12 @@ function renderChildren(
   );
 }
 
-function endConditionFulfilled(params: Params) {
+function endConditionFulfilled(params: BranchingFractalParams) {
   if (params.depth > params.zoom) {
     return true;
   }
   return false;
 }
+
+export default renderBranchingFractal;
+export { branchingFractal };

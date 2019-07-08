@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { Typography } from '@material-ui/core';
 import { ParameterDefinition } from '../FractalDefinitions';
-import { SetParameter, SetParameterAction } from '../StateManagement/fractalReducer';
+import {
+  SetParameter,
+  SetParameterAction
+} from '../StateManagement/fractalActions';
 import { useFractalReducer } from '../StateManagement/FractalContextProvider';
 
 const Slider: React.ComponentClass<any> = require('@material-ui/lab/Slider')

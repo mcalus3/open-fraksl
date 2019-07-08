@@ -1,4 +1,4 @@
-import { FractalElementsTree, FractalDefinition } from './index';
+import { FractalElementsTree } from './index';
 import {
   smallerThanOnePixel,
   unmountChildren
@@ -6,17 +6,19 @@ import {
 import * as PIXI from 'pixi.js';
 import { ColorPicker } from './common/ColorPalettes';
 
-type Params = {
-  x: number;
-  y: number;
-  rotation: number;
-  zoom: number;
-  width: number;
-  height: number;
-  depth: number;
-};
+export type SpiralFractalParams =
+  | {
+      x: number;
+      y: number;
+      rotation: number;
+      zoom: number;
+      width: number;
+      height: number;
+      depth: number;
+    }
+  | { [key: string]: number };
 
-export const spiralFractal: FractalDefinition = {
+const spiralFractal = {
   name: 'spiral fractal',
   parameters: {
     x: {
@@ -47,10 +49,10 @@ export const spiralFractal: FractalDefinition = {
   renderingFunction: renderSpiralFractal
 };
 
-export default function renderSpiralFractal(
+function renderSpiralFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: Params,
+  params: SpiralFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -65,7 +67,7 @@ export default function renderSpiralFractal(
 
 function applyTransformation(
   sprite: PIXI.Sprite,
-  params: Params,
+  params: SpiralFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -90,7 +92,7 @@ function applyTransformation(
 function renderChildren(
   pixiApp: PIXI.Application,
   elements: FractalElementsTree[],
-  params: Params,
+  params: SpiralFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -114,3 +116,6 @@ function renderChildren(
     colorPicker
   );
 }
+
+export default renderSpiralFractal;
+export { spiralFractal };

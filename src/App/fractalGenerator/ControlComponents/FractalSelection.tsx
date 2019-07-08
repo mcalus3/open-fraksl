@@ -4,7 +4,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 import { useFractalReducer } from '../StateManagement/FractalContextProvider';
-import { SetFractalAction, SetFractal } from '../StateManagement/fractalReducer';
+import {
+  SetFractalAction,
+  SetFractal
+} from '../StateManagement/fractalActions';
 import fractalModels from '../FractalDefinitions';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core';

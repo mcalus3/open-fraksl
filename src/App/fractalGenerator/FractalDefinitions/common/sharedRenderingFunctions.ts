@@ -1,6 +1,6 @@
-import { Params, FractalElementsTree } from '../index';
+import { FractalElementsTree, ParametersType } from '../index';
 
-export function smallerThanOnePixel(params: Params): boolean {
+export function smallerThanOnePixel(params: ParametersType): boolean {
   const totalZoom = Math.pow(params.zoom, params.depth);
   return (
     Math.min(params.height * totalZoom, params.width * totalZoom) < 1 ||

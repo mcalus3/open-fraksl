@@ -23,7 +23,7 @@ function ParametersPanel() {
   const renderSliders = () => {
     const sliders = Object.keys(parameterDefinitions).map(key => {
       const def = parameterDefinitions[key];
-      const val = parameterValues[key];
+      const val: number = parameterValues[key];
       return (
         <ParameterControl
           parameter={def}

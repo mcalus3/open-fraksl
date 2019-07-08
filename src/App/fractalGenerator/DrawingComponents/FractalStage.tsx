@@ -10,7 +10,7 @@ import {
   ResizeStage,
   FractalAction,
   ResizeStageAction
-} from '../StateManagement/fractalReducer';
+} from '../StateManagement/fractalActions';
 
 const useStyles = makeStyles({
   stage: {

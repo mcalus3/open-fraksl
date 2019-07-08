@@ -8,8 +8,6 @@ export type FractalElementsTree = {
   children: FractalElementsTree[];
 };
 
-export type Params = { [key: string]: number };
-
 export type ParameterDefinition = {
   name: string;
   min: number;
@@ -17,17 +15,23 @@ export type ParameterDefinition = {
   default: number;
 };
 
+export type ParametersType = { [key: string]: number };
+
 export type FractalDefinition = {
   name: string;
-  parameters: { [key: string]: ParameterDefinition };
+  parameters: Record<string, ParameterDefinition>;
   renderingFunction: (
     pixiApp: PIXI.Application,
     treeElement: FractalElementsTree,
-    params: any, // { [key: string]: number }
+    params: ParametersType,
     texture: PIXI.Texture,
     colorPicker: ColorPicker
   ) => void;
 };
 
-const fractalModels = [branchingFractal, spiralFractal, PyramidFractal];
+const fractalModels: FractalDefinition[] = [
+  branchingFractal,
+  spiralFractal,
+  PyramidFractal
+];
 export default fractalModels;
