@@ -114,14 +114,10 @@ function renderChildren(
   colorPicker: ColorPicker
 ) {
   if (element.children.length < 2) {
-    const newSprite = new PIXI.Sprite(texture);
-    newSprite.x = params.width;
-    newSprite.y = params.height;
+    const newSprite = new PIXI.Sprite();
     element.sprite.addChild(newSprite);
 
-    const newSprite2 = new PIXI.Sprite(texture);
-    newSprite2.x = params.width;
-    newSprite2.y = params.height;
+    const newSprite2 = new PIXI.Sprite();
     element.sprite.addChild(newSprite2);
 
     element.children[0] = { sprite: newSprite, children: [] };

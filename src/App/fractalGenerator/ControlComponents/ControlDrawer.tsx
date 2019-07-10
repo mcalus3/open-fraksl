@@ -6,6 +6,7 @@ import FractalSelection from './FractalSelection';
 import { Paper } from '@material-ui/core';
 import TextureSelection from './TextureSelection';
 import ColorSelection from './ColorSelection';
+import PhotoCaptureButton from './PhotoCaptureButton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,6 +32,7 @@ function ControlDrawer() {
       <FractalSelection />
       <ColorSelection />
       <TextureSelection />
+      <PhotoCaptureButton />
     </Paper>
   );
 }

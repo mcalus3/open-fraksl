@@ -30,8 +30,8 @@ export type FractalDefinition = {
 };
 
 const fractalModels: FractalDefinition[] = [
-  branchingFractal,
   spiralFractal,
+  branchingFractal,
   PyramidFractal
 ];
 export default fractalModels;
