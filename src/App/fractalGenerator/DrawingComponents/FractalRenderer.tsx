@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 
 import { FractalElementsTree } from '../FractalDefinitions';
 import { getFractalDefinition } from '../StateManagement/fractalReducer';
-import { useFractalReducer } from '../StateManagement/FractalContextProvider';
+import { useFractalReducer, usePixiApp } from '../StateManagement/FractalContextProvider';
 import { TweenLite, Power3 } from 'gsap';
 
 const starterElement: FractalElementsTree = {
@@ -43,11 +43,9 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
   }, [targetState, currentParams, pixiApp]);
 }
 
-type Props = {
-  pixiApp: PIXI.Application;
-};
 
-function FractalRenderer({ pixiApp }: Props) {
+function FractalRenderer() {
+    const {pixiApp} = usePixiApp();
   useFractalRenderer(pixiApp);
   return null;
 }

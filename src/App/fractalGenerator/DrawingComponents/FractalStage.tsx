@@ -33,7 +33,7 @@ function FractalStage() {
   return (
     <div className={classes.stage} ref={sizeRef}>
       <div className={classes.stage} ref={canvasRef}>
-        <FractalRenderer pixiApp={pixiApp} />
+        <FractalRenderer />
       </div>
     </div>
   );

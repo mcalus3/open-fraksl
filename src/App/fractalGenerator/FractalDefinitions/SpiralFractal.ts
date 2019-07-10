@@ -55,7 +55,7 @@ function renderSpiralFractal(
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
-  if (treeElement.sprite.width < 1 || treeElement.sprite.height < 1 || params.depth > 1000) {
+  if (CalculateZoomForElement(params)*params.width < 1 || params.depth > 5000) {
     unmountChildren(treeElement);
   } else {
     applyTransformation(treeElement.sprite, params, texture, colorPicker);
@@ -70,7 +70,7 @@ function applyTransformation(
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
-  const zoom = Math.pow(params.zoom / (params.zoom + 1), params.depth);
+  const zoom = CalculateZoomForElement(params);
 
   sprite.tint = colorPicker(params.depth);
   if (sprite.texture !== texture) {
@@ -86,6 +86,10 @@ function applyTransformation(
     (params.width * zoom) / texture.width,
     (params.height * zoom) / texture.height
   );
+}
+
+function CalculateZoomForElement(params: SpiralFractalParams) {
+    return Math.pow(params.zoom / (params.zoom + 1), params.depth);
 }
 
 function renderChildren(
