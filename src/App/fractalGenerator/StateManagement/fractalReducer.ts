@@ -30,7 +30,7 @@ function fractalReducer(state: FractalState, action: FractalAction) {
 
     case SetFractal:
       newState = initializeFractal(getFractalDefinition(action.payload.name));
-      Object.assign(newState.parameters, state.parameters);
+      Object.assign(newState.parameters, transformParametersProportionally(state.parameters, state.name, action.payload.name));
       newState.color = state.color;
       newState.texture = state.texture;
       return newState;
@@ -81,5 +81,23 @@ function getFractalDefinition(name: string) {
   return fractalModels.find(e => e.name === name) || fractalModels[0];
 }
 
+function transformParametersProportionally(parameters: ParametersType, oldName: string, newName: string){
+    const oldParamDefinitions = getFractalDefinition(oldName);
+    const newParamDefinitions = getFractalDefinition(newName);
+    const newParams = {...parameters};
+    Object.keys(oldParamDefinitions.parameters).forEach(k => {
+        const min = oldParamDefinitions.parameters[k].min;
+        const max = oldParamDefinitions.parameters[k].max;
+        const value = parameters[k];
+        const proportion = (value - min) / (max - min)
+
+        const newMin = newParamDefinitions.parameters[k].min;
+        const newMax = newParamDefinitions.parameters[k].max;
+        newParams[k] = proportion * (newMax - newMin) + newMin;
+
+    });
+    return newParams;
+}
+
 export default fractalReducer;
-export { initializeFractal, fractalInitialState, getFractalDefinition };
+export { initializeFractal, fractalInitialState, getFractalDefinition, transformParametersProportionally };

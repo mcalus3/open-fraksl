@@ -22,14 +22,14 @@ const branchingFractal = {
     x: {
       name: 'x',
       min: 0,
-      max: 100,
-      default: 10
+      max: 50,
+      default: 25
     },
     y: {
       name: 'y',
       min: 0,
-      max: 100,
-      default: 10
+      max: 50,
+      default: 25
     },
     rotation: {
       name: 'rotation',
@@ -79,12 +79,13 @@ function applyTransformation(
   sprite.tint = colorPicker(params.depth);
 
   if (params.depth === 1) {
-    sprite.anchor.set(0.5);
+    sprite.anchor.set(0.5, 1);
     sprite.x = params.width / 2;
-    sprite.y = params.height - (20 * params.y) / 2;
+    sprite.y = params.height;
+    sprite.rotation = 0;
     sprite.scale = new PIXI.Point(
-      (5 * params.x) / texture.width,
-      (20 * params.y) / texture.height
+      params.x*2 / texture.width * (params.width / 1600),
+      params.y*2 / texture.height * (params.height / 900)
     );
   } else {
     if (params.x < 0) {
@@ -93,10 +94,8 @@ function applyTransformation(
       sprite.anchor.set(0, 1);
     }
 
-    // sprite.x = (5 * params.x) / 2;
-    // sprite.y = -(20 * params.y) / 2;
-    sprite.x = params.x / 2;
-    sprite.y = -10;
+    sprite.x = params.x / 2  * (params.width / 1600);
+    sprite.y = -params.y * (params.height / 900);
 
     sprite.rotation = params.rotation;
     sprite.scale = new PIXI.Point(

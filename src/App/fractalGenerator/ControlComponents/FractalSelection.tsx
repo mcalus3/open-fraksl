@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -6,11 +7,14 @@ import Select from '@material-ui/core/Select';
 import { useFractalReducer } from '../StateManagement/FractalContextProvider';
 import {
   SetFractalAction,
-  SetFractal
+  SetFractal,
+  SetParameterAction,
+  SetParameter
 } from '../StateManagement/fractalActions';
 import fractalModels from '../FractalDefinitions';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core';
+import { transformParametersProportionally } from '../StateManagement/fractalReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,18 +24,33 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function ColorSelection() {
+function FractalSelection() {
   const classes = useStyles();
   const { state, dispatch } = useFractalReducer();
+  const [selectedName, setSelectedName] = useState<string>(state.name);
 
   function handleChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) {
-    const action: SetFractalAction = {
+      const action: SetParameterAction = {
+      type: SetParameter,
+      payload: { name: "zoom", value: 0 }
+    };
+    dispatch(action);
+    setSelectedName(event.target.value as string);
+
+    setTimeout(() => {
+    const changeFractalAaction: SetFractalAction = {
       type: SetFractal,
       payload: { name: event.target.value as string }
     };
-    dispatch(action);
+    dispatch(changeFractalAaction);
+    const changeParamsAction: SetParameterAction = {
+      type: SetParameter,
+      payload: { name: "zoom", value: transformParametersProportionally(state.parameters, selectedName, event.target.value as string).zoom }
+    };
+    dispatch(changeParamsAction);
+}, 1000);
   }
 
   const fractalSelectors = fractalModels.map(model => (
@@ -41,10 +60,10 @@ function ColorSelection() {
   ));
 
   return (
-    <div className={classes.paper}>
+    <div className={classes.paper} >
       <InputLabel htmlFor="choose-fractal">choose fractal</InputLabel>
       <Select
-        value={state.name}
+        value={selectedName}
         onChange={handleChange}
         inputProps={{
           name: 'choose fractal',
@@ -57,4 +76,4 @@ function ColorSelection() {
   );
 }
 
-export default ColorSelection;
+export default FractalSelection;

@@ -13,7 +13,7 @@ const starterElement: FractalElementsTree = {
 
 function useFractalRenderer(pixiApp: PIXI.Application) {
   const { state: targetState } = useFractalReducer();
-  const [previousParams, setPreviousParams] = useState(targetState.parameters);
+  const [previousParams, setPreviousParams] = useState({...targetState.parameters});
   let currentParams = previousParams;
   const rootFractalElement = useRef<FractalElementsTree>(starterElement);
   useEffect(() => {
