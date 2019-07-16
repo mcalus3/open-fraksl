@@ -3,7 +3,10 @@ import * as PIXI from 'pixi.js';
 
 import { FractalElementsTree } from '../FractalDefinitions';
 import { getFractalDefinition } from '../StateManagement/fractalReducer';
-import { useFractalReducer, usePixiApp } from '../StateManagement/FractalContextProvider';
+import {
+  useFractalReducer,
+  usePixiApp
+} from '../StateManagement/FractalContextProvider';
 import { TweenLite, Power3 } from 'gsap';
 
 const starterElement: FractalElementsTree = {
@@ -13,15 +16,13 @@ const starterElement: FractalElementsTree = {
 
 function useFractalRenderer(pixiApp: PIXI.Application) {
   const { state: targetState } = useFractalReducer();
-  const [previousParams, setPreviousParams] = useState({...targetState.parameters});
+  const [previousParams, setPreviousParams] = useState({
+    ...targetState.parameters
+  });
   let currentParams = previousParams;
   const rootFractalElement = useRef<FractalElementsTree>(starterElement);
   useEffect(() => {
-    TweenLite.to(currentParams, 1, {
-      x: targetState.parameters.x,
-      y: targetState.parameters.y,
-      rotation: targetState.parameters.rotation,
-      zoom: targetState.parameters.zoom,
+    const tweenTo = {
       ease: Power3.easeOut,
       onUpdate: () => {
         setPreviousParams(currentParams);
@@ -39,13 +40,14 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
           targetState.color.pick
         );
       }
-    });
+    };
+    Object.assign(tweenTo, targetState.parameters);
+    TweenLite.to(currentParams, 1, tweenTo);
   }, [targetState, currentParams, pixiApp]);
 }
 
-
 function FractalRenderer() {
-    const {pixiApp} = usePixiApp();
+  const { pixiApp } = usePixiApp();
   useFractalRenderer(pixiApp);
   return null;
 }
