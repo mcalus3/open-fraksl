@@ -32,25 +32,32 @@ function FractalSelection() {
   function handleChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) {
-      const action: SetParameterAction = {
+    const action: SetParameterAction = {
       type: SetParameter,
-      payload: { name: "zoom", value: 0 }
+      payload: { name: 'zoom', value: 0 }
     };
     dispatch(action);
     setSelectedName(event.target.value as string);
 
     setTimeout(() => {
-    const changeFractalAaction: SetFractalAction = {
-      type: SetFractal,
-      payload: { name: event.target.value as string }
-    };
-    dispatch(changeFractalAaction);
-    const changeParamsAction: SetParameterAction = {
-      type: SetParameter,
-      payload: { name: "zoom", value: transformParametersProportionally(state.parameters, selectedName, event.target.value as string).zoom }
-    };
-    dispatch(changeParamsAction);
-}, 1000);
+      const changeFractalAaction: SetFractalAction = {
+        type: SetFractal,
+        payload: { name: event.target.value as string }
+      };
+      dispatch(changeFractalAaction);
+      const changeParamsAction: SetParameterAction = {
+        type: SetParameter,
+        payload: {
+          name: 'zoom',
+          value: transformParametersProportionally(
+            state.parameters,
+            selectedName,
+            event.target.value as string
+          ).zoom
+        }
+      };
+      dispatch(changeParamsAction);
+    }, 1000);
   }
 
   const fractalSelectors = fractalModels.map(model => (
@@ -60,7 +67,7 @@ function FractalSelection() {
   ));
 
   return (
-    <div className={classes.paper} >
+    <div className={classes.paper}>
       <InputLabel htmlFor="choose-fractal">choose fractal</InputLabel>
       <Select
         value={selectedName}
