@@ -4,38 +4,40 @@ import { FractalElementsTree } from './index';
 import { unmountChildren } from './common/sharedRenderingFunctions';
 import { ColorPicker } from './common/ColorPalettes';
 
-export type BranchingFractalParams =
+export type SierpinskiTreeFractalParams =
   | {
-      x: number;
-      y: number;
-      rotation: number;
+      length: number;
+      ratio: number;
+      angle: number;
       zoom: number;
       width: number;
       height: number;
       depth: number;
+      x: number;
+      y: number;
     }
   | { [key: string]: number };
 
-const branchingFractal = {
-  name: 'branching fractal',
+const sierpinskiTreeFractal = {
+  name: 'Sierpinski tree',
   parameters: {
-    x: {
-      name: 'width',
+    length: {
+      name: 'length',
       min: 0,
-      max: 50,
-      default: 25
+      max: 1,
+      default: 0.25
     },
-    y: {
-      name: 'height',
+    ratio: {
+      name: 'ratio',
       min: 0,
-      max: 50,
-      default: 25
+      max: 1,
+      default: 0.7
     },
-    rotation: {
-      name: 'rotation',
+    angle: {
+      name: 'angle',
       min: 0,
       max: Math.PI,
-      default: 0.1
+      default: Math.PI / 4
     },
     zoom: {
       name: 'depth',
@@ -44,13 +46,13 @@ const branchingFractal = {
       default: 5
     }
   },
-  renderingFunction: renderBranchingFractal
+  renderingFunction: renderSierpinskiTreeFractal
 };
 
-function renderBranchingFractal(
+function renderSierpinskiTreeFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: BranchingFractalParams,
+  params: SierpinskiTreeFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -68,7 +70,7 @@ function renderBranchingFractal(
 
 function applyTransformation(
   sprite: PIXI.Sprite,
-  params: BranchingFractalParams,
+  params: SierpinskiTreeFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -78,37 +80,27 @@ function applyTransformation(
 
   sprite.tint = colorPicker(params.depth);
 
+  sprite.anchor.set(0.5, 1);
+
   if (params.depth === 1) {
-    sprite.anchor.set(0.5, 1);
+    // sprite.scale = new PIXI.Point(10 * params.length, 10 * params.length);
+    // sprite.width = 10;
+    // sprite.height = params.length * params.height;
+
     sprite.x = params.width / 2;
     sprite.y = params.height;
     sprite.rotation = 0;
-    sprite.scale = new PIXI.Point(
-      params.x*2 / texture.width * (params.width / 1600),
-      params.y*2 / texture.height * (params.height / 900)
-    );
   } else {
-    if (params.x < 0) {
-      sprite.anchor.set(1, 1);
-    } else {
-      sprite.anchor.set(0, 1);
-    }
-
-    sprite.x = params.x / 2  * (params.width / 1600);
-    sprite.y = -params.y * (params.height / 900);
-
-    sprite.rotation = params.rotation;
-    sprite.scale = new PIXI.Point(
-      params.zoom / (params.zoom + 1),
-      params.zoom / (params.zoom + 1)
-    );
+    sprite.rotation = params.angle;
+    sprite.scale.set(1, params.ratio);
+    sprite.y = -texture.height;
   }
 }
 
 function renderChildren(
   pixiApp: PIXI.Application,
   element: FractalElementsTree,
-  params: BranchingFractalParams,
+  params: SierpinskiTreeFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
@@ -123,19 +115,18 @@ function renderChildren(
     element.children[1] = { sprite: newSprite2, children: [] };
   }
 
-  renderBranchingFractal(
+  renderSierpinskiTreeFractal(
     pixiApp,
     element.children[0],
     {
       ...params,
-      x: params.x * -1,
-      rotation: params.rotation * -1,
+      angle: params.angle * -1,
       depth: params.depth + 1
     },
     texture,
     colorPicker
   );
-  renderBranchingFractal(
+  renderSierpinskiTreeFractal(
     pixiApp,
     element.children[1],
     {
@@ -147,12 +138,12 @@ function renderChildren(
   );
 }
 
-function endConditionFulfilled(params: BranchingFractalParams) {
+function endConditionFulfilled(params: SierpinskiTreeFractalParams) {
   if (params.depth > params.zoom) {
     return true;
   }
   return false;
 }
 
-export default renderBranchingFractal;
-export { branchingFractal };
+export default renderSierpinskiTreeFractal;
+export { sierpinskiTreeFractal };

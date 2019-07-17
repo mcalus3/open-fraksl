@@ -19,18 +19,6 @@ export type PyramidFractalParams =
 const PyramidFractal = {
   name: 'pyramid fractal',
   parameters: {
-    x: {
-      name: 'x',
-      min: -1,
-      max: 1,
-      default: 0
-    },
-    y: {
-      name: 'y',
-      min: -1,
-      max: 1,
-      default: 0
-    },
     rotation: {
       name: 'rotation',
       min: 0,
@@ -38,7 +26,7 @@ const PyramidFractal = {
       default: 0.2
     },
     zoom: {
-      name: 'zoom',
+      name: 'depth',
       min: 0,
       max: 100,
       default: 70

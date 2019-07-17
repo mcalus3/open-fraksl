@@ -1,7 +1,5 @@
 import { FractalElementsTree } from './index';
-import {
-  unmountChildren
-} from './common/sharedRenderingFunctions';
+import { unmountChildren } from './common/sharedRenderingFunctions';
 import * as PIXI from 'pixi.js';
 import { ColorPicker } from './common/ColorPalettes';
 
@@ -39,7 +37,7 @@ const spiralFractal = {
       default: 0.1
     },
     zoom: {
-      name: 'zoom',
+      name: 'depth',
       min: 0,
       max: 100,
       default: 30
@@ -55,7 +53,10 @@ function renderSpiralFractal(
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
-  if (CalculateZoomForElement(params)*params.width < 1 || params.depth > 5000) {
+  if (
+    CalculateZoomForElement(params) * params.width < 1 ||
+    params.depth > 5000
+  ) {
     unmountChildren(treeElement);
   } else {
     applyTransformation(treeElement.sprite, params, texture, colorPicker);
@@ -89,7 +90,7 @@ function applyTransformation(
 }
 
 function CalculateZoomForElement(params: SpiralFractalParams) {
-    return Math.pow(params.zoom / (params.zoom + 1), params.depth);
+  return Math.pow(params.zoom / (params.zoom + 1), params.depth);
 }
 
 function renderChildren(

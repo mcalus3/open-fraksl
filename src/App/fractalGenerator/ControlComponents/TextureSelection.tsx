@@ -33,6 +33,9 @@ function TextureSelection() {
   const fileSelector = useFileSelector();
 
   function handleChange(event: MyChangeEvent) {
+    if (!event.target.value || event.target.value === 'custom') {
+      return;
+    }
     const action: SetFractalTextureAction = {
       type: SetFractalTexture,
       payload: event.target.value as FractalTexture
