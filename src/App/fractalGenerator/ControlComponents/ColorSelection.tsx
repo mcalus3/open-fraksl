@@ -10,6 +10,7 @@ import {
   SetFractalColorAction,
   SetFractalColor
 } from '../StateManagement/fractalActions';
+import { useState } from 'react';
 
 type MyChangeEvent = React.ChangeEvent<{
   name?: string;
@@ -20,13 +21,18 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       marginBottom: theme.spacing(3)
-    }
+    },
+    input: { width: '100px' },
+    selector: { width: '100%', height: '100%' }
   })
 );
 
 function ColorSelection() {
   const classes = useStyles();
   const { state, dispatch } = useFractalReducer();
+  const [selectedPaletteName, setSelectedPaletteName] = useState(
+    state.color.name
+  );
 
   function handleChange(event: MyChangeEvent) {
     const action: SetFractalColorAction = {
@@ -39,6 +45,7 @@ function ColorSelection() {
   const colorSelectors = colorPalettes.map(palette => (
     <MenuItem value={palette.name} key={palette.name}>
       <div
+        className={classes.selector}
         onMouseOver={e => {
           handleChange({ target: { value: palette.name } } as MyChangeEvent);
         }}
@@ -52,8 +59,18 @@ function ColorSelection() {
     <div className={classes.paper}>
       <InputLabel htmlFor="color-palette">choose palette</InputLabel>
       <Select
-        value={state.color.name}
-        onChange={handleChange}
+        value={selectedPaletteName}
+        onChange={e => {
+          setSelectedPaletteName(e.target.value as string);
+          handleChange(e);
+        }}
+        onClose={() =>
+          handleChange({
+            target: {
+              value: selectedPaletteName
+            }
+          } as MyChangeEvent)
+        }
         inputProps={{
           name: 'color palette',
           id: 'color-palette'

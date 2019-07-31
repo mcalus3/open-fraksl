@@ -15,6 +15,7 @@ export type ParameterDefinition = {
   min: number;
   max: number;
   default: number;
+  step?: boolean;
 };
 
 export type ParametersType = { [key: string]: number };

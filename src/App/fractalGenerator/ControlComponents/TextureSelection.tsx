@@ -12,6 +12,7 @@ import {
   fractalTextures,
   FractalTexture
 } from '../FractalDefinitions/common/FractalTextures';
+import { useState } from 'react';
 
 type MyChangeEvent = React.ChangeEvent<{
   name?: string;
@@ -23,13 +24,17 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       marginBottom: theme.spacing(3)
     },
-    input: { width: '100px' }
+    input: { width: '100px' },
+    selector: { width: '100%', height: '100%' }
   })
 );
 
 function TextureSelection() {
   const classes = useStyles();
   const { state, dispatch } = useFractalReducer();
+  const [selectedTextureName, setSelectedTextureName] = useState(
+    state.texture.name
+  );
   const fileSelector = useFileSelector();
 
   function handleChange(event: MyChangeEvent) {
@@ -46,6 +51,7 @@ function TextureSelection() {
   const textureSelectors = fractalTextures.map(texture => (
     <MenuItem value={texture.name} key={texture.name}>
       <div
+        className={classes.selector}
         onMouseOver={e => {
           handleChange({ target: { value: texture } } as MyChangeEvent);
         }}
@@ -59,14 +65,22 @@ function TextureSelection() {
     <div className={classes.paper}>
       <InputLabel htmlFor="choose-texture"> choose texture</InputLabel>
       <Select
-        value={state.texture.name}
+        value={selectedTextureName}
         onChange={e => {
+          setSelectedTextureName(e.target.value as string);
           handleChange({
             target: {
               value: fractalTextures.find(t => t.name === e.target.value)
             }
           } as MyChangeEvent);
         }}
+        onClose={() =>
+          handleChange({
+            target: {
+              value: fractalTextures.find(t => t.name === selectedTextureName)
+            }
+          } as MyChangeEvent)
+        }
         inputProps={{
           name: 'choose texture',
           id: 'choose-texture'

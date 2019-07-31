@@ -27,7 +27,8 @@ const sierpinskiCarpetFractal = {
       name: 'depth',
       min: 0,
       max: 5,
-      default: 3
+      default: 3,
+      step: true
     },
     rotation: {
       name: 'rotation',

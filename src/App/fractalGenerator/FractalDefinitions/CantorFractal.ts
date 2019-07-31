@@ -47,7 +47,8 @@ const cantorFractal = {
       name: 'depth',
       min: 0,
       max: 13,
-      default: 5
+      default: 5,
+      step: true
     }
   },
   renderingFunction: renderCantorFractal

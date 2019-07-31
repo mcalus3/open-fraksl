@@ -44,7 +44,8 @@ const sierpinskiTreeFractal = {
       name: 'depth',
       min: 0,
       max: 12,
-      default: 5
+      default: 5,
+      step: true
     }
   },
   renderingFunction: renderSierpinskiTreeFractal

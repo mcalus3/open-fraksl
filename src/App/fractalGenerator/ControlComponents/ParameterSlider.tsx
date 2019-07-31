@@ -37,6 +37,7 @@ function ParameterControl({ parameter, value, variableName }: Props) {
         onChange={cp}
         max={parameter.max}
         min={parameter.min}
+        step={parameter.step ? 1 : null}
       />
     </div>
   );
