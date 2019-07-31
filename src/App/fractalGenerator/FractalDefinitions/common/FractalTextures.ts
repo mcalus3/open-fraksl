@@ -6,12 +6,12 @@ export type FractalTexture = {
 };
 
 export const fullRectangle: FractalTexture = {
-  name: 'full rectangle',
+  name: 'rectangle',
   texture: PIXI.Texture.WHITE
 };
 
 export const ellipsis: FractalTexture = {
-  name: 'ellipsis',
+  name: 'ring',
   texture: getEllipsisTexture()
 };
 
@@ -21,15 +21,20 @@ export const rectangle: FractalTexture = {
 };
 
 export const fullEllipsis: FractalTexture = {
-  name: 'full ellipsis',
+  name: 'circle',
   texture: getFullEllipsisTexture()
+};
+
+export const line: FractalTexture = {
+  name: 'line',
+  texture: getLineTexture()
 };
 
 export const fractalTextures: FractalTexture[] = [
   fullRectangle,
   ellipsis,
   fullEllipsis,
-  rectangle
+  line
 ];
 
 function getEllipsisTexture() {
@@ -79,6 +84,23 @@ function getRectangleTexture() {
   ctx.beginPath();
   ctx.rect(0, 0, quality, quality);
   ctx.lineWidth = (10 * quality) / 1000;
+  ctx.strokeStyle = '#FFFFFF';
+  ctx.stroke();
+
+  return PIXI.Texture.from(canvas);
+}
+
+function getLineTexture() {
+  const quality = 100;
+  const canvas = document.createElement('canvas');
+  canvas.width = 1;
+  canvas.height = quality;
+
+  const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+  ctx.beginPath();
+  ctx.rect(0, 0, 0, quality);
+  ctx.lineWidth = 1;
   ctx.strokeStyle = '#FFFFFF';
   ctx.stroke();
 

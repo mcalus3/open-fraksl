@@ -9,9 +9,14 @@ import {
 } from '../StateManagement/FractalContextProvider';
 import { TweenLite, Power3 } from 'gsap';
 
-const starterElement: FractalElementsTree = {
-  sprite: new PIXI.Sprite(PIXI.Texture.WHITE),
-  children: []
+const getStarterElement = (pixiApp: PIXI.Application) => {
+  const element = {
+    sprite: new PIXI.Sprite(),
+    children: []
+  };
+
+  pixiApp.stage.addChild(element.sprite);
+  return element;
 };
 
 function useFractalRenderer(pixiApp: PIXI.Application) {
@@ -20,7 +25,9 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
     ...targetState.parameters
   });
   let currentParams = previousParams;
-  const rootFractalElement = useRef<FractalElementsTree>(starterElement);
+  const rootFractalElement = useRef<FractalElementsTree>(
+    getStarterElement(pixiApp)
+  );
   useEffect(() => {
     const tweenTo = {
       ease: Power3.easeOut,
@@ -32,7 +39,6 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
           {
             ...currentParams,
             depth: 1,
-            zoom: currentParams.zoom,
             width: Math.floor(pixiApp.screen.width),
             height: Math.floor(pixiApp.screen.height)
           },

@@ -26,7 +26,7 @@ const sierpinskiCarpetFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 6,
+      max: 5,
       default: 3
     },
     rotation: {

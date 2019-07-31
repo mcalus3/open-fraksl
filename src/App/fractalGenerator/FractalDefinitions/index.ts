@@ -1,10 +1,9 @@
-import { PyramidFractal } from './PyramidFractal';
 import { spiralFractal } from './SpiralFractal';
 import { ColorPicker } from './common/ColorPalettes';
-import { branchingFractal } from './BranchingFractal';
 import { cantorFractal } from './CantorFractal';
 import { sierpinskiTreeFractal } from './SierpinskiTreeFractal';
 import { sierpinskiCarpetFractal } from './SierpinskiCarpetFractal';
+import { pythagorasTreeFractal } from './PythagorasTreeFractal';
 
 export type FractalElementsTree = {
   sprite: PIXI.Sprite;
@@ -35,7 +34,8 @@ export type FractalDefinition = {
 const fractalModels: FractalDefinition[] = [
   sierpinskiCarpetFractal,
   cantorFractal,
-  spiralFractal,
-  branchingFractal
+  sierpinskiTreeFractal,
+  pythagorasTreeFractal,
+  spiralFractal
 ];
 export default fractalModels;
