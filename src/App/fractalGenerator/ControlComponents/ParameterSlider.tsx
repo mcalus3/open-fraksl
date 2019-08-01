@@ -6,6 +6,7 @@ import {
   SetParameterAction
 } from '../StateManagement/fractalActions';
 import { useFractalReducer } from '../StateManagement/FractalContextProvider';
+import { useState } from 'react';
 
 const Slider: React.ComponentClass<any> = require('@material-ui/lab/Slider')
   .default;
@@ -18,13 +19,17 @@ type Props = {
 
 function ParameterControl({ parameter, value, variableName }: Props) {
   const { dispatch } = useFractalReducer();
+  const [startTime, setStartTime] = useState(0);
 
   const cp = (e: React.FormEvent, v: number) => {
-    const action: SetParameterAction = {
-      type: SetParameter,
-      payload: { name: variableName, value: v }
-    };
-    dispatch(action);
+      if (Date.now() - startTime > 50){
+        setStartTime(Date.now());
+        const action: SetParameterAction = {
+        type: SetParameter,
+        payload: { name: variableName, value: v }
+        };
+        dispatch(action);
+    }
   };
 
   return (

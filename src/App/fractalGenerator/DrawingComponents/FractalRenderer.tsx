@@ -7,7 +7,9 @@ import {
   useFractalReducer,
   usePixiApp
 } from '../StateManagement/FractalContextProvider';
-import { TweenLite, Power3 } from 'gsap';
+import { TweenLite, Power3, TweenMax } from 'gsap';
+//@ts-ignore
+import { useThrottle } from 'use-throttle';
 
 const getStarterElement = (pixiApp: PIXI.Application) => {
   const element = {
@@ -21,19 +23,23 @@ const getStarterElement = (pixiApp: PIXI.Application) => {
 
 function useFractalRenderer(pixiApp: PIXI.Application) {
   const { state: targetState } = useFractalReducer();
+  const throttledState = useThrottle(targetState, 50);
   const [previousParams, setPreviousParams] = useState({
-    ...targetState.parameters
+    ...throttledState.parameters
   });
   let currentParams = previousParams;
   const rootFractalElement = useRef<FractalElementsTree>(
     getStarterElement(pixiApp)
   );
   useEffect(() => {
+    TweenMax.getAllTweens().forEach(element => {
+        element.kill()
+    });
     const tweenTo = {
       ease: Power3.easeOut,
       onUpdate: () => {
         setPreviousParams(currentParams);
-        getFractalDefinition(targetState.name).renderingFunction(
+        getFractalDefinition(throttledState.name).renderingFunction(
           pixiApp,
           rootFractalElement.current,
           {
@@ -42,14 +48,14 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
             width: Math.floor(pixiApp.screen.width),
             height: Math.floor(pixiApp.screen.height)
           },
-          targetState.texture.texture,
-          targetState.color.pick
+          throttledState.texture.texture,
+          throttledState.color.pick
         );
       }
     };
-    Object.assign(tweenTo, targetState.parameters);
+    Object.assign(tweenTo, throttledState.parameters);
     TweenLite.to(currentParams, 1, tweenTo);
-  }, [targetState, currentParams, pixiApp]);
+  }, [throttledState, currentParams, pixiApp]);
 }
 
 function FractalRenderer() {
