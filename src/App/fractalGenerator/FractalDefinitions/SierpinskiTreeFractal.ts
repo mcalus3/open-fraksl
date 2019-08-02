@@ -54,10 +54,10 @@ const sierpinskiTreeFractal = {
 function renderSierpinskiTreeFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: SierpinskiTreeFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
+  const params = treeElement.params;
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
@@ -113,46 +113,56 @@ function renderChildren(
     const newSprite2 = new PIXI.Sprite();
     pixiApp.stage.addChild(newSprite2);
 
-    element.children[0] = { sprite: newSprite, children: [] };
-    element.children[1] = { sprite: newSprite2, children: [] };
+    element.children[0] = {
+      sprite: newSprite,
+      children: [],
+      params: {
+        ...params,
+        currentAngle: params.currentAngle - params.angle,
+        x:
+          params.x +
+          params.height * params.length * Math.sin(params.currentAngle),
+        y:
+          params.y -
+          params.height * params.length * Math.cos(params.currentAngle),
+        length: params.length * params.ratio,
+        depth: params.depth + 1
+      }
+    };
+    element.children[1] = {
+      sprite: newSprite2,
+      children: [],
+      params: {
+        ...params,
+        currentAngle: params.currentAngle + params.angle,
+        x:
+          params.x +
+          params.height * params.length * Math.sin(params.currentAngle),
+        y:
+          params.y -
+          params.height * params.length * Math.cos(params.currentAngle),
+        length: params.length * params.ratio,
+        depth: params.depth + 1
+      }
+    };
   }
 
-  renderSierpinskiTreeFractal(
-    pixiApp,
-    element.children[0],
-    {
-      ...params,
-      currentAngle: params.currentAngle - params.angle,
-      x:
-        params.x +
-        params.height * params.length * Math.sin(params.currentAngle),
-      y:
-        params.y -
-        params.height * params.length * Math.cos(params.currentAngle),
-      length: params.length * params.ratio,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderSierpinskiTreeFractal(
-    pixiApp,
-    element.children[1],
-    {
-      ...params,
-      currentAngle: params.currentAngle + params.angle,
-      x:
-        params.x +
-        params.height * params.length * Math.sin(params.currentAngle),
-      y:
-        params.y -
-        params.height * params.length * Math.cos(params.currentAngle),
-      length: params.length * params.ratio,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
+  element.children[0].params = {
+    ...params,
+    currentAngle: params.currentAngle - params.angle,
+    x: params.x + params.height * params.length * Math.sin(params.currentAngle),
+    y: params.y - params.height * params.length * Math.cos(params.currentAngle),
+    length: params.length * params.ratio,
+    depth: params.depth + 1
+  };
+  element.children[1].params = {
+    ...params,
+    currentAngle: params.currentAngle + params.angle,
+    x: params.x + params.height * params.length * Math.sin(params.currentAngle),
+    y: params.y - params.height * params.length * Math.cos(params.currentAngle),
+    length: params.length * params.ratio,
+    depth: params.depth + 1
+  };
 }
 
 function endConditionFulfilled(params: SierpinskiTreeFractalParams) {

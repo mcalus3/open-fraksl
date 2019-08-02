@@ -10,11 +10,13 @@ import {
 import { TweenLite, Power3, TweenMax } from 'gsap';
 //@ts-ignore
 import { useThrottle } from 'use-throttle';
+import crawl from '../../../tree-crawl';
 
 const getStarterElement = (pixiApp: PIXI.Application) => {
   const element = {
     sprite: new PIXI.Sprite(),
-    children: []
+    children: [],
+    params: {}
   };
 
   pixiApp.stage.addChild(element.sprite);
@@ -33,23 +35,37 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
   );
   useEffect(() => {
     TweenMax.getAllTweens().forEach(element => {
-        element.kill()
+      element.kill();
     });
     const tweenTo = {
       ease: Power3.easeOut,
       onUpdate: () => {
         setPreviousParams(currentParams);
-        getFractalDefinition(throttledState.name).renderingFunction(
-          pixiApp,
+        rootFractalElement.current.params = {
+          ...currentParams,
+          depth: 1,
+          width: Math.floor(pixiApp.screen.width),
+          height: Math.floor(pixiApp.screen.height)
+        };
+        const render = getFractalDefinition(throttledState.name)
+          .renderingFunction;
+
+        let startTime = Date.now();
+        crawl(
           rootFractalElement.current,
-          {
-            ...currentParams,
-            depth: 1,
-            width: Math.floor(pixiApp.screen.width),
-            height: Math.floor(pixiApp.screen.height)
+          async node => {
+            if (Date.now() - startTime > 50) {
+              startTime = Date.now();
+              await new Promise(resolve => setTimeout(resolve));
+            }
+            render(
+              pixiApp,
+              node,
+              throttledState.texture.texture,
+              throttledState.color.pick
+            );
           },
-          throttledState.texture.texture,
-          throttledState.color.pick
+          { order: 'bfs' }
         );
       }
     };

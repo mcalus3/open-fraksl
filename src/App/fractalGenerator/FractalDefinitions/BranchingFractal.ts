@@ -40,7 +40,7 @@ const branchingFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 13,
+      max: 15,
       default: 5,
       step: true
     }
@@ -51,10 +51,10 @@ const branchingFractal = {
 function renderBranchingFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: BranchingFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
+  const params = treeElement.params;
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
@@ -63,7 +63,7 @@ function renderBranchingFractal(
     }
     applyTransformation(treeElement.sprite, params, texture, colorPicker);
 
-    renderChildren(pixiApp, treeElement, params, texture, colorPicker);
+    renderChildren(treeElement, params);
   }
 }
 
@@ -107,11 +107,8 @@ function applyTransformation(
 }
 
 function renderChildren(
-  pixiApp: PIXI.Application,
   element: FractalElementsTree,
-  params: BranchingFractalParams,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
+  params: BranchingFractalParams
 ) {
   if (element.children.length < 2) {
     const newSprite = new PIXI.Sprite();
@@ -120,32 +117,36 @@ function renderChildren(
     const newSprite2 = new PIXI.Sprite();
     element.sprite.addChild(newSprite2);
 
-    element.children[0] = { sprite: newSprite, children: [] };
-    element.children[1] = { sprite: newSprite2, children: [] };
-  }
-
-  renderBranchingFractal(
-    pixiApp,
-    element.children[0],
-    {
+    element.children[0] = {
+      sprite: newSprite,
+      children: [],
+      params: {
+        ...params,
+        x: params.x * -1,
+        rotation: params.rotation * -1,
+        depth: params.depth + 1
+      }
+    };
+    element.children[1] = {
+      sprite: newSprite2,
+      children: [],
+      params: {
+        ...params,
+        depth: params.depth + 1
+      }
+    };
+  } else {
+    element.children[0].params = {
       ...params,
       x: params.x * -1,
       rotation: params.rotation * -1,
       depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderBranchingFractal(
-    pixiApp,
-    element.children[1],
-    {
+    };
+    element.children[1].params = {
       ...params,
       depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
+    };
+  }
 }
 
 function endConditionFulfilled(params: BranchingFractalParams) {

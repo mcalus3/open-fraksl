@@ -38,10 +38,10 @@ const PyramidFractal = {
 function renderPyramidFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: PyramidFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
+  const params = treeElement.params;
   if (endConditionFilfulled(params)) {
     unmountChildren(treeElement);
   } else {
@@ -89,21 +89,17 @@ function renderChildren(
     const newSprite = new PIXI.Sprite();
 
     pixiApp.stage.addChild(newSprite);
-    element.children[0] = { sprite: newSprite, children: [] };
+    element.children[0] = {
+      sprite: newSprite,
+      children: [],
+      params: {
+        ...params,
+        width: (params.width * params.zoom) / (params.zoom + 1),
+        height: (params.height * params.zoom) / (params.zoom + 1),
+        depth: params.depth + 1
+      }
+    };
   }
-
-  renderPyramidFractal(
-    pixiApp,
-    element.children[0],
-    {
-      ...params,
-      width: (params.width * params.zoom) / (params.zoom + 1),
-      height: (params.height * params.zoom) / (params.zoom + 1),
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
 }
 
 function endConditionFilfulled(params: PyramidFractalParams) {
