@@ -39,7 +39,7 @@ const spiralFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 100,
+      max: 200,
       default: 30
     }
   },
@@ -49,10 +49,10 @@ const spiralFractal = {
 function renderSpiralFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: SpiralFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
+  const params = treeElement.params;
   if (
     CalculateZoomForElement(params) * params.width < 1 ||
     params.depth > 5000
@@ -104,19 +104,19 @@ function renderChildren(
     const newSprite = new PIXI.Sprite();
 
     pixiApp.stage.addChild(newSprite);
-    elements[0] = { sprite: newSprite, children: [] };
+    elements[0] = {
+      sprite: newSprite,
+      children: [],
+      params: {
+        ...params,
+        depth: params.depth + 1
+      }
+    };
   }
-
-  renderSpiralFractal(
-    pixiApp,
-    elements[0],
-    {
-      ...params,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
+  elements[0].params = {
+    ...params,
+    depth: params.depth + 1
+  };
 }
 
 export default renderSpiralFractal;

@@ -22,13 +22,14 @@ function ParameterControl({ parameter, value, variableName }: Props) {
   const [startTime, setStartTime] = useState(0);
 
   const cp = (e: React.FormEvent, v: number) => {
-      if (Date.now() - startTime > 50){
-        setStartTime(Date.now());
-        const action: SetParameterAction = {
+    // throttle the state setting to 50 ms
+    if (Date.now() - startTime > 50) {
+      setStartTime(Date.now());
+      const action: SetParameterAction = {
         type: SetParameter,
         payload: { name: variableName, value: v }
-        };
-        dispatch(action);
+      };
+      dispatch(action);
     }
   };
 

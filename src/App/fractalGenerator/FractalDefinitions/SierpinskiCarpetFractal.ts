@@ -4,10 +4,6 @@ import { FractalElementsTree } from './index';
 import { unmountChildren } from './common/sharedRenderingFunctions';
 import { ColorPicker } from './common/ColorPalettes';
 
-type Left = -1;
-type Right = 1;
-type Side = Left | Right;
-
 export type SierpinskiCarpetFractalParams =
   | {
       x: number;
@@ -26,7 +22,7 @@ const sierpinskiCarpetFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 5,
+      max: 6,
       default: 3,
       step: true
     },
@@ -43,10 +39,10 @@ const sierpinskiCarpetFractal = {
 function renderSierpinskiCarpetFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: SierpinskiCarpetFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
+  const params = treeElement.params;
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
@@ -55,7 +51,7 @@ function renderSierpinskiCarpetFractal(
     }
     applyTransformation(treeElement.sprite, params, texture, colorPicker);
 
-    renderChildren(pixiApp, treeElement, params, texture, colorPicker);
+    renderChildren(treeElement, params);
   }
 }
 
@@ -89,117 +85,73 @@ function applyTransformation(
 }
 
 function renderChildren(
-  pixiApp: PIXI.Application,
   element: FractalElementsTree,
-  params: SierpinskiCarpetFractalParams,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
+  params: SierpinskiCarpetFractalParams
 ) {
   if (element.children.length < 2) {
     for (let i = 0; i < 8; i++) {
       const newSprite = new PIXI.Sprite();
       element.sprite.addChild(newSprite);
 
-      element.children[i] = { sprite: newSprite, children: [] };
+      element.children[i] = { sprite: newSprite, children: [], params: {} };
     }
   }
 
-  renderSierpinskiCarpetFractal(
-    pixiApp,
-    element.children[0],
-    {
-      ...params,
-      x: -1,
-      y: -1,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderSierpinskiCarpetFractal(
-    pixiApp,
-    element.children[1],
-    {
-      ...params,
-      x: 0,
-      y: -1,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderSierpinskiCarpetFractal(
-    pixiApp,
-    element.children[2],
-    {
-      ...params,
-      x: 1,
-      y: -1,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderSierpinskiCarpetFractal(
-    pixiApp,
-    element.children[3],
-    {
-      ...params,
-      x: -1,
-      y: 0,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderSierpinskiCarpetFractal(
-    pixiApp,
-    element.children[4],
-    {
-      ...params,
-      x: 1,
-      y: 0,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderSierpinskiCarpetFractal(
-    pixiApp,
-    element.children[5],
-    {
-      ...params,
-      x: -1,
-      y: 1,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderSierpinskiCarpetFractal(
-    pixiApp,
-    element.children[6],
-    {
-      ...params,
-      x: 0,
-      y: 1,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderSierpinskiCarpetFractal(
-    pixiApp,
-    element.children[7],
-    {
-      ...params,
-      x: 1,
-      y: 1,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
+  element.children[0].params = {
+    ...params,
+    x: -1,
+    y: -1,
+    depth: params.depth + 1
+  };
+
+  element.children[1].params = {
+    ...params,
+    x: 0,
+    y: -1,
+    depth: params.depth + 1
+  };
+
+  element.children[2].params = {
+    ...params,
+    x: 1,
+    y: -1,
+    depth: params.depth + 1
+  };
+
+  element.children[3].params = {
+    ...params,
+    x: -1,
+    y: 0,
+    depth: params.depth + 1
+  };
+
+  element.children[4].params = {
+    ...params,
+    x: 1,
+    y: 0,
+    depth: params.depth + 1
+  };
+
+  element.children[5].params = {
+    ...params,
+    x: -1,
+    y: 1,
+    depth: params.depth + 1
+  };
+
+  element.children[6].params = {
+    ...params,
+    x: 0,
+    y: 1,
+    depth: params.depth + 1
+  };
+
+  element.children[7].params = {
+    ...params,
+    x: 1,
+    y: 1,
+    depth: params.depth + 1
+  };
 }
 
 function endConditionFulfilled(params: SierpinskiCarpetFractalParams) {

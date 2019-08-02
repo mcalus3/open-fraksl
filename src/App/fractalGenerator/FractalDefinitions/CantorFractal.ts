@@ -46,7 +46,7 @@ const cantorFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 13,
+      max: 15,
       default: 5,
       step: true
     }
@@ -57,10 +57,10 @@ const cantorFractal = {
 function renderCantorFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: CantorFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
+  const params = treeElement.params;
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
@@ -69,7 +69,7 @@ function renderCantorFractal(
     }
     applyTransformation(treeElement.sprite, params, texture, colorPicker);
 
-    renderChildren(pixiApp, treeElement, params, texture, colorPicker);
+    renderChildren(treeElement, params);
   }
 }
 
@@ -104,11 +104,8 @@ function applyTransformation(
 }
 
 function renderChildren(
-  pixiApp: PIXI.Application,
   element: FractalElementsTree,
-  params: CantorFractalParams,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
+  params: CantorFractalParams
 ) {
   if (element.children.length < 2) {
     const newSprite = new PIXI.Sprite();
@@ -117,32 +114,37 @@ function renderChildren(
     const newSprite2 = new PIXI.Sprite();
     element.sprite.addChild(newSprite2);
 
-    element.children[0] = { sprite: newSprite, children: [] };
-    element.children[1] = { sprite: newSprite2, children: [] };
+    element.children[0] = {
+      sprite: newSprite,
+      children: [],
+      params: {
+        ...params,
+        side: -1,
+        depth: params.depth + 1
+      }
+    };
+    element.children[1] = {
+      sprite: newSprite2,
+      children: [],
+      params: {
+        ...params,
+        side: 1,
+        depth: params.depth + 1
+      }
+    };
   }
 
-  renderCantorFractal(
-    pixiApp,
-    element.children[0],
-    {
-      ...params,
-      side: -1,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
-  renderCantorFractal(
-    pixiApp,
-    element.children[1],
-    {
-      ...params,
-      side: 1,
-      depth: params.depth + 1
-    },
-    texture,
-    colorPicker
-  );
+  element.children[0].params = {
+    ...params,
+    side: -1,
+    depth: params.depth + 1
+  };
+
+  element.children[1].params = {
+    ...params,
+    side: 1,
+    depth: params.depth + 1
+  };
 }
 
 function endConditionFulfilled(params: CantorFractalParams) {

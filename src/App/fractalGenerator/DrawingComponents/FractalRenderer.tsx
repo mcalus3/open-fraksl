@@ -7,14 +7,16 @@ import {
   useFractalReducer,
   usePixiApp
 } from '../StateManagement/FractalContextProvider';
-import { TweenLite, Power3, TweenMax } from 'gsap';
+import { TweenLite, Power3 } from 'gsap';
 //@ts-ignore
 import { useThrottle } from 'use-throttle';
+import crawl from '../../../tree-crawl';
 
 const getStarterElement = (pixiApp: PIXI.Application) => {
   const element = {
     sprite: new PIXI.Sprite(),
-    children: []
+    children: [],
+    params: {}
   };
 
   pixiApp.stage.addChild(element.sprite);
@@ -32,28 +34,46 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
     getStarterElement(pixiApp)
   );
   useEffect(() => {
-    TweenMax.getAllTweens().forEach(element => {
-        element.kill()
-    });
+    TweenLite.killTweensOf(currentParams);
+
     const tweenTo = {
       ease: Power3.easeOut,
       onUpdate: () => {
         setPreviousParams(currentParams);
-        getFractalDefinition(throttledState.name).renderingFunction(
-          pixiApp,
+        rootFractalElement.current.params = {
+          ...currentParams,
+          depth: 1,
+          width: Math.floor(pixiApp.screen.width),
+          height: Math.floor(pixiApp.screen.height)
+        };
+        const render = getFractalDefinition(throttledState.name)
+          .renderingFunction;
+
+        let startTime = performance.now();
+        crawl(
           rootFractalElement.current,
-          {
-            ...currentParams,
-            depth: 1,
-            width: Math.floor(pixiApp.screen.width),
-            height: Math.floor(pixiApp.screen.height)
+          async node => {
+            if (performance.now() - startTime > 100) {
+              await new Promise(resolve =>
+                requestAnimationFrame(() => {
+                  startTime = performance.now();
+                  resolve();
+                })
+              );
+            }
+            render(
+              pixiApp,
+              node,
+              throttledState.texture.texture,
+              throttledState.color.pick
+            );
           },
-          throttledState.texture.texture,
-          throttledState.color.pick
+          { order: 'bfs' }
         );
       }
     };
     Object.assign(tweenTo, throttledState.parameters);
+    TweenLite.lagSmoothing(0, 0);
     TweenLite.to(currentParams, 1, tweenTo);
   }, [throttledState, currentParams, pixiApp]);
 }

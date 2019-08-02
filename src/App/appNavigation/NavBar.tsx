@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   }
 });
 
-function NavBar () {
+function NavBar() {
   const classes = useStyles();
   const [drawerVisible, setDrawerVisible] = useState(false);
 
@@ -40,6 +40,6 @@ function NavBar () {
       </Toolbar>
     </AppBar>
   );
-};
+}
 
 export default NavBar;

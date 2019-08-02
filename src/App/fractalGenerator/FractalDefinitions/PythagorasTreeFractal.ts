@@ -38,7 +38,7 @@ const pythagorasTreeFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 12,
+      max: 15,
       default: 5,
       step: true
     }
@@ -49,10 +49,10 @@ const pythagorasTreeFractal = {
 function renderPythagorasTreeFractal(
   pixiApp: PIXI.Application,
   treeElement: FractalElementsTree,
-  params: PythagorasTreeFractalParams,
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
+  const params = treeElement.params;
   if (endConditionFulfilled(params)) {
     unmountChildren(treeElement);
   } else {
@@ -109,43 +109,35 @@ function renderChildren(
     const newSprite2 = new PIXI.Sprite();
     pixiApp.stage.addChild(newSprite2);
 
-    element.children[0] = { sprite: newSprite, children: [] };
-    element.children[1] = { sprite: newSprite2, children: [] };
+    const { x1, y1, x2, y2 } = calculateNewCoords(params, element.sprite.width);
+
+    element.children[0] = {
+      sprite: newSprite,
+      children: [],
+      params: {
+        ...params,
+        currentAngle: params.currentAngle - params.angle,
+        x: x1,
+        y: y1,
+        length: params.length * Math.cos(params.angle),
+        depth: params.depth + 1,
+        anchor: 0
+      }
+    };
+    element.children[1] = {
+      sprite: newSprite2,
+      children: [],
+      params: {
+        ...params,
+        currentAngle: params.currentAngle + Math.PI / 2 - params.angle,
+        x: x2,
+        y: y2,
+        length: params.length * Math.sin(params.angle),
+        depth: params.depth + 1,
+        anchor: 1
+      }
+    };
   }
-
-  const { x1, y1, x2, y2 } = calculateNewCoords(params, element.sprite.width);
-
-  renderPythagorasTreeFractal(
-    pixiApp,
-    element.children[0],
-    {
-      ...params,
-      currentAngle: params.currentAngle - params.angle,
-      x: x1,
-      y: y1,
-      length: params.length * Math.cos(params.angle),
-      depth: params.depth + 1,
-      anchor: 0
-    },
-    texture,
-    colorPicker
-  );
-
-  renderPythagorasTreeFractal(
-    pixiApp,
-    element.children[1],
-    {
-      ...params,
-      currentAngle: params.currentAngle + Math.PI / 2 - params.angle,
-      x: x2,
-      y: y2,
-      length: params.length * Math.sin(params.angle),
-      depth: params.depth + 1,
-      anchor: 1
-    },
-    texture,
-    colorPicker
-  );
 }
 
 function endConditionFulfilled(params: PythagorasTreeFractalParams) {
