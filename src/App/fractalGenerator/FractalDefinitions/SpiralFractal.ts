@@ -39,7 +39,7 @@ const spiralFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 100,
+      max: 200,
       default: 30
     }
   },

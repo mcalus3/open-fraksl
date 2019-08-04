@@ -28,7 +28,7 @@ const PyramidFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 100,
+      max: 200,
       default: 70
     }
   },

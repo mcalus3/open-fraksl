@@ -38,7 +38,7 @@ const pythagorasTreeFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 12,
+      max: 15,
       default: 5,
       step: true
     }

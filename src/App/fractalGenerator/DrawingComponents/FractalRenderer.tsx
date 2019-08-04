@@ -7,10 +7,10 @@ import {
   useFractalReducer,
   usePixiApp
 } from '../StateManagement/FractalContextProvider';
-import { TweenLite, Power3, TweenMax } from 'gsap';
+import { TweenLite, Power3 } from 'gsap';
 //@ts-ignore
 import { useThrottle } from 'use-throttle';
-import crawl from '../../../tree-crawl';
+import crawl from 'tree-crawl';
 
 const getStarterElement = (pixiApp: PIXI.Application) => {
   const element = {
@@ -34,9 +34,8 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
     getStarterElement(pixiApp)
   );
   useEffect(() => {
-    TweenMax.getAllTweens().forEach(element => {
-      element.kill();
-    });
+    TweenLite.killTweensOf(currentParams);
+
     const tweenTo = {
       ease: Power3.easeOut,
       onUpdate: () => {
@@ -53,11 +52,11 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
         let startTime = Date.now();
         crawl(
           rootFractalElement.current,
-          async node => {
-            if (Date.now() - startTime > 50) {
-              startTime = Date.now();
-              await new Promise(resolve => setTimeout(resolve));
-            }
+          node => {
+            // if (Date.now() - startTime > 50) {
+            //   startTime = Date.now();
+            //   await new Promise(resolve => setTimeout(resolve));
+            // }
             render(
               pixiApp,
               node,
@@ -70,7 +69,8 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
       }
     };
     Object.assign(tweenTo, throttledState.parameters);
-    TweenLite.to(currentParams, 1, tweenTo);
+    TweenLite.lagSmoothing(0, 0);
+    TweenLite.to(currentParams, 1, tweenTo)
   }, [throttledState, currentParams, pixiApp]);
 }
 
