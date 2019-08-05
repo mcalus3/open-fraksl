@@ -7,6 +7,7 @@ import { Paper } from '@material-ui/core';
 import TextureSelection from './TextureSelection';
 import ColorSelection from './ColorSelection';
 import PhotoCaptureButton from './PhotoCaptureButton';
+import ElementsCounter from './ElementsCounter';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -28,6 +29,7 @@ function ControlDrawer() {
 
   return (
     <Paper className={classes.paper}>
+      <ElementsCounter />
       <ParametersPanel />
       <FractalSelection />
       <ColorSelection />

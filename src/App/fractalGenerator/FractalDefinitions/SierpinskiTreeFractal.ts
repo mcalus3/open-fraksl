@@ -48,7 +48,8 @@ const sierpinskiTreeFractal = {
       step: true
     }
   },
-  renderingFunction: renderSierpinskiTreeFractal
+  renderingFunction: renderSierpinskiTreeFractal,
+  branchingFactor: 2
 };
 
 function renderSierpinskiTreeFractal(
@@ -102,7 +103,7 @@ function applyTransformation(
 function renderChildren(
   pixiApp: PIXI.Application,
   element: FractalElementsTree,
-  params: SierpinskiTreeFractalParams,
+  params: SierpinskiTreeFractalParams
 ) {
   if (element.children.length < 2) {
     const newSprite = new PIXI.Sprite();

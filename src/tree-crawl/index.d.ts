@@ -12,12 +12,12 @@ declare namespace crawl {
      *
      * By default, node's `children` property is used.
      */
-    getChildren?(node: TreeNode): TreeNode[],
+    getChildren?(node: TreeNode): TreeNode[];
     /**
      * Order of the walk: either in DFS pre or post order, or BFS.
      */
-    order?: 'pre' | 'post' | 'bfs'
-  }
+    order?: 'pre' | 'post' | 'bfs';
+  };
 
   /**
    * A traversal context.
@@ -28,18 +28,18 @@ declare namespace crawl {
     /**
      * Skip current node, children won't be visited.
      */
-    skip(): void,
+    skip(): void;
     /**
      * Stop traversal now.
      */
-    break(): void,
+    break(): void;
     /**
      * Notifies that the current node has been removed, children won't be visited.
      *
      * Because `tree-crawl` has no idea about the intrinsic structure of your tree, you have to remove the node yourself.
      * `Context#remove` only notifies the traversal code that the structure of the tree has changed.
      */
-    remove(): void,
+    remove(): void;
     /**
      * Notifies that the current node has been replaced, the new node's children will be visited instead.
      *
@@ -48,24 +48,24 @@ declare namespace crawl {
      *
      * @param node Replacement node.
      */
-    replace(node: TreeNode): void,
+    replace(node: TreeNode): void;
     /**
      * Get the parent of the current node. `null` for the root node.
      */
-    parent: TreeNode | null,
+    parent: TreeNode | null;
     /**
      * Get the depth of the current node. The depth is the number of ancestors the current node has.
      */
-    depth: number,
+    depth: number;
     /**
      * Get the level of current node. The level is the number of ancestors+1 the current node has.
      */
-    level: number,
+    level: number;
     /**
      * Get the index of the current node.
      */
-    index: number
-  }
+    index: number;
+  };
 }
 
 /**
@@ -75,10 +75,10 @@ declare namespace crawl {
  * @param iteratee Function invoked on each node.
  * @param options Options customizing the walk. By default `getChildren` will return the `children` property of a node.
  */
-declare function crawl<TreeNode>(
+declare async function crawl<TreeNode>(
   root: TreeNode,
   iteratee: (node: TreeNode, context: crawl.Context<TreeNode>) => void,
   options: crawl.Options<TreeNode>
-): void
+): Promise<void>;
 
-export = crawl
+export = crawl;

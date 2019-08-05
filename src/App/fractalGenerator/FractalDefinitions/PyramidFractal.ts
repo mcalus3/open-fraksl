@@ -32,7 +32,8 @@ const PyramidFractal = {
       default: 70
     }
   },
-  renderingFunction: renderPyramidFractal
+  renderingFunction: renderPyramidFractal,
+  branchingFactor: 0
 };
 
 function renderPyramidFractal(

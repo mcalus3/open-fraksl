@@ -45,7 +45,8 @@ const branchingFractal = {
       step: true
     }
   },
-  renderingFunction: renderBranchingFractal
+  renderingFunction: renderBranchingFractal,
+  branchingFactor: 2
 };
 
 function renderBranchingFractal(

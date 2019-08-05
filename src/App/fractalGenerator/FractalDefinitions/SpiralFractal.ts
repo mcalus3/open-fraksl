@@ -43,7 +43,8 @@ const spiralFractal = {
       default: 30
     }
   },
-  renderingFunction: renderSpiralFractal
+  renderingFunction: renderSpiralFractal,
+  branchingFactor: 0
 };
 
 function renderSpiralFractal(

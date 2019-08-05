@@ -43,7 +43,8 @@ const pythagorasTreeFractal = {
       step: true
     }
   },
-  renderingFunction: renderPythagorasTreeFractal
+  renderingFunction: renderPythagorasTreeFractal,
+  branchingFactor: 2
 };
 
 function renderPythagorasTreeFractal(

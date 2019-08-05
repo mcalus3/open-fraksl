@@ -16,7 +16,9 @@ import {
   SetFractal,
   SetFractalTexture,
   ResizeStage,
-  SetFractalColor
+  SetFractalColor,
+  SetCurrentElementsCount,
+  SetTotalElementsCount
 } from './fractalActions';
 
 function fractalReducer(state: FractalState, action: FractalAction) {
@@ -26,6 +28,10 @@ function fractalReducer(state: FractalState, action: FractalAction) {
       let newParams = { ...state.parameters };
       newParams[action.payload.name] = action.payload.value;
       newState.parameters = newParams;
+      newState.totalElementsCount = calculateTotalElements(
+        getFractalDefinition(newState.name),
+        newParams
+      );
       return newState;
 
     case SetFractal:
@@ -57,6 +63,12 @@ function fractalReducer(state: FractalState, action: FractalAction) {
         colorPalettes.find(palette => palette.name === action.payload.name) ||
         colorPalettes[0];
       return newState;
+    case SetTotalElementsCount:
+      newState.totalElementsCount = action.payload.value;
+      return newState;
+    case SetCurrentElementsCount:
+      newState.currentElementsCount = action.payload.value;
+      return newState;
   }
 }
 
@@ -65,6 +77,8 @@ export type FractalState = {
   parameters: ParametersType;
   texture: FractalTexture;
   color: ColorDefinition;
+  totalElementsCount: number;
+  currentElementsCount: number;
 };
 
 const fractalInitialState = initializeFractal(fractalModels[0]);
@@ -80,8 +94,21 @@ function initializeFractal(fractalDef: FractalDefinition): FractalState {
     name: fractalDef.name,
     parameters: parameterObject as ParametersType,
     texture: fractalTextures[0],
-    color: colorPalettes[0]
+    color: colorPalettes[0],
+    totalElementsCount: calculateTotalElements(fractalDef, parameterObject),
+    currentElementsCount: 0
   };
+}
+
+function calculateTotalElements(
+  fractalDef: FractalDefinition,
+  parameterObject: { [key: string]: number }
+): number {
+  let sum = 0;
+  for (let x = 0; x < parameterObject.zoom; x++) {
+    sum += Math.floor(Math.pow(fractalDef.branchingFactor, x));
+  }
+  return sum;
 }
 
 function getFractalDefinition(name: string) {

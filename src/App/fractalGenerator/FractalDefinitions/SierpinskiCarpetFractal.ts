@@ -33,7 +33,8 @@ const sierpinskiCarpetFractal = {
       default: Math.PI / 2
     }
   },
-  renderingFunction: renderSierpinskiCarpetFractal
+  renderingFunction: renderSierpinskiCarpetFractal,
+  branchingFactor: 8
 };
 
 function renderSierpinskiCarpetFractal(

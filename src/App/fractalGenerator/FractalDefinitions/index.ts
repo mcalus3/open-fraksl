@@ -30,6 +30,7 @@ export type FractalDefinition = {
     texture: PIXI.Texture,
     colorPicker: ColorPicker
   ) => void;
+  branchingFactor: number;
 };
 
 const fractalModels: FractalDefinition[] = [

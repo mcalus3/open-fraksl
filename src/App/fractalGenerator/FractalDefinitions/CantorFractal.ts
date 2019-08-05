@@ -51,7 +51,8 @@ const cantorFractal = {
       step: true
     }
   },
-  renderingFunction: renderCantorFractal
+  renderingFunction: renderCantorFractal,
+  branchingFactor: 2
 };
 
 function renderCantorFractal(

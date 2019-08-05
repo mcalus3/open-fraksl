@@ -11,6 +11,10 @@ import { TweenLite, Power3 } from 'gsap';
 //@ts-ignore
 import { useThrottle } from 'use-throttle';
 import crawl from '../../../tree-crawl';
+import {
+  SetCurrentElementsCountAction,
+  SetCurrentElementsCount
+} from '../StateManagement/fractalActions';
 
 const getStarterElement = (pixiApp: PIXI.Application) => {
   const element = {
@@ -24,7 +28,7 @@ const getStarterElement = (pixiApp: PIXI.Application) => {
 };
 
 function useFractalRenderer(pixiApp: PIXI.Application) {
-  const { state: targetState } = useFractalReducer();
+  const { state: targetState, dispatch } = useFractalReducer();
   const throttledState = useThrottle(targetState, 50);
   const [previousParams, setPreviousParams] = useState({
     ...throttledState.parameters
@@ -53,35 +57,68 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
         let startTime = performance.now();
         lastCrawlId.current++;
         const thisCrawlId = lastCrawlId.current;
-        crawl(
-          rootFractalElement.current,
-          async (node, context) => {
-            if (performance.now() - startTime > 50) {
-              await new Promise(resolve =>
-                requestAnimationFrame(() => {
-                    if (lastCrawlId.current !== thisCrawlId){
-                    context.break();
-                    }
-                  startTime = performance.now();
-                  resolve();
-                })
-              );
-            }
-            render(
-              pixiApp,
-              node,
-              throttledState.texture.texture,
-              throttledState.color.pick
+        let currentElements = 0;
+        let preventDispatch = false;
+
+        async function iterateeFunction(
+          node: FractalElementsTree,
+          context: crawl.Context<FractalElementsTree>
+        ) {
+          if (node.children.length !== 0) {
+            currentElements++;
+          }
+          if (performance.now() - startTime > 50) {
+            await new Promise(resolve =>
+              requestAnimationFrame(() => {
+                console.log('dispatching partial ' + currentElements);
+                dispatchCurrentElementsCount(currentElements, dispatch);
+                if (lastCrawlId.current !== thisCrawlId) {
+                  context.break();
+                  preventDispatch = true;
+                }
+                startTime = performance.now();
+                resolve();
+              })
             );
-          },
-          { order: 'bfs' }
-        );
+          }
+          render(
+            pixiApp,
+            node,
+            throttledState.texture.texture,
+            throttledState.color.pick
+          );
+        }
+
+        crawl(rootFractalElement.current, iterateeFunction, {
+          order: 'bfs'
+        }).then(() => {
+          if (!preventDispatch) {
+            dispatchCurrentElementsCount(currentElements, dispatch);
+          }
+        });
       }
     };
     Object.assign(tweenTo, throttledState.parameters);
     TweenLite.lagSmoothing(0, 0);
     TweenLite.to(currentParams, 1, tweenTo);
-  }, [throttledState, currentParams, pixiApp, lastCrawlId]);
+  }, [
+    throttledState.parameters,
+    throttledState.texture,
+    throttledState.color,
+    throttledState.name,
+    currentParams,
+    pixiApp,
+    lastCrawlId,
+    dispatch
+  ]);
+}
+
+function dispatchCurrentElementsCount(currentElements: number, dispatch: any) {
+  const action: SetCurrentElementsCountAction = {
+    type: SetCurrentElementsCount,
+    payload: { value: currentElements }
+  };
+  dispatch(action);
 }
 
 function FractalRenderer() {
