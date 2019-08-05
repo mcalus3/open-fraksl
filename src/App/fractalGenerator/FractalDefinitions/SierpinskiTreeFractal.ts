@@ -43,7 +43,7 @@ const sierpinskiTreeFractal = {
     zoom: {
       name: 'depth',
       min: 0,
-      max: 15,
+      max: 18,
       default: 5,
       step: true
     }

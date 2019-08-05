@@ -29,6 +29,7 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
   const [previousParams, setPreviousParams] = useState({
     ...throttledState.parameters
   });
+  const lastCrawlId = useRef(0);
   let currentParams = previousParams;
   const rootFractalElement = useRef<FractalElementsTree>(
     getStarterElement(pixiApp)
@@ -50,12 +51,17 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
           .renderingFunction;
 
         let startTime = performance.now();
+        lastCrawlId.current++;
+        const thisCrawlId = lastCrawlId.current;
         crawl(
           rootFractalElement.current,
-          async node => {
-            if (performance.now() - startTime > 100) {
+          async (node, context) => {
+            if (performance.now() - startTime > 50) {
               await new Promise(resolve =>
                 requestAnimationFrame(() => {
+                    if (lastCrawlId.current !== thisCrawlId){
+                    context.break();
+                    }
                   startTime = performance.now();
                   resolve();
                 })
@@ -75,7 +81,7 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
     Object.assign(tweenTo, throttledState.parameters);
     TweenLite.lagSmoothing(0, 0);
     TweenLite.to(currentParams, 1, tweenTo);
-  }, [throttledState, currentParams, pixiApp]);
+  }, [throttledState, currentParams, pixiApp, lastCrawlId]);
 }
 
 function FractalRenderer() {

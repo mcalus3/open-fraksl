@@ -19,18 +19,18 @@ type Props = {
 
 function ParameterControl({ parameter, value, variableName }: Props) {
   const { dispatch } = useFractalReducer();
-  const [startTime, setStartTime] = useState(0);
+  const [startTime, setStartTime] = useState(performance.now());
 
   const cp = (e: React.FormEvent, v: number) => {
     // throttle the state setting to 50 ms
-    if (Date.now() - startTime > 50) {
-      setStartTime(Date.now());
-      const action: SetParameterAction = {
-        type: SetParameter,
-        payload: { name: variableName, value: v }
-      };
-      dispatch(action);
-    }
+        if (performance.now() - startTime > 50) {
+          setStartTime(performance.now());
+          const action: SetParameterAction = {
+            type: SetParameter,
+            payload: { name: variableName, value: v }
+          };
+          dispatch(action);
+        }
   };
 
   return (
