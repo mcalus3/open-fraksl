@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { FractalElementsTree } from './index';
-import { unmountChildren } from './common/sharedRenderingFunctions';
+import { hideChildren } from './common/sharedRenderingFunctions';
 import { ColorPicker } from './common/ColorPalettes';
 
 export type PyramidFractalParams =
@@ -44,7 +44,7 @@ function renderPyramidFractal(
 ) {
   const params = treeElement.params;
   if (endConditionFilfulled(params)) {
-    unmountChildren(treeElement);
+    hideChildren(treeElement);
   } else {
     applyTransformation(
       treeElement.sprite as PIXI.Sprite,

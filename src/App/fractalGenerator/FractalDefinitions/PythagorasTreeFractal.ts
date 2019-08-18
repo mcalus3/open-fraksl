@@ -1,8 +1,9 @@
 import * as PIXI from 'pixi.js';
 
 import { FractalElementsTree } from './index';
-import { unmountChildren } from './common/sharedRenderingFunctions';
+import { hideChildren } from './common/sharedRenderingFunctions';
 import { ColorPicker } from './common/ColorPalettes';
+import { RenderFunctionParams } from './common/fractalRendererBuilder';
 
 export type PythagorasTreeFractalParams =
   | {
@@ -47,16 +48,21 @@ const pythagorasTreeFractal = {
   branchingFactor: 2
 };
 
-function renderPythagorasTreeFractal(
-  pixiApp: PIXI.Application,
-  treeElement: FractalElementsTree,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
-) {
+function renderPythagorasTreeFractal({
+  pixiApp,
+  treeElement,
+  texture,
+  colorPicker
+}: RenderFunctionParams) {
   const params = treeElement.params;
   if (endConditionFulfilled(params)) {
-    unmountChildren(treeElement);
+    hideChildren(treeElement);
   } else {
+    treeElement.sprite.renderable = true;
+    if (!treeElement.sprite.parent) {
+      pixiApp.stage.addChild(treeElement.sprite);
+    }
+
     const params2 =
       params.depth === 1
         ? {
@@ -103,14 +109,13 @@ function renderChildren(
   texture: PIXI.Texture,
   colorPicker: ColorPicker
 ) {
+  const { x1, y1, x2, y2 } = calculateNewCoords(params, element.sprite.width);
   if (element.children.length < 2) {
     const newSprite = new PIXI.Sprite();
     pixiApp.stage.addChild(newSprite);
 
     const newSprite2 = new PIXI.Sprite();
     pixiApp.stage.addChild(newSprite2);
-
-    const { x1, y1, x2, y2 } = calculateNewCoords(params, element.sprite.width);
 
     element.children[0] = {
       sprite: newSprite,
@@ -137,6 +142,25 @@ function renderChildren(
         depth: params.depth + 1,
         anchor: 1
       }
+    };
+  } else {
+    element.children[0].params = {
+      ...params,
+      currentAngle: params.currentAngle - params.angle,
+      x: x1,
+      y: y1,
+      length: params.length * Math.cos(params.angle),
+      depth: params.depth + 1,
+      anchor: 0
+    };
+    element.children[1].params = {
+      ...params,
+      currentAngle: params.currentAngle + Math.PI / 2 - params.angle,
+      x: x2,
+      y: y2,
+      length: params.length * Math.sin(params.angle),
+      depth: params.depth + 1,
+      anchor: 1
     };
   }
 }

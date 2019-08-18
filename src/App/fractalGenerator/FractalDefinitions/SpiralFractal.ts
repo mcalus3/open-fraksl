@@ -1,7 +1,8 @@
 import { FractalElementsTree } from './index';
-import { unmountChildren } from './common/sharedRenderingFunctions';
+import { hideChildren } from './common/sharedRenderingFunctions';
 import * as PIXI from 'pixi.js';
 import { ColorPicker } from './common/ColorPalettes';
+import { RenderFunctionParams } from './common/fractalRendererBuilder';
 
 export type SpiralFractalParams =
   | {
@@ -47,18 +48,18 @@ const spiralFractal = {
   branchingFactor: 0
 };
 
-function renderSpiralFractal(
-  pixiApp: PIXI.Application,
-  treeElement: FractalElementsTree,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
-) {
+function renderSpiralFractal({
+  pixiApp,
+  treeElement,
+  texture,
+  colorPicker
+}: RenderFunctionParams) {
   const params = treeElement.params;
   if (
     CalculateZoomForElement(params) * params.width < 1 ||
     params.depth > 5000
   ) {
-    unmountChildren(treeElement);
+    hideChildren(treeElement);
   } else {
     applyTransformation(treeElement.sprite, params, texture, colorPicker);
 

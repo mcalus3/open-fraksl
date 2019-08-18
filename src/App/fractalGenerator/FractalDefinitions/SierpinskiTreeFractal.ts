@@ -1,23 +1,15 @@
 import * as PIXI from 'pixi.js';
+import { depthExceedsZoomLevel } from './common/sharedRenderingFunctions';
+import buildRenderFunction, {
+  FractalFunctionDefinitions,
+  RenderFunctionParams
+} from './common/fractalRendererBuilder';
 
-import { FractalElementsTree } from './index';
-import { unmountChildren } from './common/sharedRenderingFunctions';
-import { ColorPicker } from './common/ColorPalettes';
-
-export type SierpinskiTreeFractalParams =
-  | {
-      length: number;
-      ratio: number;
-      angle: number;
-      currentAngle: number;
-      zoom: number;
-      width: number;
-      height: number;
-      depth: number;
-      x: number;
-      y: number;
-    }
-  | { [key: string]: number };
+const sierpinskiTreeRenderingFunctionDefinitions: FractalFunctionDefinitions = {
+  isLastElement: depthExceedsZoomLevel,
+  prepareTransformationAttributes,
+  applyPropsToChildren: renderChildren
+};
 
 const sierpinskiTreeFractal = {
   name: 'Sierpinski tree',
@@ -44,132 +36,77 @@ const sierpinskiTreeFractal = {
       name: 'depth',
       min: 0,
       max: 18,
-      default: 5,
+      default: 6,
       step: true
     }
   },
-  renderingFunction: renderSierpinskiTreeFractal,
+  renderingFunction: buildRenderFunction(
+    sierpinskiTreeRenderingFunctionDefinitions
+  ),
   branchingFactor: 2
 };
 
-function renderSierpinskiTreeFractal(
-  pixiApp: PIXI.Application,
-  treeElement: FractalElementsTree,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
-) {
-  const params = treeElement.params;
-  if (endConditionFulfilled(params)) {
-    unmountChildren(treeElement);
-  } else {
-    const params2 =
-      params.depth === 1
-        ? {
-            ...params,
-            x: params.width / 2,
-            y: params.height,
-            currentAngle: 0
-          }
-        : params;
-    applyTransformation(treeElement.sprite, params2, texture, colorPicker);
-    renderChildren(pixiApp, treeElement, params2);
-  }
-}
+export type SierpinskiTreeFractalParams =
+  | {
+      length: number;
+      ratio: number;
+      angle: number;
+      currentAngle: number;
+      zoom: number;
+      width: number;
+      height: number;
+      depth: number;
+      x: number;
+      y: number;
+    }
+  | { [key: string]: number };
 
-function applyTransformation(
-  sprite: PIXI.Sprite,
-  params: SierpinskiTreeFractalParams,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
-) {
-  if (sprite.texture !== texture) {
-    sprite.texture = texture;
-  }
+function prepareTransformationAttributes(params: RenderFunctionParams) {
+  const p = params.treeElement.params;
+  const textureIsWiderThan1px =
+    params.texture.width * ((p.height * p.length) / params.texture.height) < 1;
 
-  sprite.tint = colorPicker(params.depth);
-
-  sprite.anchor.set(0.5, 1);
-  sprite.rotation = params.currentAngle;
-  sprite.x = params.x;
-  sprite.y = params.y;
-
-  if (texture.width * ((params.height * params.length) / texture.height) < 1) {
-    sprite.scale.set(1, (params.height * params.length) / texture.height);
-  } else {
-    sprite.scale.set((params.height * params.length) / texture.height);
-  }
-}
-
-function renderChildren(
-  pixiApp: PIXI.Application,
-  element: FractalElementsTree,
-  params: SierpinskiTreeFractalParams
-) {
-  if (element.children.length < 2) {
-    const newSprite = new PIXI.Sprite();
-    pixiApp.stage.addChild(newSprite);
-
-    const newSprite2 = new PIXI.Sprite();
-    pixiApp.stage.addChild(newSprite2);
-
-    element.children[0] = {
-      sprite: newSprite,
-      children: [],
-      params: {
-        ...params,
-        currentAngle: params.currentAngle - params.angle,
-        x:
-          params.x +
-          params.height * params.length * Math.sin(params.currentAngle),
-        y:
-          params.y -
-          params.height * params.length * Math.cos(params.currentAngle),
-        length: params.length * params.ratio,
-        depth: params.depth + 1
-      }
-    };
-    element.children[1] = {
-      sprite: newSprite2,
-      children: [],
-      params: {
-        ...params,
-        currentAngle: params.currentAngle + params.angle,
-        x:
-          params.x +
-          params.height * params.length * Math.sin(params.currentAngle),
-        y:
-          params.y -
-          params.height * params.length * Math.cos(params.currentAngle),
-        length: params.length * params.ratio,
-        depth: params.depth + 1
-      }
-    };
-  }
-
-  element.children[0].params = {
-    ...params,
-    currentAngle: params.currentAngle - params.angle,
-    x: params.x + params.height * params.length * Math.sin(params.currentAngle),
-    y: params.y - params.height * params.length * Math.cos(params.currentAngle),
-    length: params.length * params.ratio,
-    depth: params.depth + 1
-  };
-  element.children[1].params = {
-    ...params,
-    currentAngle: params.currentAngle + params.angle,
-    x: params.x + params.height * params.length * Math.sin(params.currentAngle),
-    y: params.y - params.height * params.length * Math.cos(params.currentAngle),
-    length: params.length * params.ratio,
-    depth: params.depth + 1
+  const scale = (p.height * p.length) / params.texture.height;
+  return {
+    anchor: new PIXI.Point(0.5, 1),
+    scale: textureIsWiderThan1px
+      ? new PIXI.Point(1, scale)
+      : new PIXI.Point(scale, scale),
+    rotation: p.depth === 1 ? 0 : p.currentAngle,
+    x: p.depth === 1 ? p.width / 2 : p.x,
+    y: p.depth === 1 ? p.height : p.y
   };
 }
 
-function endConditionFulfilled(params: SierpinskiTreeFractalParams) {
-  if (params.depth > params.zoom) {
-    return true;
-  }
-  return false;
+function renderChildren(params: RenderFunctionParams) {
+  const pp = params.treeElement.params;
+  const p =
+    pp.depth === 1
+      ? {
+          ...pp,
+          x: pp.width / 2,
+          y: pp.height,
+          currentAngle: 0
+        }
+      : pp;
+
+  return [
+    {
+      currentAngle: p.currentAngle - p.angle,
+      x: p.x + p.height * p.length * Math.sin(p.currentAngle),
+      y: p.y - p.height * p.length * Math.cos(p.currentAngle),
+      length: p.length * p.ratio,
+      depth: p.depth + 1
+    },
+    {
+      currentAngle: p.currentAngle + p.angle,
+      x: p.x + p.height * p.length * Math.sin(p.currentAngle),
+      y: p.y - p.height * p.length * Math.cos(p.currentAngle),
+      length: p.length * p.ratio,
+      depth: p.depth + 1
+    }
+  ];
 }
 
-export default renderSierpinskiTreeFractal;
+export default sierpinskiTreeFractal;
 export { sierpinskiTreeFractal };

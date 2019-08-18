@@ -1,9 +1,9 @@
-import { ColorPicker } from './common/ColorPalettes';
 import { cantorFractal } from './CantorFractal';
 import { sierpinskiTreeFractal } from './SierpinskiTreeFractal';
 import { pythagorasTreeFractal } from './PythagorasTreeFractal';
 import { spiralFractal } from './SpiralFractal';
 import { sierpinskiCarpetFractal } from './SierpinskiCarpetFractal';
+import { RenderFunctionParams } from './common/fractalRendererBuilder';
 
 export type FractalElementsTree = {
   sprite: PIXI.Sprite;
@@ -24,12 +24,7 @@ export type ParametersType = { [key: string]: number };
 export type FractalDefinition = {
   name: string;
   parameters: Record<string, ParameterDefinition>;
-  renderingFunction: (
-    pixiApp: PIXI.Application,
-    treeElement: FractalElementsTree,
-    texture: PIXI.Texture,
-    colorPicker: ColorPicker
-  ) => void;
+  renderingFunction: (params: RenderFunctionParams) => void;
   branchingFactor: number;
 };
 

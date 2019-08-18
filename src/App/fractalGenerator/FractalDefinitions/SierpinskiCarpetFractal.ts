@@ -1,8 +1,9 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from "pixi.js";
 
-import { FractalElementsTree } from './index';
-import { unmountChildren } from './common/sharedRenderingFunctions';
-import { ColorPicker } from './common/ColorPalettes';
+import { FractalElementsTree } from "./index";
+import { hideChildren } from "./common/sharedRenderingFunctions";
+import { ColorPicker } from "./common/ColorPalettes";
+import { RenderFunctionParams } from "./common/fractalRendererBuilder";
 
 export type SierpinskiCarpetFractalParams =
   | {
@@ -20,14 +21,14 @@ const sierpinskiCarpetFractal = {
   name: "Sierpinski's carpet",
   parameters: {
     zoom: {
-      name: 'depth',
+      name: "depth",
       min: 0,
       max: 7,
       default: 3,
       step: true
     },
     rotation: {
-      name: 'rotation',
+      name: "rotation",
       min: 0,
       max: Math.PI,
       default: Math.PI / 2
@@ -38,18 +39,23 @@ const sierpinskiCarpetFractal = {
 };
 
 function renderSierpinskiCarpetFractal(
-  pixiApp: PIXI.Application,
-  treeElement: FractalElementsTree,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
+  {pixiApp,
+  treeElement,
+  texture,
+  colorPicker}: RenderFunctionParams
 ) {
   const params = treeElement.params;
   if (endConditionFulfilled(params)) {
-    unmountChildren(treeElement);
+    hideChildren(treeElement);
   } else {
     if (params.depth === 1) {
       pixiApp.stage.addChild(treeElement.sprite);
     }
+
+    if (!treeElement.sprite.renderable) {
+      treeElement.sprite.renderable = true;
+    }
+
     applyTransformation(treeElement.sprite, params, texture, colorPicker);
 
     renderChildren(treeElement, params);

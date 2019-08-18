@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import { FractalElementsTree } from './index';
-import { unmountChildren } from './common/sharedRenderingFunctions';
+import { hideChildren } from './common/sharedRenderingFunctions';
 import { ColorPicker } from './common/ColorPalettes';
 
 export type BranchingFractalParams =
@@ -57,7 +57,7 @@ function renderBranchingFractal(
 ) {
   const params = treeElement.params;
   if (endConditionFulfilled(params)) {
-    unmountChildren(treeElement);
+    hideChildren(treeElement);
   } else {
     if (params.depth === 1) {
       pixiApp.stage.addChild(treeElement.sprite);

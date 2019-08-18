@@ -1,8 +1,9 @@
 import * as PIXI from 'pixi.js';
 
 import { FractalElementsTree } from './index';
-import { unmountChildren } from './common/sharedRenderingFunctions';
+import { hideChildren } from './common/sharedRenderingFunctions';
 import { ColorPicker } from './common/ColorPalettes';
+import { RenderFunctionParams } from './common/fractalRendererBuilder';
 
 type Left = -1;
 type Right = 1;
@@ -55,16 +56,17 @@ const cantorFractal = {
   branchingFactor: 2
 };
 
-function renderCantorFractal(
-  pixiApp: PIXI.Application,
-  treeElement: FractalElementsTree,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
-) {
+function renderCantorFractal({
+  pixiApp,
+  treeElement,
+  texture,
+  colorPicker
+}: RenderFunctionParams) {
   const params = treeElement.params;
   if (endConditionFulfilled(params)) {
-    unmountChildren(treeElement);
+    hideChildren(treeElement);
   } else {
+    treeElement.sprite.renderable = true;
     if (params.depth === 1) {
       pixiApp.stage.addChild(treeElement.sprite);
     }
