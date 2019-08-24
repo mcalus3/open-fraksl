@@ -1,8 +1,14 @@
-import { FractalElementsTree } from './index';
-import { hideChildren } from './common/sharedRenderingFunctions';
 import * as PIXI from 'pixi.js';
-import { ColorPicker } from './common/ColorPalettes';
-import { RenderFunctionParams } from './common/fractalRendererBuilder';
+import buildRenderFunction, {
+  RenderFunctionParams,
+  FractalFunctionDefinitions
+} from './common/fractalRendererBuilder';
+
+const spiralRenderingFunctionDefinitions: FractalFunctionDefinitions = {
+  isLastElement: isSmallerThan1px,
+  prepareTransformationAttributes,
+  applyPropsToChildren: renderChildren
+};
 
 export type SpiralFractalParams =
   | {
@@ -44,50 +50,15 @@ const spiralFractal = {
       default: 30
     }
   },
-  renderingFunction: renderSpiralFractal,
+  renderingFunction: buildRenderFunction(spiralRenderingFunctionDefinitions),
   branchingFactor: 0
 };
 
-function renderSpiralFractal({
-  pixiApp,
-  treeElement,
-  texture,
-  colorPicker
-}: RenderFunctionParams) {
-  const params = treeElement.params;
-  if (
-    CalculateZoomForElement(params) * params.width < 1 ||
-    params.depth > 5000
-  ) {
-    hideChildren(treeElement);
-  } else {
-    applyTransformation(treeElement.sprite, params, texture, colorPicker);
-
-    renderChildren(pixiApp, treeElement.children, params, texture, colorPicker);
-  }
-}
-
-function applyTransformation(
-  sprite: PIXI.Sprite,
-  params: SpiralFractalParams,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
-) {
-  const zoom = CalculateZoomForElement(params);
-
-  sprite.tint = colorPicker(params.depth);
-  if (sprite.texture !== texture) {
-    sprite.texture = texture;
-  }
-
-  sprite.anchor.set(0.5);
-  sprite.x = params.width / 2 + params.x * params.depth;
-  sprite.y = params.height / 2 + params.y * params.depth;
-
-  sprite.rotation = params.rotation * params.depth;
-  sprite.scale = new PIXI.Point(
-    (params.width * zoom) / texture.width,
-    (params.height * zoom) / texture.height
+function isSmallerThan1px(params: RenderFunctionParams) {
+  return (
+    CalculateZoomForElement(params.treeElement.params) *
+      params.treeElement.params.width <
+      1 || params.treeElement.params.depth > 5000
   );
 }
 
@@ -95,31 +66,29 @@ function CalculateZoomForElement(params: SpiralFractalParams) {
   return Math.pow(params.zoom / (params.zoom + 1), params.depth);
 }
 
-function renderChildren(
-  pixiApp: PIXI.Application,
-  elements: FractalElementsTree[],
-  params: SpiralFractalParams,
-  texture: PIXI.Texture,
-  colorPicker: ColorPicker
-) {
-  if (elements.length === 0) {
-    const newSprite = new PIXI.Sprite();
+function prepareTransformationAttributes(params: RenderFunctionParams) {
+  const p = params.treeElement.params;
+  const zoom = CalculateZoomForElement(p);
+  const scale = new PIXI.Point(
+    (p.width * zoom) / params.texture.width,
+    (p.height * zoom) / params.texture.height
+  );
 
-    pixiApp.stage.addChild(newSprite);
-    elements[0] = {
-      sprite: newSprite,
-      children: [],
-      params: {
-        ...params,
-        depth: params.depth + 1
-      }
-    };
-  }
-  elements[0].params = {
-    ...params,
-    depth: params.depth + 1
+  return {
+    anchor: new PIXI.Point(0.5, 0.5),
+    scale,
+    rotation: p.rotation * p.depth,
+    x: p.width / 2 + p.x * p.depth,
+    y: p.height / 2 + p.y * p.depth
   };
 }
 
-export default renderSpiralFractal;
+function renderChildren(params: RenderFunctionParams) {
+  return [
+    {
+      depth: params.treeElement.params.depth + 1
+    }
+  ];
+}
+
 export { spiralFractal };

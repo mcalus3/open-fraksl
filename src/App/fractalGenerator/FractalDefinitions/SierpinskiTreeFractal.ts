@@ -63,14 +63,14 @@ export type SierpinskiTreeFractalParams =
 
 function prepareTransformationAttributes(params: RenderFunctionParams) {
   const p = params.treeElement.params;
-  const textureIsWiderThan1px =
-    params.texture.width * ((p.height * p.length) / params.texture.height) < 1;
-
   const scale = (p.height * p.length) / params.texture.height;
+  const textureIsSmallerThan1px =
+    params.texture.width * scale < 1 || params.texture.height * scale < 1;
+
   return {
     anchor: new PIXI.Point(0.5, 1),
-    scale: textureIsWiderThan1px
-      ? new PIXI.Point(1, scale)
+    scale: textureIsSmallerThan1px
+      ? new PIXI.Point(1 / params.texture.width, scale)
       : new PIXI.Point(scale, scale),
     rotation: p.depth === 1 ? 0 : p.currentAngle,
     x: p.depth === 1 ? p.width / 2 : p.x,
