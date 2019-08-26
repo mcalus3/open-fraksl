@@ -35,9 +35,11 @@ function ColorSelection() {
   );
 
   function handleChange(event: MyChangeEvent) {
+    const palette = colorPalettes.find(palette => palette.name === event.target.value) ||
+      colorPalettes[0];
     const action: SetFractalColorAction = {
       type: SetFractalColor,
-      payload: { name: event.target.value as string }
+      payload: { palette }
     };
     dispatch(action);
   }

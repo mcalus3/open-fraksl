@@ -10,7 +10,7 @@ import {
 export function buildRenderFunction(
   fractalFunctionDefinitions: FractalFunctionDefinitions
 ) {
-  return (params: RenderFunctionParams) => {
+  const renderFunction = (params: RenderFunctionParams) => {
     if (fractalFunctionDefinitions.isLastElement(params)) {
       hideChildren(params.treeElement);
     } else {
@@ -36,6 +36,7 @@ export function buildRenderFunction(
       );
     }
   };
+  return renderFunction;
 }
 
 export type FractalFunctionDefinitions = {

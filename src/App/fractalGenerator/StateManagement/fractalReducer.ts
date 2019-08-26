@@ -59,9 +59,7 @@ function fractalReducer(state: FractalState, action: FractalAction) {
       newState.parameters.height = action.payload.height;
       return newState;
     case SetFractalColor:
-      newState.color =
-        colorPalettes.find(palette => palette.name === action.payload.name) ||
-        colorPalettes[0];
+      newState.color = action.payload.palette;
       return newState;
     case SetTotalElementsCount:
       newState.totalElementsCount = action.payload.value;

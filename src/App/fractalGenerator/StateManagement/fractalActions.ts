@@ -1,4 +1,5 @@
 import { FractalTexture } from '../FractalDefinitions/common/FractalTextures';
+import { ColorDefinition } from '../FractalDefinitions/common/ColorPalettes';
 
 export const SetParameter = 'SET_PARAMETER';
 export const SetFractal = 'SET_FRACTAL';
@@ -25,7 +26,7 @@ export type SetFractalTextureAction = {
 
 export type SetFractalColorAction = {
   type: typeof SetFractalColor;
-  payload: { name: string };
+  payload: { palette: ColorDefinition };
 };
 
 export type ResizeStageAction = {
