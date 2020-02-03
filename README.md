@@ -2,7 +2,7 @@
 
 ## Try it now
 
-https://openfraksl.netlify.com/
+https://openfraksl.mcalus.dev/
 
 ## About
 
