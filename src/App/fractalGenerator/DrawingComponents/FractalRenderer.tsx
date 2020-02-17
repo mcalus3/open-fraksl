@@ -7,7 +7,7 @@ import {
   useFractalReducer,
   usePixiApp
 } from "../StateManagement/FractalContextProvider";
-import { TweenLite, Power3 } from "gsap";
+import { gsap } from "gsap";
 //@ts-ignore
 import { useThrottle } from "use-throttle";
 import crawl from "../../../tree-crawl";
@@ -38,83 +38,81 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
   const rootFractalElement = useRef<FractalElementsTree>(
     getStarterElement(pixiApp)
   );
-  useEffect(
-    () => {
-      TweenLite.killTweensOf(currentParams);
+  useEffect(() => {
+    gsap.killTweensOf(currentParams);
 
-      const tweenTo = {
-        ease: Power3.easeOut,
-        onUpdate: () => {
-          setPreviousParams(currentParams);
-          rootFractalElement.current.params = {
-            ...currentParams,
-            depth: 1,
-            width: Math.floor(pixiApp.screen.width),
-            height: Math.floor(pixiApp.screen.height)
-          };
-          const render = getFractalDefinition(throttledState.name)
-            .renderingFunction;
+    const tweenTo = {
+      duration: 1,
+      ease: " power3. out",
+      onUpdate: () => {
+        setPreviousParams(currentParams);
+        rootFractalElement.current.params = {
+          ...currentParams,
+          depth: 1,
+          width: Math.floor(pixiApp.screen.width),
+          height: Math.floor(pixiApp.screen.height)
+        };
+        const render = getFractalDefinition(throttledState.name)
+          .renderingFunction;
 
-          let startTime = performance.now();
-          lastCrawlId.current++;
-          const thisCrawlId = lastCrawlId.current;
-          let currentElements = 0;
-          // this flag prevents dispatching the number of elements from the crawl that was stopped because newer has started before it reached the end
-          let preventDispatch = false;
+        let startTime = performance.now();
+        lastCrawlId.current++;
+        const thisCrawlId = lastCrawlId.current;
+        let currentElements = 0;
+        // this flag prevents dispatching the number of elements from the crawl that was stopped because newer has started before it reached the end
+        let preventDispatch = false;
 
-          async function iterateeFunction(
-            node: FractalElementsTree,
-            context: crawl.Context<FractalElementsTree>
-          ) {
-            if (performance.now() - startTime > 50) {
-              await new Promise(resolve =>
-                requestAnimationFrame(() => {
-                  dispatchCurrentElementsCount(currentElements, dispatch);
-                  if (lastCrawlId.current !== thisCrawlId) {
-                    context.break();
-                    preventDispatch = true;
-                  }
-                  startTime = performance.now();
-                  resolve();
-                })
-              );
-            }
-            render({
-              pixiApp,
-              treeElement: node,
-              texture: throttledState.texture.texture,
-              colorPicker: throttledState.color.pick
-            });
-            // Currently, the fractal element creates its children even if it's at the last level. It's children (last level + 1), just don't render themselves and don't create their own. It's useful for recognizing first rendering of this element.
-            if (node.children.length !== 0) {
-              currentElements++;
-            }
+        async function iterateeFunction(
+          node: FractalElementsTree,
+          context: crawl.Context<FractalElementsTree>
+        ) {
+          if (performance.now() - startTime > 50) {
+            await new Promise(resolve =>
+              requestAnimationFrame(() => {
+                dispatchCurrentElementsCount(currentElements, dispatch);
+                if (lastCrawlId.current !== thisCrawlId) {
+                  context.break();
+                  preventDispatch = true;
+                }
+                startTime = performance.now();
+                resolve();
+              })
+            );
           }
-
-          crawl(rootFractalElement.current, iterateeFunction, {
-            order: "bfs"
-          }).then(() => {
-            if (!preventDispatch) {
-              dispatchCurrentElementsCount(currentElements, dispatch);
-            }
+          render({
+            pixiApp,
+            treeElement: node,
+            texture: throttledState.texture.texture,
+            colorPicker: throttledState.color.pick
           });
+          // Currently, the fractal element creates its children even if it's at the last level. It's children (last level + 1), just don't render themselves and don't create their own. It's useful for recognizing first rendering of this element.
+          if (node.children.length !== 0) {
+            currentElements++;
+          }
         }
-      };
-      Object.assign(tweenTo, throttledState.parameters);
-      TweenLite.lagSmoothing(0, 0);
-      TweenLite.to(currentParams, 1, tweenTo);
-    },
-    [
-      throttledState.parameters,
-      throttledState.texture,
-      throttledState.color,
-      throttledState.name,
-      currentParams,
-      pixiApp,
-      lastCrawlId,
-      dispatch
-    ]
-  );
+
+        crawl(rootFractalElement.current, iterateeFunction, {
+          order: "bfs"
+        }).then(() => {
+          if (!preventDispatch) {
+            dispatchCurrentElementsCount(currentElements, dispatch);
+          }
+        });
+      }
+    };
+    Object.assign(tweenTo, throttledState.parameters);
+    gsap.ticker.lagSmoothing(0, 0);
+    gsap.to(currentParams, tweenTo);
+  }, [
+    throttledState.parameters,
+    throttledState.texture,
+    throttledState.color,
+    throttledState.name,
+    currentParams,
+    pixiApp,
+    lastCrawlId,
+    dispatch
+  ]);
 }
 
 function dispatchCurrentElementsCount(currentElements: number, dispatch: any) {
