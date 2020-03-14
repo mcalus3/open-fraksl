@@ -6,6 +6,7 @@
     "@material-ui/core": "^4.9.3",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.43",
+    "async-tree-crawl": "^1.1.1",
     "gsap": "^3.1.1",
     "pixi.js": "^5.2.1",
     "react": "^16.12.0",

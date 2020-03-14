@@ -10,7 +10,7 @@ import {
 import { gsap } from "gsap";
 //@ts-ignore
 import { useThrottle } from "use-throttle";
-import crawl from "../../../tree-crawl";
+import crawl from "async-tree-crawl";
 import {
   SetCurrentElementsCountAction,
   SetCurrentElementsCount
