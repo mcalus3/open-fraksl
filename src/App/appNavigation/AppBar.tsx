@@ -5,17 +5,10 @@ import {
   Toolbar,
   Typography,
   Hidden,
-  Button,
-  Grid,
-  Link,
-  CircularProgress
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import { NavLink as RouterLink } from "react-router-dom";
-import About from "./About";
-
-import { useAuth } from "react-use-auth";
 import { makeStyles } from "@material-ui/core/styles";
+
 import { Navigation } from "./Navigation";
 
 const packageJson = require("../../../package.json");
@@ -24,7 +17,6 @@ const name = packageJson.name;
 const useStyles = makeStyles(theme => ({
   menuIcon: {
     marginLeft: "auto",
-    color: "white"
   }
 }));
 

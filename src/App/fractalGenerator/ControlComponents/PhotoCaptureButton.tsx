@@ -26,7 +26,6 @@ export default function PhotoCaptureButton() {
   return (
     <Button
       variant="contained"
-      color="default"
       className={classes.button}
       onClick={() => saveFractalImage(pixiApp)}
     >

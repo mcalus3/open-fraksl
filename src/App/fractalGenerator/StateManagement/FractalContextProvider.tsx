@@ -43,7 +43,7 @@ function useCreatePixiApp() {
   const [pixiApp, _] = React.useState<PIXI.Application>(
     () =>
       new PIXI.Application({
-        backgroundColor: 0x1099bb,
+        backgroundColor: 0x00acc1,
         autoDensity: true,
         resolution: window.devicePixelRatio
       })

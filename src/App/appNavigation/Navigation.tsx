@@ -18,16 +18,14 @@ const useStyles = makeStyles(theme => ({
   navigation: {
     flexBasis: 0,
     marginLeft: "auto",
-    color: "white"
   },
   button: {
     textTransform: "none",
-    color: "white"
   },
   link: {
+    color: theme.palette.primary.contrastText,
     cursor: "pointer",
     textTransform: "none",
-    color: "white",
     textDecoration: "none",
     "&:hover": {
       textDecoration: "underline"
