@@ -20,10 +20,8 @@ function FractalGenerator() {
 
   return (
     <div className={classes.container}>
-      <FractalStateProvider>
         <FractalStage />
         <ControlDrawer />
-      </FractalStateProvider>
     </div>
   );
 }

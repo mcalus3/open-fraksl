@@ -25,15 +25,17 @@ const useStyles = makeStyles(theme => ({
     color: "white"
   },
   link: {
+    cursor: "pointer",
     textTransform: "none",
     color: "white",
-    opacity: 0.5,
+    textDecoration: "none",
     "&:hover": {
-      opacity: 1
+      textDecoration: "underline"
     }
   },
   activeLink: {
-    opacity: 1
+    textDecoration: "underline",
+    fontWeight: "bold"
   }
 }));
 
@@ -47,42 +49,40 @@ export const Navigation = () => {
       <Grid
         container
         className={classes.navigation}
-        spacing={2}
+        spacing={4}
         alignItems="center"
         justify="flex-end"
         wrap="nowrap"
       >
         <Grid item>
-          <Button
+          <RouterLink
             className={classes.link}
-            component={RouterLink}
             to="/"
             activeClassName={classes.activeLink}
             exact
           >
             <Typography color="inherit">Generator</Typography>
-          </Button>
+          </RouterLink>
         </Grid>
         <Grid item>
-          <Button
+          <RouterLink
             className={classes.link}
-            component={RouterLink}
             to="gallery"
             activeClassName={classes.activeLink}
             exact
           >
             <Typography color="inherit">Gallery</Typography>
-          </Button>
+          </RouterLink>
         </Grid>
         <Grid item>
-          <Button
+          <Typography
             className={classes.link}
             onClick={() => {
               setModalOpen(true);
             }}
           >
-            <Typography color="inherit">About</Typography>
-          </Button>
+            About
+          </Typography>
         </Grid>
         <Grid item>
           {isAuthenticating ? (

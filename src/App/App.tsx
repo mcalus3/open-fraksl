@@ -5,6 +5,7 @@ import AppBar from "./appNavigation/AppBar";
 import FractalGenerator from "./fractalGenerator/FractalGenerator";
 import { AuthCallback } from "./AuthCallback";
 import { Providers } from "./Providers";
+import { Gallery } from "./FractalGallery/Gallery";
 
 const useStyles = makeStyles({
   root: {
@@ -26,8 +27,8 @@ export const App = () => {
           <AppBar />
           <Switch>
             <Route path="/auth0_callback" component={AuthCallback} />
+            <Route path="/gallery" component={Gallery} />
             <Route path="/" component={FractalGenerator} />
-            <Route path="/gallery" component={FractalGenerator} />
           </Switch>
         </div>
       </Providers>
