@@ -5,103 +5,148 @@ import {
   Typography,
   CircularProgress,
   IconButton,
-  Link
+  Link,
+  Menu,
+  MenuItem
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink as RouterLink } from "react-router-dom";
 import GitHubIcon from "@material-ui/icons/GitHub";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import PersonIcon from "@material-ui/icons/Person";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { fade } from "@material-ui/core/styles/colorManipulator";
+
 import { useAuth } from "react-use-auth";
 import About from "./About";
 
 const useStyles = makeStyles(theme => ({
   navigation: {
-    flexBasis: 0,
-    marginLeft: "auto",
   },
   button: {
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    fontWeight: 300,
+    fontSize: "1rem",
     textTransform: "none",
-  },
-  link: {
-    color: theme.palette.primary.contrastText,
-    cursor: "pointer",
-    textTransform: "none",
-    textDecoration: "none",
     "&:hover": {
-      textDecoration: "underline"
+      textDecoration: "underline",
+      backgroundColor: fade(theme.palette.primary.contrastText, 0.04)
+    }
+  },
+  profileButton: {
+    fontWeight: 300,
+    fontSize: "1rem",
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: fade(theme.palette.primary.contrastText, 0.04)
     }
   },
   activeLink: {
-    textDecoration: "underline",
-    fontWeight: "bold"
-  }
+    backgroundColor: fade(theme.palette.primary.contrastText, 0.04)
+  },
+  light: {}
 }));
 
 export const Navigation = () => {
   const classes = useStyles();
   const { isAuthenticated, login, logout, user, isAuthenticating } = useAuth();
   const [modalOpen, setModalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
       <Grid
         container
         className={classes.navigation}
-        spacing={4}
+        spacing={2}
         alignItems="center"
         justify="flex-end"
-        wrap="nowrap"
       >
         <Grid item>
-          <RouterLink
-            className={classes.link}
+          <Button
+            component={RouterLink}
+            className={classes.button}
+            color="inherit"
             to="/"
             activeClassName={classes.activeLink}
             exact
           >
-            <Typography color="inherit">Generator</Typography>
-          </RouterLink>
+            Generator
+          </Button>
         </Grid>
         <Grid item>
-          <RouterLink
-            className={classes.link}
+          <Button
+            component={RouterLink}
+            className={classes.button}
+            color="inherit"
             to="gallery"
             activeClassName={classes.activeLink}
             exact
           >
-            <Typography color="inherit">Gallery</Typography>
-          </RouterLink>
+            Gallery
+          </Button>
         </Grid>
         <Grid item>
-          <Typography
-            className={classes.link}
+          <Button
+            className={classes.button}
+            color="inherit"
             onClick={() => {
               setModalOpen(true);
             }}
           >
             About
-          </Typography>
+          </Button>
         </Grid>
         <Grid item>
           {isAuthenticating ? (
             <CircularProgress color="inherit" />
           ) : isAuthenticated() ? (
-            <IconButton
-              className={classes.navigation}
-              color="inherit"
-              aria-label="Menu"
-            >
-              <AccountCircleIcon />
-            </IconButton>
+            <>
+              <Button
+                className={classes.profileButton}
+                color="inherit"
+                aria-label="Menu"
+                aria-controls="simple-menu"
+                aria-haspopup="true"
+                onClick={handleClick}
+              >
+                <PersonIcon />
+                Profile
+                <ArrowDropDownIcon />
+              </Button>
+              <Menu
+                id="simple-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>My fractals</MenuItem>
+                <MenuItem onClick={handleClose}>Account settings</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
+              </Menu>
+            </>
           ) : (
-            <Button variant="outlined" color="inherit" onClick={login}>
+            <Button
+              variant="outlined"
+              color="inherit"
+              onClick={login}
+              className={classes.button}
+            >
               Login
             </Button>
           )}
         </Grid>
         <Grid item>
           <IconButton
-            className={classes.navigation}
             color="inherit"
             aria-label="Github"
             component={Link}

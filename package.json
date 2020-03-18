@@ -18,6 +18,7 @@
     "react-use-auth": "^0.5.3",
     "react-use-dimensions": "^1.2.1",
     "tree-crawl": "^1.0.5",
+    "typeface-roboto": "0.0.75",
     "typescript": "3.7.5",
     "use-throttle": "0.0.3"
   },

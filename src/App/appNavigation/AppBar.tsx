@@ -15,8 +15,10 @@ const packageJson = require("../../../package.json");
 const name = packageJson.name;
 
 const useStyles = makeStyles(theme => ({
-  menuIcon: {
-    marginLeft: "auto",
+  brand: {
+    marginRight: "auto",
+    fontWeight: 300,
+    flexShrink: 0
   }
 }));
 
@@ -27,7 +29,7 @@ function AppBar() {
   return (
     <MuiAppBar position="static">
       <Toolbar variant="dense">
-        <Typography variant="h6" color="inherit">
+        <Typography variant="h6" color="inherit" className={classes.brand}>
           {name}
         </Typography>
         <Hidden xsDown>
@@ -35,7 +37,6 @@ function AppBar() {
         </Hidden>
         <Hidden smUp>
           <IconButton
-            className={classes.menuIcon}
             color="inherit"
             aria-label="Menu"
             onClick={() => {
