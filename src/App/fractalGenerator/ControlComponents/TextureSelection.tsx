@@ -1,18 +1,18 @@
-import * as React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { InputLabel, Select, MenuItem } from '@material-ui/core';
-import * as PIXI from 'pixi.js';
+import * as React from "react";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { InputLabel, Select, MenuItem } from "@material-ui/core";
+import * as PIXI from "pixi.js";
 
-import { useFractalReducer } from '../StateManagement/FractalContextProvider';
+import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import {
   SetFractalTextureAction,
   SetFractalTexture
-} from '../StateManagement/fractalActions';
+} from "../StateManagement/fractalActions";
 import {
   fractalTextures,
   FractalTexture
-} from '../FractalDefinitions/common/FractalTextures';
-import { useState } from 'react';
+} from "../FractalDefinitions/common/FractalTextures";
+import { useState } from "react";
 
 type MyChangeEvent = React.ChangeEvent<{
   name?: string;
@@ -24,8 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       marginBottom: theme.spacing(3)
     },
-    input: { width: '100px' },
-    selector: { width: '100%', height: '100%' }
+    input: { width: "100px" },
+    selector: { width: "100%", height: "100%" }
   })
 );
 
@@ -38,7 +38,7 @@ function TextureSelection() {
   const fileSelector = useFileSelector();
 
   function handleChange(event: MyChangeEvent) {
-    if (!event.target.value || event.target.value === 'custom') {
+    if (!event.target.value || event.target.value === "custom") {
       return;
     }
     const action: SetFractalTextureAction = {
@@ -82,8 +82,8 @@ function TextureSelection() {
           } as MyChangeEvent)
         }
         inputProps={{
-          name: 'choose texture',
-          id: 'choose-texture'
+          name: "choose texture",
+          id: "choose-texture"
         }}
       >
         {textureSelectors}
@@ -112,7 +112,7 @@ function useImageLoad() {
       const action: SetFractalTextureAction = {
         type: SetFractalTexture,
         payload: {
-          name: 'custom',
+          name: "custom",
           texture: PIXI.Texture.from(event.target.result)
         }
       };
@@ -125,9 +125,9 @@ function useImageLoad() {
 
 function useFileSelector() {
   const onImageLoad = useImageLoad();
-  const fileSelector = document.createElement('input');
-  fileSelector.setAttribute('type', 'file');
-  fileSelector.setAttribute('accept', 'image/*');
+  const fileSelector = document.createElement("input");
+  fileSelector.setAttribute("type", "file");
+  fileSelector.setAttribute("accept", "image/*");
   fileSelector.onchange = onImageLoad;
 
   return fileSelector;

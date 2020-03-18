@@ -1,16 +1,16 @@
-import * as React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import * as React from "react";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
-import { colorPalettes } from '../FractalDefinitions/common/ColorPalettes';
-import { useFractalReducer } from '../StateManagement/FractalContextProvider';
+import { colorPalettes } from "../FractalDefinitions/common/ColorPalettes";
+import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import {
   SetFractalColorAction,
   SetFractalColor
-} from '../StateManagement/fractalActions';
-import { useState } from 'react';
+} from "../StateManagement/fractalActions";
+import { useState } from "react";
 
 type MyChangeEvent = React.ChangeEvent<{
   name?: string;
@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       marginBottom: theme.spacing(3)
     },
-    input: { width: '100px' },
-    selector: { width: '100%', height: '100%' }
+    input: { width: "100px" },
+    selector: { width: "100%", height: "100%" }
   })
 );
 
@@ -35,7 +35,8 @@ function ColorSelection() {
   );
 
   function handleChange(event: MyChangeEvent) {
-    const palette = colorPalettes.find(palette => palette.name === event.target.value) ||
+    const palette =
+      colorPalettes.find(palette => palette.name === event.target.value) ||
       colorPalettes[0];
     const action: SetFractalColorAction = {
       type: SetFractalColor,
@@ -74,8 +75,8 @@ function ColorSelection() {
           } as MyChangeEvent)
         }
         inputProps={{
-          name: 'color palette',
-          id: 'color-palette'
+          name: "color palette",
+          id: "color-palette"
         }}
       >
         {colorSelectors}

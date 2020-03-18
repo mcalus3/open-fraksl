@@ -38,12 +38,12 @@ const sierpinskiCarpetFractal = {
   branchingFactor: 8
 };
 
-function renderSierpinskiCarpetFractal(
-  {pixiApp,
+function renderSierpinskiCarpetFractal({
+  pixiApp,
   treeElement,
   texture,
-  colorPicker}: RenderFunctionParams
-) {
+  colorPicker
+}: RenderFunctionParams) {
   const params = treeElement.params;
   if (endConditionFulfilled(params)) {
     hideChildren(treeElement);

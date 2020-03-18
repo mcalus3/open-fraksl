@@ -46,9 +46,9 @@ const None: ColorPicker = (order: number) => {
 };
 
 export const colorPalettes: ColorDefinition[] = [
-  { name: 'sea colors', pick: calusPalette },
-  { name: 'black and white', pick: blackAndWhite },
-  { name: 'gumball', pick: gumballPalette },
-  { name: 'rainbow', pick: rainbowPalette },
-  { name: 'none', pick: None }
+  { name: "sea colors", pick: calusPalette },
+  { name: "black and white", pick: blackAndWhite },
+  { name: "gumball", pick: gumballPalette },
+  { name: "rainbow", pick: rainbowPalette },
+  { name: "none", pick: None }
 ];

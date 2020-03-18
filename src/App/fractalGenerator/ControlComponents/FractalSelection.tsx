@@ -1,20 +1,20 @@
-import * as React from 'react';
-import { useState } from 'react';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
+import * as React from "react";
+import { useState } from "react";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
-import { useFractalReducer } from '../StateManagement/FractalContextProvider';
+import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import {
   SetFractalAction,
   SetFractal,
   SetParameterAction,
   SetParameter
-} from '../StateManagement/fractalActions';
-import fractalModels from '../FractalDefinitions';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Theme } from '@material-ui/core';
-import { transformParametersProportionally } from '../StateManagement/fractalReducer';
+} from "../StateManagement/fractalActions";
+import fractalModels from "../FractalDefinitions";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@material-ui/core";
+import { transformParametersProportionally } from "../StateManagement/fractalReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,7 +34,7 @@ function FractalSelection() {
   ) {
     const action: SetParameterAction = {
       type: SetParameter,
-      payload: { name: 'zoom', value: 0 }
+      payload: { name: "zoom", value: 0 }
     };
     dispatch(action);
     setSelectedName(event.target.value as string);
@@ -48,7 +48,7 @@ function FractalSelection() {
       const changeParamsAction: SetParameterAction = {
         type: SetParameter,
         payload: {
-          name: 'zoom',
+          name: "zoom",
           value: transformParametersProportionally(
             state.parameters,
             selectedName,
@@ -73,11 +73,11 @@ function FractalSelection() {
         value={selectedName}
         onChange={handleChange}
         inputProps={{
-          name: 'choose fractal',
-          id: 'choose-fractal'
+          name: "choose fractal",
+          id: "choose-fractal"
         }}
       >
-        {fractalSelectors}{' '}
+        {fractalSelectors}{" "}
       </Select>
     </div>
   );

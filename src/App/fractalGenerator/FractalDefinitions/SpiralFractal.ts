@@ -1,8 +1,8 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from "pixi.js";
 import buildRenderFunction, {
   RenderFunctionParams,
   FractalFunctionDefinitions
-} from './common/fractalRendererBuilder';
+} from "./common/fractalRendererBuilder";
 
 const spiralRenderingFunctionDefinitions: FractalFunctionDefinitions = {
   isLastElement: isSmallerThan1px,
@@ -23,28 +23,28 @@ export type SpiralFractalParams =
   | { [key: string]: number };
 
 const spiralFractal = {
-  name: 'spiral fractal',
+  name: "spiral fractal",
   parameters: {
     x: {
-      name: 'x',
+      name: "x",
       min: -1,
       max: 1,
       default: 0
     },
     y: {
-      name: 'y',
+      name: "y",
       min: -1,
       max: 1,
       default: 0
     },
     rotation: {
-      name: 'rotation',
+      name: "rotation",
       min: 0,
       max: Math.PI,
       default: 0.1
     },
     zoom: {
-      name: 'depth',
+      name: "depth",
       min: 0,
       max: 200,
       default: 30

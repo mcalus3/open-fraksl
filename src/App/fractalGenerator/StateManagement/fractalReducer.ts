@@ -1,15 +1,15 @@
 import fractalModels, {
   FractalDefinition,
   ParametersType
-} from '../FractalDefinitions';
+} from "../FractalDefinitions";
 import {
   ColorDefinition,
   colorPalettes
-} from '../FractalDefinitions/common/ColorPalettes';
+} from "../FractalDefinitions/common/ColorPalettes";
 import {
   fractalTextures,
   FractalTexture
-} from '../FractalDefinitions/common/FractalTextures';
+} from "../FractalDefinitions/common/FractalTextures";
 import {
   FractalAction,
   SetParameter,
@@ -19,7 +19,7 @@ import {
   SetFractalColor,
   SetCurrentElementsCount,
   SetTotalElementsCount
-} from './fractalActions';
+} from "./fractalActions";
 
 function fractalReducer(state: FractalState, action: FractalAction) {
   let newState = { ...state };

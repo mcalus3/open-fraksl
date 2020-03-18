@@ -1,5 +1,5 @@
-import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
+import React from "react";
+import Dialog from "@material-ui/core/Dialog";
 import {
   DialogActions,
   Button,
@@ -7,8 +7,8 @@ import {
   Typography,
   DialogTitle,
   DialogContent
-} from '@material-ui/core';
-import { TransitionProps } from 'react-transition-group/Transition';
+} from "@material-ui/core";
+import { TransitionProps } from "react-transition-group/Transition";
 
 const Transition = React.forwardRef<unknown, TransitionProps>(
   function Transition(props, ref) {

@@ -1,9 +1,9 @@
-import * as PIXI from 'pixi.js';
-import { depthExceedsZoomLevel } from './common/sharedRenderingFunctions';
+import * as PIXI from "pixi.js";
+import { depthExceedsZoomLevel } from "./common/sharedRenderingFunctions";
 import buildRenderFunction, {
   FractalFunctionDefinitions,
   RenderFunctionParams
-} from './common/fractalRendererBuilder';
+} from "./common/fractalRendererBuilder";
 
 const sierpinskiTreeRenderingFunctionDefinitions: FractalFunctionDefinitions = {
   isLastElement: depthExceedsZoomLevel,
@@ -12,28 +12,28 @@ const sierpinskiTreeRenderingFunctionDefinitions: FractalFunctionDefinitions = {
 };
 
 const sierpinskiTreeFractal = {
-  name: 'Sierpinski tree',
+  name: "Sierpinski tree",
   parameters: {
     length: {
-      name: 'size',
+      name: "size",
       min: 0,
       max: 1,
       default: 0.25
     },
     ratio: {
-      name: 'shrinking ratio',
+      name: "shrinking ratio",
       min: 0,
       max: 1,
       default: 0.7
     },
     angle: {
-      name: 'angle',
+      name: "angle",
       min: 0,
       max: Math.PI,
       default: Math.PI / 4
     },
     zoom: {
-      name: 'depth',
+      name: "depth",
       min: 0,
       max: 18,
       default: 6,

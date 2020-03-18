@@ -1,19 +1,19 @@
-import React, { Dispatch, useLayoutEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import * as PIXI from 'pixi.js';
+import React, { Dispatch, useLayoutEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import * as PIXI from "pixi.js";
 //@ts-ignore
-import useDimensions from 'react-use-dimensions';
+import useDimensions from "react-use-dimensions";
 
-import FractalRenderer from './FractalRenderer';
+import FractalRenderer from "./FractalRenderer";
 import {
   useFractalReducer,
   usePixiApp
-} from '../StateManagement/FractalContextProvider';
+} from "../StateManagement/FractalContextProvider";
 import {
   ResizeStage,
   FractalAction,
   ResizeStageAction
-} from '../StateManagement/fractalActions';
+} from "../StateManagement/fractalActions";
 
 const useStyles = makeStyles({
   stage: {

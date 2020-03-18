@@ -20,8 +20,7 @@ import { useAuth } from "react-use-auth";
 import About from "./About";
 
 const useStyles = makeStyles(theme => ({
-  navigation: {
-  },
+  navigation: {},
   button: {
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),

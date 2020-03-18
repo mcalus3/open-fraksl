@@ -1,10 +1,10 @@
-import * as React from 'react';
-import * as PIXI from 'pixi.js';
+import * as React from "react";
+import * as PIXI from "pixi.js";
 import fractalReducer, {
   FractalState,
   fractalInitialState
-} from './fractalReducer';
-import { FractalAction } from './fractalActions';
+} from "./fractalReducer";
+import { FractalAction } from "./fractalActions";
 
 type CountProviderProps = { children: React.ReactNode };
 
@@ -63,7 +63,7 @@ function useCreatePixiApp() {
 function useFractalState() {
   const context = React.useContext(CountStateContext);
   if (context === undefined) {
-    throw new Error('useCountState must be used within a CountProvider');
+    throw new Error("useCountState must be used within a CountProvider");
   }
   return context;
 }
@@ -71,7 +71,7 @@ function useFractalState() {
 function useFractalDispatch() {
   const context = React.useContext(CountDispatchContext);
   if (context === undefined) {
-    throw new Error('useCountDispatch must be used within a CountProvider');
+    throw new Error("useCountDispatch must be used within a CountProvider");
   }
   return context;
 }
@@ -83,7 +83,7 @@ function useFractalReducer() {
 function usePixiApp() {
   const context = React.useContext(PixiContext);
   if (context === undefined) {
-    throw new Error('usePixiApp must be used within a PixiProvider');
+    throw new Error("usePixiApp must be used within a PixiProvider");
   }
   return context;
 }

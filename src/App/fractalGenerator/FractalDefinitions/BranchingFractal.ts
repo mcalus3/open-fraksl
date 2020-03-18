@@ -1,8 +1,8 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from "pixi.js";
 
-import { FractalElementsTree } from './index';
-import { hideChildren } from './common/sharedRenderingFunctions';
-import { ColorPicker } from './common/ColorPalettes';
+import { FractalElementsTree } from "./index";
+import { hideChildren } from "./common/sharedRenderingFunctions";
+import { ColorPicker } from "./common/ColorPalettes";
 
 export type BranchingFractalParams =
   | {
@@ -17,28 +17,28 @@ export type BranchingFractalParams =
   | { [key: string]: number };
 
 const branchingFractal = {
-  name: 'branching fractal',
+  name: "branching fractal",
   parameters: {
     x: {
-      name: 'width',
+      name: "width",
       min: 0,
       max: 50,
       default: 25
     },
     y: {
-      name: 'height',
+      name: "height",
       min: 0,
       max: 50,
       default: 25
     },
     rotation: {
-      name: 'rotation',
+      name: "rotation",
       min: 0,
       max: Math.PI,
       default: 0.1
     },
     zoom: {
-      name: 'depth',
+      name: "depth",
       min: 0,
       max: 18,
       default: 5,

@@ -1,6 +1,6 @@
-import { FractalElementsTree, ParametersType } from '../index';
-import { RenderFunctionParams } from './fractalRendererBuilder';
-import * as PIXI from 'pixi.js';
+import { FractalElementsTree, ParametersType } from "../index";
+import { RenderFunctionParams } from "./fractalRendererBuilder";
+import * as PIXI from "pixi.js";
 
 export function hideChildren(treeElement: FractalElementsTree) {
   for (let i = 0; i < treeElement.children.length; i++) {

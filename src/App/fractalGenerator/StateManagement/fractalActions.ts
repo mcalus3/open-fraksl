@@ -1,13 +1,13 @@
-import { FractalTexture } from '../FractalDefinitions/common/FractalTextures';
-import { ColorDefinition } from '../FractalDefinitions/common/ColorPalettes';
+import { FractalTexture } from "../FractalDefinitions/common/FractalTextures";
+import { ColorDefinition } from "../FractalDefinitions/common/ColorPalettes";
 
-export const SetParameter = 'SET_PARAMETER';
-export const SetFractal = 'SET_FRACTAL';
-export const SetFractalTexture = 'SET_FRACTAL_TEXTURE';
-export const SetFractalColor = 'SET_FRACTAL_COLOR';
-export const ResizeStage = 'RESIZE_STAGE';
-export const SetTotalElementsCount = 'SET_TOTAL_ELEMENTS_COUNT';
-export const SetCurrentElementsCount = 'SET_CURRENT_ELEMENTS_COUNT';
+export const SetParameter = "SET_PARAMETER";
+export const SetFractal = "SET_FRACTAL";
+export const SetFractalTexture = "SET_FRACTAL_TEXTURE";
+export const SetFractalColor = "SET_FRACTAL_COLOR";
+export const ResizeStage = "RESIZE_STAGE";
+export const SetTotalElementsCount = "SET_TOTAL_ELEMENTS_COUNT";
+export const SetCurrentElementsCount = "SET_CURRENT_ELEMENTS_COUNT";
 
 export type SetParameterAction = {
   type: typeof SetParameter;

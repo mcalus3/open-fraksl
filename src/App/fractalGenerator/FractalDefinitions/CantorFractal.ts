@@ -1,9 +1,9 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from "pixi.js";
 
-import { FractalElementsTree } from './index';
-import { hideChildren } from './common/sharedRenderingFunctions';
-import { ColorPicker } from './common/ColorPalettes';
-import { RenderFunctionParams } from './common/fractalRendererBuilder';
+import { FractalElementsTree } from "./index";
+import { hideChildren } from "./common/sharedRenderingFunctions";
+import { ColorPicker } from "./common/ColorPalettes";
+import { RenderFunctionParams } from "./common/fractalRendererBuilder";
 
 type Left = -1;
 type Right = 1;
@@ -24,28 +24,28 @@ export type CantorFractalParams =
   | { [key: string]: number };
 
 const cantorFractal = {
-  name: 'cantor set',
+  name: "cantor set",
   parameters: {
     x: {
-      name: 'left width',
+      name: "left width",
       min: 0,
       max: 1,
       default: 0.4
     },
     z: {
-      name: 'right width',
+      name: "right width",
       min: 0,
       max: 1,
       default: 0.6
     },
     y: {
-      name: 'height',
+      name: "height",
       min: 0,
       max: 100,
       default: 30
     },
     zoom: {
-      name: 'depth',
+      name: "depth",
       min: 0,
       max: 18,
       default: 5,

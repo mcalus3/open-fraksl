@@ -1,10 +1,10 @@
-import * as PIXI from 'pixi.js';
+import * as PIXI from "pixi.js";
 
-import { depthExceedsZoomLevel } from './common/sharedRenderingFunctions';
+import { depthExceedsZoomLevel } from "./common/sharedRenderingFunctions";
 import buildRenderFunction, {
   RenderFunctionParams,
   FractalFunctionDefinitions
-} from './common/fractalRendererBuilder';
+} from "./common/fractalRendererBuilder";
 
 const pythagorasTreeRenderingFunctionDefinitions: FractalFunctionDefinitions = {
   isLastElement: depthExceedsZoomLevel,
@@ -29,22 +29,22 @@ export type PythagorasTreeFractalParams =
   | { [key: string]: number };
 
 const pythagorasTreeFractal = {
-  name: 'Pythagoras tree',
+  name: "Pythagoras tree",
   parameters: {
     length: {
-      name: 'size',
+      name: "size",
       min: 0,
       max: 1,
       default: 0.25
     },
     angle: {
-      name: 'angle',
+      name: "angle",
       min: 0,
       max: Math.PI / 2,
       default: Math.PI / 4
     },
     zoom: {
-      name: 'depth',
+      name: "depth",
       min: 0,
       max: 18,
       default: 5,

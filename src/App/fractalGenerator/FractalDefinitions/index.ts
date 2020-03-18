@@ -1,9 +1,9 @@
-import { cantorFractal } from './CantorFractal';
-import { sierpinskiTreeFractal } from './SierpinskiTreeFractal';
-import { pythagorasTreeFractal } from './PythagorasTreeFractal';
-import { spiralFractal } from './SpiralFractal';
-import { sierpinskiCarpetFractal } from './SierpinskiCarpetFractal';
-import { RenderFunctionParams } from './common/fractalRendererBuilder';
+import { cantorFractal } from "./CantorFractal";
+import { sierpinskiTreeFractal } from "./SierpinskiTreeFractal";
+import { pythagorasTreeFractal } from "./PythagorasTreeFractal";
+import { spiralFractal } from "./SpiralFractal";
+import { sierpinskiCarpetFractal } from "./SierpinskiCarpetFractal";
+import { RenderFunctionParams } from "./common/fractalRendererBuilder";
 
 export type FractalElementsTree = {
   sprite: PIXI.Sprite;

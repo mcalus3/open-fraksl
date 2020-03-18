@@ -1,17 +1,17 @@
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
 
-import React from 'react';
-import Button from '@material-ui/core/Button';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { usePixiApp } from '../StateManagement/FractalContextProvider';
+import React from "react";
+import Button from "@material-ui/core/Button";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { usePixiApp } from "../StateManagement/FractalContextProvider";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
       marginBottom: theme.spacing(3),
-      textTransform: 'none',
+      textTransform: "none",
       lineHeight: 1,
-      fontSize: '1rem'
+      fontSize: "1rem"
     },
     icon: {
       marginRight: theme.spacing(1),
@@ -59,10 +59,10 @@ function saveFractalImage(pixiApp: PIXI.Application) {
   //   const canvas = pixiApp.renderer.extract.canvas(pixiApp.stage);
   //   document.body.append(canvas);
 
-  const img = pixiApp.renderer.extract.base64(pixiApp.stage, 'image/png');
-  const a = document.createElement('a');
+  const img = pixiApp.renderer.extract.base64(pixiApp.stage, "image/png");
+  const a = document.createElement("a");
   document.body.append(a);
-  a.download = 'fractal.png';
+  a.download = "fractal.png";
   a.href = img;
   a.click();
   a.remove();
