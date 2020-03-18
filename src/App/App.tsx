@@ -1,11 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
-import AppBar from "./appNavigation/AppBar";
-import FractalGenerator from "./fractalGenerator/FractalGenerator";
 import { AuthCallback } from "./AuthCallback";
 import { Providers } from "./Providers";
-import { Gallery } from "./FractalGallery/Gallery";
+import { AppBar } from "./appNavigation";
+import { FractalGenerator } from "./fractalGenerator";
+import { Gallery } from "./FractalGallery";
 
 const useStyles = makeStyles({
   root: {

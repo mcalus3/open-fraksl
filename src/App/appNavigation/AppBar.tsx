@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function AppBar() {
+export function AppBar() {
   const classes = useStyles();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -57,5 +57,3 @@ function AppBar() {
     </MuiAppBar>
   );
 }
-
-export default AppBar;
