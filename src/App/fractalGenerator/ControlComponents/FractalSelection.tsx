@@ -6,10 +6,10 @@ import Select from "@material-ui/core/Select";
 
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import {
-  SetFractalAction,
-  SetFractal,
+  SetFractalTypeAction,
   SetParameterAction,
-  SetParameter
+  SetParameter,
+  SetFractalType
 } from "../StateManagement/fractalActions";
 import fractalModels from "../FractalDefinitions";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
@@ -40,11 +40,11 @@ function FractalSelection() {
     setSelectedName(event.target.value as string);
 
     setTimeout(() => {
-      const changeFractalAaction: SetFractalAction = {
-        type: SetFractal,
+      const changeFractalAction: SetFractalTypeAction = {
+        type: SetFractalType,
         payload: { name: event.target.value as string }
       };
-      dispatch(changeFractalAaction);
+      dispatch(changeFractalAction);
       const changeParamsAction: SetParameterAction = {
         type: SetParameter,
         payload: {

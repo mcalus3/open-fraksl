@@ -4,6 +4,7 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import SaveIcon from "@material-ui/icons/Save";
 import { getFractalDefinition } from "../StateManagement/fractalReducer";
+import { uploadFractal } from "../StateManagement/fractalLoader";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,13 +38,12 @@ export default function SaveInAGalleryButton() {
             relevantParamNames.includes(e[0])
           )
         );
-        const savedData = {
-          color: state.color.name,
+        uploadFractal({
+          color: state.color,
           parameters: relevantParams,
           name: state.name,
-          texture: state.texture.name
-        };
-        console.log(savedData);
+          texture: state.texture
+        });
       }}
     >
       Save fractal to gallery

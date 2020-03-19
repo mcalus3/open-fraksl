@@ -9,6 +9,7 @@ import ColorSelection from "./ColorSelection";
 import PhotoCaptureButton from "./PhotoCaptureButton";
 import ElementsCounter from "./ElementsCounter";
 import SaveInAGalleryButton from "./SaveInAGalleryButton";
+import SetRandomButton from "./SetRandomButton";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +38,7 @@ function ControlDrawer() {
       <TextureSelection />
       <PhotoCaptureButton />
       <SaveInAGalleryButton />
+      <SetRandomButton />
     </Paper>
   );
 }

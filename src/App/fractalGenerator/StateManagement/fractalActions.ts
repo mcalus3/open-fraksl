@@ -1,5 +1,6 @@
 import { FractalTexture } from "../FractalDefinitions/common/FractalTextures";
 import { ColorDefinition } from "../FractalDefinitions/common/ColorPalettes";
+import { FractalLoadData } from "./fractalLoader";
 
 export const SetParameter = "SET_PARAMETER";
 export const SetFractal = "SET_FRACTAL";
@@ -8,14 +9,15 @@ export const SetFractalColor = "SET_FRACTAL_COLOR";
 export const ResizeStage = "RESIZE_STAGE";
 export const SetTotalElementsCount = "SET_TOTAL_ELEMENTS_COUNT";
 export const SetCurrentElementsCount = "SET_CURRENT_ELEMENTS_COUNT";
+export const SetFractalType = "SET_FRACTAL_TYPE";
 
 export type SetParameterAction = {
   type: typeof SetParameter;
   payload: { name: string; value: number };
 };
 
-export type SetFractalAction = {
-  type: typeof SetFractal;
+export type SetFractalTypeAction = {
+  type: typeof SetFractalType;
   payload: { name: string };
 };
 
@@ -44,11 +46,17 @@ export type SetCurrentElementsCountAction = {
   payload: { value: number };
 };
 
+export type SetFractalAction = {
+  type: typeof SetFractal;
+  payload: { data: FractalLoadData };
+};
+
 export type FractalAction =
   | SetParameterAction
-  | SetFractalAction
+  | SetFractalTypeAction
   | ResizeStageAction
   | SetFractalColorAction
   | SetFractalTextureAction
   | SetTotalElementsCountAction
-  | SetCurrentElementsCountAction;
+  | SetCurrentElementsCountAction
+  | SetFractalAction;

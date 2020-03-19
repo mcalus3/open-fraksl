@@ -18,13 +18,14 @@ import {
   ResizeStage,
   SetFractalColor,
   SetCurrentElementsCount,
-  SetTotalElementsCount
+  SetTotalElementsCount,
+  SetFractalType
 } from "./fractalActions";
 
 function fractalReducer(state: FractalState, action: FractalAction) {
   let newState = { ...state };
   switch (action.type) {
-    case SetParameter:
+    case SetParameter: {
       let newParams = { ...state.parameters };
       newParams[action.payload.name] = action.payload.value;
       newState.parameters = newParams;
@@ -33,8 +34,8 @@ function fractalReducer(state: FractalState, action: FractalAction) {
         newParams
       );
       return newState;
-
-    case SetFractal:
+    }
+    case SetFractalType: {
       newState = initializeFractal(getFractalDefinition(action.payload.name));
       Object.assign(
         newState.parameters,
@@ -47,25 +48,65 @@ function fractalReducer(state: FractalState, action: FractalAction) {
       newState.color = state.color;
       newState.texture = state.texture;
       return newState;
-
-    case SetFractalTexture:
+    }
+    case SetFractalTexture: {
       if (action.payload.name !== state.texture.name) {
         newState.texture = action.payload;
       }
       return newState;
-
-    case ResizeStage:
+    }
+    case ResizeStage: {
       newState.parameters.width = action.payload.width;
       newState.parameters.height = action.payload.height;
       return newState;
-    case SetFractalColor:
+    }
+    case SetFractalColor: {
       newState.color = action.payload.palette;
       return newState;
-    case SetTotalElementsCount:
+    }
+    case SetTotalElementsCount: {
       newState.totalElementsCount = action.payload.value;
       return newState;
-    case SetCurrentElementsCount:
+    }
+    case SetCurrentElementsCount: {
       newState.currentElementsCount = action.payload.value;
+      return newState;
+    }
+    case SetFractal:
+      {
+        //type
+        newState = initializeFractal(
+          getFractalDefinition(action.payload.data.name)
+        );
+        Object.assign(
+          newState.parameters,
+          transformParametersProportionally(
+            state.parameters,
+            state.name,
+            action.payload.data.name
+          )
+        );
+        newState.color = state.color;
+        newState.texture = state.texture;
+
+        //params
+        let newParams = { ...state.parameters };
+        Object.entries(action.payload.data.parameters).forEach(param => {
+          newParams[param[0]] = param[1];
+        });
+        newState.parameters = newParams;
+        newState.totalElementsCount = calculateTotalElements(
+          getFractalDefinition(newState.name),
+          newParams
+        );
+
+        //texture
+        if (action.payload.data.texture.name !== state.texture.name) {
+          newState.texture = action.payload.data.texture;
+        }
+        newState.color = action.payload.data.color;
+        return newState;
+      }
       return newState;
   }
 }
