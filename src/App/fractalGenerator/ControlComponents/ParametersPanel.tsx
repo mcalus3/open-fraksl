@@ -1,10 +1,11 @@
 import * as React from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
-import { InputLabel } from "@material-ui/core";
+import { InputLabel, Switch, FormControlLabel } from "@material-ui/core";
 
 import ParameterControl from "./ParameterSlider";
 import { getFractalDefinition } from "../StateManagement/fractalReducer";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
+import { useState } from "react";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,6 +20,7 @@ function ParametersPanel() {
   const { state } = useFractalReducer();
   const parameterDefinitions = getFractalDefinition(state.name).parameters;
   const parameterValues = state.parameters;
+  const [showNumeric, setShowNumeric] = useState(false);
 
   const renderSliders = () => {
     const sliders = Object.keys(parameterDefinitions).map(key => {
@@ -30,6 +32,7 @@ function ParametersPanel() {
           key={def.name}
           value={val}
           variableName={key}
+          showNumeric={showNumeric}
         />
       );
     });
@@ -39,6 +42,15 @@ function ParametersPanel() {
   return (
     <div className={classes.paper}>
       <InputLabel> Transformation parameters</InputLabel>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={showNumeric}
+            onChange={() => setShowNumeric(!showNumeric)}
+          />
+        }
+        label="Show numeric values"
+      />
       {renderSliders()}
     </div>
   );
