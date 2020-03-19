@@ -10,6 +10,10 @@ import {
 } from "@material-ui/core";
 import { TransitionProps } from "react-transition-group/Transition";
 
+const packageJson = require("../../../package.json");
+const name = packageJson.name;
+const version = packageJson.version;
+
 const Transition = React.forwardRef<unknown, TransitionProps>(
   function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -32,7 +36,9 @@ export default function About({ open, onClose }: AboutProps) {
       TransitionComponent={Transition}
       keepMounted
     >
-      <DialogTitle id="about-title">About open-fraksl</DialogTitle>
+      <DialogTitle id="about-title">
+        {name} v{version}
+      </DialogTitle>
       <DialogContent dividers>
         <Typography gutterBottom>
           open-fraksl is a tool for you to create beautiful, yet simple
