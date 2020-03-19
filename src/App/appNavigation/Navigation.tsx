@@ -130,7 +130,7 @@ export const Navigation = () => {
               >
                 <MenuItem onClick={handleClose}>My fractals</MenuItem>
                 <MenuItem onClick={handleClose}>Account settings</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={logout}>Logout</MenuItem>
               </Menu>
             </>
           ) : (
