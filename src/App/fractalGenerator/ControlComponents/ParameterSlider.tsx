@@ -1,10 +1,6 @@
 import * as React from "react";
 import { Typography, Slider, Input } from "@material-ui/core";
 import { ParameterDefinition } from "../FractalDefinitions";
-import {
-  SetParameter,
-  SetParameterAction
-} from "../StateManagement/fractalActions";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import { useState } from "react";
 
@@ -25,14 +21,13 @@ function ParameterControl({
   const [startTime, setStartTime] = useState(performance.now());
 
   const setValue = (value: number | number[]) => {
-    const action: SetParameterAction = {
-      type: SetParameter,
+    dispatch({
+      type: "SET_PARAMETER",
       payload: {
         name: variableName,
         value: Array.isArray(value) ? value[0] : value
       }
-    };
-    dispatch(action);
+    });
   };
 
   const cp: (event: React.ChangeEvent<{}>, value: number | number[]) => void = (

@@ -3,11 +3,6 @@ import Button from "@material-ui/core/Button";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import CasinoIcon from "@material-ui/icons/Casino";
-import { getFractalDefinition } from "../StateManagement/fractalReducer";
-import {
-  SetFractal,
-  SetFractalAction
-} from "../StateManagement/fractalActions";
 import fractalModels, { ParameterDefinition } from "../FractalDefinitions";
 import { fractalTextures } from "../FractalDefinitions/common/FractalTextures";
 import { colorPalettes } from "../FractalDefinitions/common/ColorPalettes";
@@ -30,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function SetRandomButton() {
   const classes = useStyles();
-  const { state, dispatch } = useFractalReducer();
+  const { dispatch } = useFractalReducer();
 
   const objectMap = (obj: object, fn: Function) =>
     Object.fromEntries(
@@ -63,11 +58,10 @@ export default function SetRandomButton() {
       variant="contained"
       className={classes.button}
       onClick={() => {
-        const action: SetFractalAction = {
-          type: SetFractal,
+        dispatch({
+          type: "SET_FRACTAL",
           payload: getRandomFractal()
-        };
-        dispatch(action);
+        });
       }}
     >
       Randomize!

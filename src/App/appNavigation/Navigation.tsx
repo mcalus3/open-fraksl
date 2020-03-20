@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Grid,
   Button,
-  Typography,
   CircularProgress,
   IconButton,
   Link,
@@ -128,6 +127,7 @@ export const Navigation = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
+                <MenuItem disabled>{user.name}</MenuItem>
                 <MenuItem onClick={handleClose}>My fractals</MenuItem>
                 <MenuItem onClick={handleClose}>Account settings</MenuItem>
                 <MenuItem onClick={logout}>Logout</MenuItem>

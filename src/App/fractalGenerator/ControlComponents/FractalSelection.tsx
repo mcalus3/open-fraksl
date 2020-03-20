@@ -5,12 +5,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
-import {
-  SetFractalTypeAction,
-  SetParameterAction,
-  SetParameter,
-  SetFractalType
-} from "../StateManagement/fractalActions";
 import fractalModels from "../FractalDefinitions";
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core";
@@ -32,21 +26,19 @@ function FractalSelection() {
   function handleChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) {
-    const action: SetParameterAction = {
-      type: SetParameter,
+    dispatch({
+      type: "SET_PARAMETER",
       payload: { name: "zoom", value: 0 }
-    };
-    dispatch(action);
+    });
     setSelectedName(event.target.value as string);
 
     setTimeout(() => {
-      const changeFractalAction: SetFractalTypeAction = {
-        type: SetFractalType,
+      dispatch({
+        type: "SET_FRACTAL_TYPE",
         payload: { name: event.target.value as string }
-      };
-      dispatch(changeFractalAction);
-      const changeParamsAction: SetParameterAction = {
-        type: SetParameter,
+      });
+      dispatch({
+        type: "SET_PARAMETER",
         payload: {
           name: "zoom",
           value: transformParametersProportionally(
@@ -55,8 +47,7 @@ function FractalSelection() {
             event.target.value as string
           ).zoom
         }
-      };
-      dispatch(changeParamsAction);
+      });
     }, 1000);
   }
 
@@ -77,7 +68,7 @@ function FractalSelection() {
           id: "choose-fractal"
         }}
       >
-        {fractalSelectors}{" "}
+        {fractalSelectors}
       </Select>
     </div>
   );

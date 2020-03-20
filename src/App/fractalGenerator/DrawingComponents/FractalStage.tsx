@@ -9,11 +9,7 @@ import {
   useFractalReducer,
   usePixiApp
 } from "../StateManagement/FractalContextProvider";
-import {
-  ResizeStage,
-  FractalAction,
-  ResizeStageAction
-} from "../StateManagement/fractalActions";
+import { FractalAction } from "../StateManagement/fractalActions";
 
 const useStyles = makeStyles({
   stage: {
@@ -48,11 +44,10 @@ function usePixiAppResize(
 
   useLayoutEffect(() => {
     pixiApp.renderer.resize(width, height - 5);
-    const action: ResizeStageAction = {
-      type: ResizeStage,
+    dispatch({
+      type: "RESIZE_STAGE",
       payload: { width, height }
-    };
-    dispatch(action);
+    });
   }, [width, height, pixiApp, dispatch]);
   return ref;
 }

@@ -11,10 +11,7 @@ import { gsap } from "gsap";
 //@ts-ignore
 import { useThrottle } from "use-throttle";
 import crawl from "async-tree-crawl";
-import {
-  SetCurrentElementsCountAction,
-  SetCurrentElementsCount
-} from "../StateManagement/fractalActions";
+import { FractalAction } from "../StateManagement/fractalActions";
 
 const getStarterElement = (pixiApp: PIXI.Application) => {
   const element = {
@@ -115,12 +112,14 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
   ]);
 }
 
-function dispatchCurrentElementsCount(currentElements: number, dispatch: any) {
-  const action: SetCurrentElementsCountAction = {
-    type: SetCurrentElementsCount,
+function dispatchCurrentElementsCount(
+  currentElements: number,
+  dispatch: React.Dispatch<FractalAction>
+) {
+  dispatch({
+    type: "SET_CURRENT_ELEMENTS_COUNT",
     payload: { value: currentElements }
-  };
-  dispatch(action);
+  });
 }
 
 function FractalRenderer() {

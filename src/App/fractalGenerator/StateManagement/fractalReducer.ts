@@ -10,22 +10,12 @@ import {
   fractalTextures,
   FractalTexture
 } from "../FractalDefinitions/common/FractalTextures";
-import {
-  FractalAction,
-  SetParameter,
-  SetFractal,
-  SetFractalTexture,
-  ResizeStage,
-  SetFractalColor,
-  SetCurrentElementsCount,
-  SetTotalElementsCount,
-  SetFractalType
-} from "./fractalActions";
+import { FractalAction } from "./fractalActions";
 
 function fractalReducer(state: FractalState, action: FractalAction) {
   let newState = { ...state };
   switch (action.type) {
-    case SetParameter: {
+    case "SET_PARAMETER": {
       let newParams = { ...state.parameters };
       newParams[action.payload.name] = action.payload.value;
       newState.parameters = newParams;
@@ -35,7 +25,7 @@ function fractalReducer(state: FractalState, action: FractalAction) {
       );
       return newState;
     }
-    case SetFractalType: {
+    case "SET_FRACTAL_TYPE": {
       newState = initializeFractal(getFractalDefinition(action.payload.name));
       Object.assign(
         newState.parameters,
@@ -49,65 +39,63 @@ function fractalReducer(state: FractalState, action: FractalAction) {
       newState.texture = state.texture;
       return newState;
     }
-    case SetFractalTexture: {
+    case "SET_FRACTAL_TEXTURE": {
       if (action.payload.name !== state.texture.name) {
         newState.texture = action.payload;
       }
       return newState;
     }
-    case ResizeStage: {
+    case "RESIZE_STAGE": {
       newState.parameters.width = action.payload.width;
       newState.parameters.height = action.payload.height;
       return newState;
     }
-    case SetFractalColor: {
+    case "SET_FRACTAL_COLOR": {
       newState.color = action.payload.palette;
       return newState;
     }
-    case SetTotalElementsCount: {
+    case "SET_TOTAL_ELEMENTS_COUNT": {
       newState.totalElementsCount = action.payload.value;
       return newState;
     }
-    case SetCurrentElementsCount: {
+    case "SET_CURRENT_ELEMENTS_COUNT": {
       newState.currentElementsCount = action.payload.value;
       return newState;
     }
-    case SetFractal:
-      {
-        //type
-        newState = initializeFractal(
-          getFractalDefinition(action.payload.data.name)
-        );
-        Object.assign(
-          newState.parameters,
-          transformParametersProportionally(
-            state.parameters,
-            state.name,
-            action.payload.data.name
-          )
-        );
-        newState.color = state.color;
-        newState.texture = state.texture;
+    case "SET_FRACTAL": {
+      //type
+      newState = initializeFractal(
+        getFractalDefinition(action.payload.data.name)
+      );
+      Object.assign(
+        newState.parameters,
+        transformParametersProportionally(
+          state.parameters,
+          state.name,
+          action.payload.data.name
+        )
+      );
+      newState.color = state.color;
+      newState.texture = state.texture;
 
-        //params
-        let newParams = { ...state.parameters };
-        Object.entries(action.payload.data.parameters).forEach(param => {
-          newParams[param[0]] = param[1];
-        });
-        newState.parameters = newParams;
-        newState.totalElementsCount = calculateTotalElements(
-          getFractalDefinition(newState.name),
-          newParams
-        );
+      //params
+      let newParams = { ...state.parameters };
+      Object.entries(action.payload.data.parameters).forEach(param => {
+        newParams[param[0]] = param[1];
+      });
+      newState.parameters = newParams;
+      newState.totalElementsCount = calculateTotalElements(
+        getFractalDefinition(newState.name),
+        newParams
+      );
 
-        //texture
-        if (action.payload.data.texture.name !== state.texture.name) {
-          newState.texture = action.payload.data.texture;
-        }
-        newState.color = action.payload.data.color;
-        return newState;
+      //texture
+      if (action.payload.data.texture.name !== state.texture.name) {
+        newState.texture = action.payload.data.texture;
       }
+      newState.color = action.payload.data.color;
       return newState;
+    }
   }
 }
 

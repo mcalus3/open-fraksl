@@ -5,10 +5,6 @@ import * as PIXI from "pixi.js";
 
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import {
-  SetFractalTextureAction,
-  SetFractalTexture
-} from "../StateManagement/fractalActions";
-import {
   fractalTextures,
   FractalTexture
 } from "../FractalDefinitions/common/FractalTextures";
@@ -41,11 +37,10 @@ function TextureSelection() {
     if (!event.target.value || event.target.value === "custom") {
       return;
     }
-    const action: SetFractalTextureAction = {
-      type: SetFractalTexture,
+    dispatch({
+      type: "SET_FRACTAL_TEXTURE",
       payload: event.target.value as FractalTexture
-    };
-    dispatch(action);
+    });
   }
 
   const textureSelectors = fractalTextures.map(texture => (
@@ -109,14 +104,13 @@ function useImageLoad() {
     var fileReader = new FileReader();
 
     fileReader.onload = function(event: any) {
-      const action: SetFractalTextureAction = {
-        type: SetFractalTexture,
+      dispatch({
+        type: "SET_FRACTAL_TEXTURE",
         payload: {
           name: "custom",
           texture: PIXI.Texture.from(event.target.result)
         }
-      };
-      dispatch(action);
+      });
     };
 
     fileReader.readAsDataURL(file);

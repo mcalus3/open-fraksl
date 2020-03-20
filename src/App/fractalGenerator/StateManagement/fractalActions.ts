@@ -2,52 +2,43 @@ import { FractalTexture } from "../FractalDefinitions/common/FractalTextures";
 import { ColorDefinition } from "../FractalDefinitions/common/ColorPalettes";
 import { FractalLoadData } from "./fractalLoader";
 
-export const SetParameter = "SET_PARAMETER";
-export const SetFractal = "SET_FRACTAL";
-export const SetFractalTexture = "SET_FRACTAL_TEXTURE";
-export const SetFractalColor = "SET_FRACTAL_COLOR";
-export const ResizeStage = "RESIZE_STAGE";
-export const SetTotalElementsCount = "SET_TOTAL_ELEMENTS_COUNT";
-export const SetCurrentElementsCount = "SET_CURRENT_ELEMENTS_COUNT";
-export const SetFractalType = "SET_FRACTAL_TYPE";
-
 export type SetParameterAction = {
-  type: typeof SetParameter;
+  type: "SET_PARAMETER";
   payload: { name: string; value: number };
 };
 
 export type SetFractalTypeAction = {
-  type: typeof SetFractalType;
+  type: "SET_FRACTAL_TYPE";
   payload: { name: string };
 };
 
 export type SetFractalTextureAction = {
-  type: typeof SetFractalTexture;
+  type: "SET_FRACTAL_TEXTURE";
   payload: FractalTexture;
 };
 
 export type SetFractalColorAction = {
-  type: typeof SetFractalColor;
+  type: "SET_FRACTAL_COLOR";
   payload: { palette: ColorDefinition };
 };
 
 export type ResizeStageAction = {
-  type: typeof ResizeStage;
+  type: "RESIZE_STAGE";
   payload: { width: number; height: number };
 };
 
 export type SetTotalElementsCountAction = {
-  type: typeof SetTotalElementsCount;
+  type: "SET_TOTAL_ELEMENTS_COUNT";
   payload: { value: number };
 };
 
 export type SetCurrentElementsCountAction = {
-  type: typeof SetCurrentElementsCount;
+  type: "SET_CURRENT_ELEMENTS_COUNT";
   payload: { value: number };
 };
 
 export type SetFractalAction = {
-  type: typeof SetFractal;
+  type: "SET_FRACTAL";
   payload: { data: FractalLoadData };
 };
 

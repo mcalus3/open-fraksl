@@ -6,10 +6,6 @@ import Select from "@material-ui/core/Select";
 
 import { colorPalettes } from "../FractalDefinitions/common/ColorPalettes";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
-import {
-  SetFractalColorAction,
-  SetFractalColor
-} from "../StateManagement/fractalActions";
 import { useState } from "react";
 
 type MyChangeEvent = React.ChangeEvent<{
@@ -38,11 +34,10 @@ function ColorSelection() {
     const palette =
       colorPalettes.find(palette => palette.name === event.target.value) ||
       colorPalettes[0];
-    const action: SetFractalColorAction = {
-      type: SetFractalColor,
+    dispatch({
+      type: "SET_FRACTAL_COLOR",
       payload: { palette }
-    };
-    dispatch(action);
+    });
   }
 
   const colorSelectors = colorPalettes.map(palette => (
