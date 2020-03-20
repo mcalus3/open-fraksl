@@ -17,7 +17,7 @@ const sierpinskiTreeFractal = {
     length: {
       name: "size",
       min: 0,
-      max: 1,
+      max: 0.5,
       default: 0.25
     },
     ratio: {

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { InputLabel, Select, MenuItem } from "@material-ui/core";
 import * as PIXI from "pixi.js";
@@ -8,7 +8,6 @@ import {
   fractalTextures,
   FractalTexture
 } from "../FractalDefinitions/common/FractalTextures";
-import { useState } from "react";
 
 type MyChangeEvent = React.ChangeEvent<{
   name?: string;
@@ -31,6 +30,11 @@ function TextureSelection() {
   const [selectedTextureName, setSelectedTextureName] = useState(
     state.texture.name
   );
+
+  useEffect(() => {
+    setSelectedTextureName(state.texture.name);
+  }, [state.texture.name]);
+
   const fileSelector = useFileSelector();
 
   function handleChange(event: MyChangeEvent) {

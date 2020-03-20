@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -22,6 +21,10 @@ function FractalSelection() {
   const classes = useStyles();
   const { state, dispatch } = useFractalReducer();
   const [selectedName, setSelectedName] = useState<string>(state.name);
+
+  useEffect(() => {
+    setSelectedName(state.name);
+  }, [state.name]);
 
   function handleChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>

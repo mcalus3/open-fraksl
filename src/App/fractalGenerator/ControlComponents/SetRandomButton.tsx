@@ -59,9 +59,17 @@ export default function SetRandomButton() {
       className={classes.button}
       onClick={() => {
         dispatch({
-          type: "SET_FRACTAL",
-          payload: getRandomFractal()
+          type: "SET_PARAMETER",
+          payload: { name: "zoom", value: 0 }
         });
+        setTimeout(
+          () =>
+            dispatch({
+              type: "SET_FRACTAL",
+              payload: getRandomFractal()
+            }),
+          1000
+        );
       }}
     >
       Randomize!

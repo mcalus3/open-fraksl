@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -6,7 +6,6 @@ import Select from "@material-ui/core/Select";
 
 import { colorPalettes } from "../FractalDefinitions/common/ColorPalettes";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
-import { useState } from "react";
 
 type MyChangeEvent = React.ChangeEvent<{
   name?: string;
@@ -29,6 +28,10 @@ function ColorSelection() {
   const [selectedPaletteName, setSelectedPaletteName] = useState(
     state.color.name
   );
+
+  useEffect(() => {
+    setSelectedPaletteName(state.color.name);
+  }, [state.color.name]);
 
   function handleChange(event: MyChangeEvent) {
     const palette =

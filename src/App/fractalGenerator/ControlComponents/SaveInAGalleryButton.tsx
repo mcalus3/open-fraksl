@@ -29,6 +29,7 @@ export default function SaveInAGalleryButton() {
     <Button
       variant="contained"
       className={classes.button}
+      disabled
       onClick={() => {
         const relevantParamNames = Object.keys(
           getFractalDefinition(state.name).parameters
