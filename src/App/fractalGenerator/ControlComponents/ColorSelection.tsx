@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles, createStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
@@ -12,7 +12,7 @@ type MyChangeEvent = React.ChangeEvent<{
   value: unknown;
 }>;
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(theme =>
   createStyles({
     paper: {
       marginBottom: theme.spacing(3)
@@ -43,19 +43,6 @@ function ColorSelection() {
     });
   }
 
-  const colorSelectors = colorPalettes.map(palette => (
-    <MenuItem value={palette.name} key={palette.name}>
-      <div
-        className={classes.selector}
-        onMouseOver={e => {
-          handleChange({ target: { value: palette.name } } as MyChangeEvent);
-        }}
-      >
-        {palette.name}
-      </div>
-    </MenuItem>
-  ));
-
   return (
     <div className={classes.paper}>
       <InputLabel htmlFor="color-palette">choose palette</InputLabel>
@@ -76,8 +63,21 @@ function ColorSelection() {
           name: "color palette",
           id: "color-palette"
         }}
+        MenuProps={{ variant: "menu" }}
       >
-        {colorSelectors}
+        {colorPalettes.map(palette => (
+          <MenuItem
+            value={palette.name}
+            key={palette.name}
+            onMouseMove={e => {
+              handleChange({
+                target: { value: palette.name }
+              } as MyChangeEvent);
+            }}
+          >
+            {palette.name}
+          </MenuItem>
+        ))}
       </Select>
     </div>
   );

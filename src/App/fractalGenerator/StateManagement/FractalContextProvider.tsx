@@ -5,6 +5,7 @@ import fractalReducer, {
   fractalInitialState
 } from "./fractalReducer";
 import { FractalAction } from "./fractalActions";
+import { useTheme, Theme } from "@material-ui/core/styles";
 
 type CountProviderProps = { children: React.ReactNode };
 
@@ -36,6 +37,7 @@ function FractalStateProvider({ children }: CountProviderProps) {
 }
 
 function useCreatePixiApp() {
+  const theme = useTheme<Theme>();
   const [_canvasRef, _setCanvasRef] = React.useState<HTMLDivElement | null>(
     null
   );
@@ -43,7 +45,9 @@ function useCreatePixiApp() {
   const [pixiApp, _] = React.useState<PIXI.Application>(
     () =>
       new PIXI.Application({
-        backgroundColor: 0x00acc1,
+        backgroundColor: Number(
+          theme.palette.secondary.main.replace("#", "0x")
+        ),
         autoDensity: true,
         resolution: window.devicePixelRatio
       })
@@ -54,6 +58,7 @@ function useCreatePixiApp() {
 
   React.useLayoutEffect(() => {
     if (_canvasRef) {
+      pixiApp.stage.removeChildren();
       _canvasRef.appendChild(pixiApp.view);
     }
   }, [_canvasRef, pixiApp.view]);

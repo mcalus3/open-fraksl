@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar as MuiAppBar,
   IconButton,
@@ -25,6 +25,11 @@ const useStyles = makeStyles(theme => ({
 export function AppBar() {
   const classes = useStyles();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // Canvas resizes iself after registering window resize event and expanding navbar affects the canvas so we should fire it
+  useEffect(() => {
+    window.dispatchEvent(new Event("resize"));
+  }, [menuOpen]);
 
   return (
     <MuiAppBar position="static">

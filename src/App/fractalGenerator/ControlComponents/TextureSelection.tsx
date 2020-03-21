@@ -19,8 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       marginBottom: theme.spacing(3)
     },
-    input: { width: "100px" },
-    selector: { width: "100%", height: "100%" }
+    input: { width: "100px" }
   })
 );
 
@@ -47,19 +46,6 @@ function TextureSelection() {
     });
   }
 
-  const textureSelectors = fractalTextures.map(texture => (
-    <MenuItem value={texture.name} key={texture.name}>
-      <div
-        className={classes.selector}
-        onMouseOver={e => {
-          handleChange({ target: { value: texture } } as MyChangeEvent);
-        }}
-      >
-        {texture.name}
-      </div>
-    </MenuItem>
-  ));
-
   return (
     <div className={classes.paper}>
       <InputLabel htmlFor="choose-texture"> choose texture</InputLabel>
@@ -84,8 +70,19 @@ function TextureSelection() {
           name: "choose texture",
           id: "choose-texture"
         }}
+        MenuProps={{ variant: "menu" }}
       >
-        {textureSelectors}
+        {fractalTextures.map(texture => (
+          <MenuItem
+            value={texture.name}
+            key={texture.name}
+            onMouseMove={e => {
+              handleChange({ target: { value: texture } } as MyChangeEvent);
+            }}
+          >
+            {texture.name}
+          </MenuItem>
+        ))}
         <MenuItem value="custom">
           <div
             onClick={() => {
