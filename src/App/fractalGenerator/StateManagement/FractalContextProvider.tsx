@@ -61,7 +61,7 @@ function useCreatePixiApp() {
       pixiApp.stage.removeChildren();
       _canvasRef.appendChild(pixiApp.view);
     }
-  }, [_canvasRef, pixiApp.view]);
+  }, [_canvasRef, pixiApp.view, pixiApp.stage]);
   return { pixiApp, canvasRef };
 }
 

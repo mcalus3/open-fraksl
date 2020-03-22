@@ -7,6 +7,32 @@ import fractalModels, { ParameterDefinition } from "../FractalDefinitions";
 import { fractalTextures } from "../FractalDefinitions/common/FractalTextures";
 import { colorPalettes } from "../FractalDefinitions/common/ColorPalettes";
 
+const objectMap: (obj: object, fn: Function) => Record<string, number> = (
+  obj,
+  fn
+) =>
+  Object.fromEntries(Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)]));
+
+export const getRandomFractal = () => {
+  const fractalModel =
+    fractalModels[Math.floor(Math.random() * fractalModels.length)];
+  return {
+    data: {
+      texture:
+        fractalTextures[Math.floor(Math.random() * fractalTextures.length)],
+      color: colorPalettes[Math.floor(Math.random() * colorPalettes.length)],
+      name: fractalModel.name,
+      parameters: objectMap(
+        fractalModel.parameters,
+        (param: ParameterDefinition) => {
+          const randValue = Math.random() * (param.max - param.min) + param.min;
+          return param.step ? Math.round(randValue) : randValue;
+        }
+      )
+    }
+  };
+};
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
@@ -26,32 +52,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function SetRandomButton() {
   const classes = useStyles();
   const { dispatch } = useFractalReducer();
-
-  const objectMap = (obj: object, fn: Function) =>
-    Object.fromEntries(
-      Object.entries(obj).map(([k, v], i) => [k, fn(v, k, i)])
-    );
-
-  const getRandomFractal = () => {
-    const fractalModel =
-      fractalModels[Math.floor(Math.random() * fractalModels.length)];
-    return {
-      data: {
-        texture:
-          fractalTextures[Math.floor(Math.random() * fractalTextures.length)],
-        color: colorPalettes[Math.floor(Math.random() * colorPalettes.length)],
-        name: fractalModel.name,
-        parameters: objectMap(
-          fractalModel.parameters,
-          (param: ParameterDefinition) => {
-            const randValue =
-              Math.random() * (param.max - param.min) + param.min;
-            return param.step ? Math.round(randValue) : randValue;
-          }
-        )
-      }
-    };
-  };
 
   return (
     <Button
