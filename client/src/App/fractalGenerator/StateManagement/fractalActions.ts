@@ -1,6 +1,6 @@
 import { FractalTexture } from "../FractalDefinitions/common/FractalTextures";
 import { ColorDefinition } from "../FractalDefinitions/common/ColorPalettes";
-import { FractalLoadData } from "./fractalLoader";
+import { FractalLoadData } from "../ControlComponents/SaveInAGalleryButton";
 
 export type SetParameterAction = {
   type: "SET_PARAMETER";
