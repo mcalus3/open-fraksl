@@ -1,0 +1,23 @@
+{
+  "name": "openfraksl-server",
+  "version": "1.0.0",
+  "description": "GraphQL server for openfraksl",
+  "main": "index.js",
+  "author": "mcalus3",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "deploy": "npm run build && serverless deploy --stage dev",
+    "deploy-prod": "npm run build && serverless deploy --stage prod"
+  },
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.46",
+    "@types/aws-sdk": "^2.7.0",
+    "@types/node-fetch": "^2.5.5",
+    "apollo-server": "^2.11.0",
+    "apollo-server-lambda": "^2.11.0",
+    "aws-lambda": "^1.0.5",
+    "graphql": "^14.6.0",
+    "simple-dynamodb": "^1.0.0"
+  }
+}
