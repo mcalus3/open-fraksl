@@ -14,6 +14,23 @@ import {
 } from "@material-ui/core";
 import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
+import { useHistory } from "react-router-dom";
+
+import { useFractalReducer } from "../fractalGenerator/StateManagement/FractalContextProvider";
+import { FractalLoadData } from "../fractalGenerator/ControlComponents/SaveInAGalleryButton";
+import { colorPalettes } from "../fractalGenerator/FractalDefinitions/common/ColorPalettes";
+import { fractalTextures } from "../fractalGenerator/FractalDefinitions/common/FractalTextures";
+
+const createFractalData = (loadDataString: string) => {
+  const loadData = JSON.parse(loadDataString);
+
+  return {
+    name: loadData.name,
+    parameters: loadData.parameters,
+    color: colorPalettes.find(c => c.name === loadData.color),
+    texture: fractalTextures.find(t => t.name === loadData.texture)
+  } as FractalLoadData;
+};
 
 const useStyles = makeStyles({
   root: {
@@ -26,6 +43,8 @@ const useStyles = makeStyles({
 
 export const Gallery = () => {
   const classes = useStyles();
+  const { dispatch } = useFractalReducer();
+  let history = useHistory();
   const { data, loading, error } = useQuery(
     gql`
       query {
@@ -58,8 +77,18 @@ export const Gallery = () => {
         <Box p={2}>
           <Grid container wrap="wrap">
             {data.savedFractals.map((savedFractal: any) => (
-              <Card className={classes.root}>
-                <CardActionArea>
+              <Card className={classes.root} key={savedFractal.savedFractalId}>
+                <CardActionArea
+                  onClick={() => {
+                    dispatch({
+                      type: "SET_FRACTAL",
+                      payload: {
+                        data: createFractalData(savedFractal.fractalLoadData)
+                      }
+                    });
+                    history.push("/");
+                  }}
+                >
                   <CardMedia
                     className={classes.media}
                     image="favicon/android-icon-192x192.png"

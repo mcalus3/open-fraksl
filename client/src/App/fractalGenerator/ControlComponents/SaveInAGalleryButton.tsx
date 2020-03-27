@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
@@ -6,6 +6,7 @@ import SaveIcon from "@material-ui/icons/Save";
 import { getFractalDefinition } from "../StateManagement/fractalReducer";
 import { ColorDefinition } from "../FractalDefinitions/common/ColorPalettes";
 import { FractalTexture } from "../FractalDefinitions/common/FractalTextures";
+import SaveInAGalleryDialog from "./SaveInAGalleryDialog";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,31 +42,27 @@ const uploadFractal = (data: FractalLoadData) => {
 };
 
 export default function SaveInAGalleryButton() {
+  const [modalOpen, setModalOpen] = useState(false);
   const classes = useStyles();
   const { state } = useFractalReducer();
   return (
-    <Button
-      variant="contained"
-      className={classes.button}
-      onClick={() => {
-        const relevantParamNames = Object.keys(
-          getFractalDefinition(state.name).parameters
-        );
-        const relevantParams = Object.fromEntries(
-          Object.entries(state.parameters).filter(e =>
-            relevantParamNames.includes(e[0])
-          )
-        );
-        uploadFractal({
-          color: state.color,
-          parameters: relevantParams,
-          name: state.name,
-          texture: state.texture
-        });
-      }}
-    >
-      Save fractal to gallery
-      <SaveIcon className={classes.icon} />
-    </Button>
+    <>
+      <Button
+        variant="contained"
+        className={classes.button}
+        onClick={() => {
+          setModalOpen(true);
+        }}
+      >
+        Save fractal to gallery
+        <SaveIcon className={classes.icon} />
+      </Button>
+      <SaveInAGalleryDialog
+        open={modalOpen}
+        onClose={() => {
+          setModalOpen(false);
+        }}
+      />
+    </>
   );
 }
