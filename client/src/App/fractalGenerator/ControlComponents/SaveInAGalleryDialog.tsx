@@ -5,7 +5,8 @@ import {
   DialogTitle,
   DialogContent,
   CircularProgress,
-  Grid
+  Grid,
+  Tooltip
 } from "@material-ui/core";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import { getFractalDefinition } from "../StateManagement/fractalReducer";
@@ -116,16 +117,33 @@ export default function SaveInAGalleryDialog({ open, onClose }: DialogProps) {
                 </Grid>
                 <Grid item container justify="flex-end" spacing={1}>
                   <Grid item>
+                    <Button variant="outlined" onClick={onClose}>
+                      Cancel
+                    </Button>
+                  </Grid>
+                  <Grid item>
                     {isSubmitting ? <CircularProgress size="2rem" /> : null}
                   </Grid>
                   <Grid item>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      disabled={isSubmitting}
-                    >
-                      Submit
-                    </Button>
+                    {state.texture.name === "custom" ? (
+                      <Tooltip title="Upload of custom textures is not yet implemented">
+                        <span>
+                          <Button variant="contained" type="submit" disabled>
+                            Submit
+                          </Button>
+                        </span>
+                      </Tooltip>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        disabled={
+                          isSubmitting || state.texture.name === "custom"
+                        }
+                      >
+                        Submit
+                      </Button>
+                    )}
                   </Grid>
                   <Grid item>{error}</Grid>
                 </Grid>
