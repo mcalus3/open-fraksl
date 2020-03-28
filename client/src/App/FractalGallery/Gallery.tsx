@@ -34,10 +34,10 @@ const createFractalData = (loadDataString: string) => {
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345
+    width: 170
   },
   media: {
-    height: 140
+    height: 170
   }
 });
 
@@ -75,39 +75,44 @@ export const Gallery = () => {
     <Grid direction="column" container justify="center">
       <Grid container alignItems="center" justify="center">
         <Box p={2}>
-          <Grid container wrap="wrap">
+          <Grid container wrap="wrap" spacing={4}>
             {data.savedFractals.map((savedFractal: any) => (
-              <Card className={classes.root} key={savedFractal.savedFractalId}>
-                <CardActionArea
-                  onClick={() => {
-                    dispatch({
-                      type: "SET_FRACTAL",
-                      payload: {
-                        data: createFractalData(savedFractal.fractalLoadData)
-                      }
-                    });
-                    history.push("/");
-                  }}
+              <Grid item>
+                <Card
+                  className={classes.root}
+                  key={savedFractal.savedFractalId}
                 >
-                  <CardMedia
-                    className={classes.media}
-                    image="favicon/android-icon-192x192.png"
-                    title="fractal image"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {savedFractal.savedName}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Author: {savedFractal.createdBy}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
+                  <CardActionArea
+                    onClick={() => {
+                      dispatch({
+                        type: "SET_FRACTAL",
+                        payload: {
+                          data: createFractalData(savedFractal.fractalLoadData)
+                        }
+                      });
+                      history.push("/");
+                    }}
+                  >
+                    <CardMedia
+                      className={classes.media}
+                      image="favicon/android-icon-192x192.png"
+                      title="fractal image"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {savedFractal.savedName}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        Author: {savedFractal.createdBy}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
             ))}
           </Grid>
         </Box>
