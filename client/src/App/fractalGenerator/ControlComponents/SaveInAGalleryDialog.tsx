@@ -9,7 +9,6 @@ import {
 } from "@material-ui/core";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import { getFractalDefinition } from "../StateManagement/fractalReducer";
-import { FractalLoadData } from "./SaveInAGalleryButton";
 import { Formik, Form, Field } from "formik";
 import { TextField } from "formik-material-ui";
 import { useMutation } from "@apollo/react-hooks";
@@ -44,7 +43,7 @@ export interface DialogProps {
 
 export default function SaveInAGalleryDialog({ open, onClose }: DialogProps) {
   const [error, setError] = useState<string | null>(null);
-  const [uploadFractal, { data }] = useMutation(UPDATE_SAVED_FRACTAL, {
+  const [uploadFractal] = useMutation(UPDATE_SAVED_FRACTAL, {
     notifyOnNetworkStatusChange: true,
     refetchQueries: ["savedFractals"]
   });
