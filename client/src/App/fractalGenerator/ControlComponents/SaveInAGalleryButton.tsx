@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import SaveIcon from "@material-ui/icons/Save";
-import { getFractalDefinition } from "../StateManagement/fractalReducer";
 import { ColorDefinition } from "../FractalDefinitions/common/ColorPalettes";
 import { FractalTexture } from "../FractalDefinitions/common/FractalTextures";
 import SaveInAGalleryDialog from "./SaveInAGalleryDialog";
@@ -31,20 +29,9 @@ export type FractalLoadData = {
   texture: FractalTexture;
 };
 
-const uploadFractal = (data: FractalLoadData) => {
-  const dataToSave = {
-    color: data.color.name,
-    texture: data.texture.name,
-    name: data.name,
-    parameters: data.parameters
-  };
-  console.log("uploading fractal data...", JSON.stringify(dataToSave));
-};
-
 export default function SaveInAGalleryButton() {
   const [modalOpen, setModalOpen] = useState(false);
   const classes = useStyles();
-  const { state } = useFractalReducer();
   return (
     <>
       <Button
