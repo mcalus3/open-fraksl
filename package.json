@@ -2,11 +2,13 @@
   "name": "open-fraksl",
   "version": "0.3.0",
   "author": "mcalus3",
+  "description": "GraphQL server for openfraksl",
   "license": "MIT",
   "scripts": {
     "install-dependencies": "npm install && cd api && npm install && cd ../client && npm install",
     "start": "cd server && npm run deploy && cd ../client && npm run start",
     "deploy-prod": "cd server && npm run deploy-prod && cd ../client && npm run build"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {}
 }
