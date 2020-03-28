@@ -9,6 +9,9 @@
     "start": "cd server && npm run deploy && cd ../client && npm run start",
     "deploy-prod": "cd server && npm run deploy-prod && cd ../client && npm run build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "typescript": "^3.8.3",
+    "serverless": "^1.67.0"
+  },
   "devDependencies": {}
 }
