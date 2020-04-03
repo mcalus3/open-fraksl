@@ -8,7 +8,8 @@
   "scripts": {
     "build": "tsc",
     "deploy": "npm run build && serverless deploy --stage dev",
-    "deploy-prod": "npm run build && serverless deploy --stage prod"
+    "deploy-prod": "npm run build && serverless deploy --stage prod",
+    "load-csv-data": "node ./tools/populateDdbFromCsv.js"
   },
   "dependencies": {
     "@types/aws-lambda": "^8.10.46",
@@ -17,9 +18,11 @@
     "apollo-server": "^2.11.0",
     "apollo-server-lambda": "^2.11.0",
     "aws-lambda": "^1.0.5",
+    "csv-parse": "^4.8.8",
     "graphql": "^14.6.0",
     "serverless": "^1.67.0",
     "simple-dynamodb": "^1.0.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "uuid": "^7.0.3"
   }
 }
