@@ -67,6 +67,7 @@ export const updateSavedFractal: UpdateSavedFractal = async (
     createdAt: savedFractal ? savedFractal.createdAt : null,
     createdBy: savedFractal ? savedFractal.createdBy : null,
     savedName: savedFractal ? savedFractal.savedName : null,
-    fractalLoadData: savedFractal ? savedFractal.fractalLoadData : null
+    fractalLoadData: savedFractal ? savedFractal.fractalLoadData : null,
+    numberOfLikes: savedFractal ? savedFractal.numberOfLikes : null
   };
 };

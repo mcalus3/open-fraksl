@@ -18,3 +18,7 @@ type SavedFractal = {
   savedName: string;
   fractalLoadData: string;
 };
+
+export type MutationResult = {
+  success: true;
+};

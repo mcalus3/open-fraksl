@@ -1,9 +1,14 @@
 import { ApolloServer, gql } from "apollo-server-lambda";
 import { updateUser } from "./mutations";
 import { updateSavedFractal } from "./mutations/updateSavedFractal";
+import { likeSavedFractal } from "./mutations/likeSavedFractal";
 import { getSavedFractals } from "./queries";
 
 const schema = gql`
+  type MutationResult {
+    success: Boolean
+  }
+
   type User {
     userId: String
     createdAt: String
@@ -16,6 +21,7 @@ const schema = gql`
     createdBy: String
     savedName: String
     fractalLoadData: String
+    numberOfLikes: Int
   }
 
   type Query {
@@ -30,6 +36,7 @@ const schema = gql`
       fractalLoadData: String
       createdBy: String
     ): SavedFractal
+    likeSavedFractal(savedFractalId: String): MutationResult
   }
 `;
 
@@ -39,7 +46,8 @@ const resolvers = {
   },
   Mutation: {
     updateUser,
-    updateSavedFractal
+    updateSavedFractal,
+    likeSavedFractal
   }
 };
 
