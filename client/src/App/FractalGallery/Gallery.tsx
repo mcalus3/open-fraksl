@@ -5,46 +5,15 @@ import {
   Box,
   CircularProgress,
   Typography,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  CardActions,
-  IconButton,
-  Tooltip,
   Button
 } from "@material-ui/core";
 import { makeStyles, fade } from "@material-ui/core/styles";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import ShareIcon from "@material-ui/icons/Share";
-import { useQuery, useMutation } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
-import { useHistory } from "react-router-dom";
 import clsx from "clsx";
-
-import { useFractalReducer } from "../fractalGenerator/StateManagement/FractalContextProvider";
-import { FractalLoadData } from "../fractalGenerator/ControlComponents/SaveInAGalleryButton";
-import { colorPalettes } from "../fractalGenerator/FractalDefinitions/common/ColorPalettes";
-import { fractalTextures } from "../fractalGenerator/FractalDefinitions/common/FractalTextures";
-
-const createFractalData = (loadDataString: string) => {
-  const loadData = JSON.parse(loadDataString);
-
-  return {
-    name: loadData.name,
-    parameters: loadData.parameters,
-    color: colorPalettes.find(c => c.name === loadData.color),
-    texture: fractalTextures.find(t => t.name === loadData.texture)
-  } as FractalLoadData;
-};
+import { SavedFractalCard } from "./SavedFractalCard";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: 170
-  },
-  media: {
-    height: 170
-  },
   toolbar: {
     border: "1px solid",
     borderColor: theme.palette.primary.main,
@@ -70,8 +39,6 @@ type SortBy = "mostLikes" | "newest";
 
 export const Gallery = () => {
   const classes = useStyles();
-  const { dispatch } = useFractalReducer();
-  const history = useHistory();
   const [sortBy, setSortBy] = useState<SortBy>("mostLikes");
   const { data: fractalsData, loading, error } = useQuery(
     gql`
@@ -88,16 +55,6 @@ export const Gallery = () => {
     `
   );
 
-  const [likeSavedFractal] = useMutation(
-    gql`
-      mutation LikeSavedFractal($savedFractalId: String) {
-        likeSavedFractal(savedFractalId: $savedFractalId) {
-          success
-        }
-      }
-    `
-  );
-
   useEffect(() => {
     if (error) {
       console.log(error);
@@ -105,85 +62,21 @@ export const Gallery = () => {
   }, [error]);
 
   const dataComponent = loading ? (
-    <CircularProgress />
+    <Grid item>
+      <CircularProgress />
+    </Grid>
   ) : error ? (
-    <Typography>
-      {error.name}: {error.message} (for more info see in console)
-    </Typography>
+    <Grid item>
+      <Typography>
+        {error.name}: {error.message} (for more info see in console)
+      </Typography>
+    </Grid>
   ) : (
-    <Box p={2}>
-      <Grid container wrap="wrap" spacing={4} justify="center">
-        {fractalsData.savedFractals.map((savedFractal: any) => (
-          <Grid item>
-            <Card className={classes.root} key={savedFractal.savedFractalId}>
-              <CardActionArea
-                onClick={() => {
-                  dispatch({
-                    type: "SET_FRACTAL",
-                    payload: {
-                      data: createFractalData(savedFractal.fractalLoadData)
-                    }
-                  });
-                  history.push("/");
-                }}
-              >
-                <CardMedia
-                  className={classes.media}
-                  image="favicon/android-icon-192x192.png"
-                  title="fractal image"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {savedFractal.savedName}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    Author: {savedFractal.createdBy}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Grid container justify="space-between">
-                  <Grid item>
-                    <Tooltip title="share">
-                      <IconButton size="small" aria-label="share">
-                        <ShareIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Grid>
-                  <Grid item>
-                    <Tooltip title="like">
-                      <IconButton
-                        size="small"
-                        aria-label="like"
-                        onClick={async () => {
-                          try {
-                            await likeSavedFractal({
-                              variables: {
-                                savedFractalId: savedFractal.savedFractalId
-                              }
-                            });
-                          } catch (error) {
-                            console.log(error);
-                          }
-                        }}
-                      >
-                        <FavoriteIcon />
-                      </IconButton>
-                    </Tooltip>
-                    {savedFractal.numberOfLikes || 0}{" "}
-                    {savedFractal.numberOfLikes === 1 ? "like" : "likes"}
-                  </Grid>
-                </Grid>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
+    fractalsData.savedFractals.map((savedFractal: any) => (
+      <Grid item key={savedFractal.savedFractalId}>
+        <SavedFractalCard savedFractal={savedFractal} />
       </Grid>
-    </Box>
+    ))
   );
 
   return (
@@ -191,7 +84,7 @@ export const Gallery = () => {
       <Box p={2}>
         <Box className={classes.toolbar}>
           <Grid container alignItems="center">
-            <Grid item xs alignItems="center">
+            <Grid item xs>
               <Typography variant="h5">Saved fractals gallery</Typography>
             </Grid>
             <Grid
@@ -226,7 +119,11 @@ export const Gallery = () => {
             </Grid>
           </Grid>
         </Box>
-        {dataComponent}
+        <Box p={1}>
+          <Grid container wrap="wrap" spacing={4} justify="center">
+            {dataComponent}
+          </Grid>
+        </Box>
       </Box>
     </Container>
   );
