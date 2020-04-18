@@ -43,8 +43,8 @@ export const Gallery = () => {
   const [sortBy, setSortBy] = useState<SortBy>("mostLikes");
   const { data: fractalsData, loading, error } = useQuery(
     gql`
-      query {
-        savedFractals {
+      query($sortBy: String!) {
+        savedFractals(sortBy: $sortBy) {
           savedFractalId
           createdAt
           createdBy
@@ -53,7 +53,8 @@ export const Gallery = () => {
           numberOfLikes
         }
       }
-    `
+    `,
+    { variables: { sortBy } }
   );
 
   useEffect(() => {

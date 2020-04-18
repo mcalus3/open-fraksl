@@ -25,7 +25,7 @@ const schema = gql`
   }
 
   type Query {
-    savedFractals: [SavedFractal]
+    savedFractals(sortBy: String): [SavedFractal]
   }
 
   type Mutation {
