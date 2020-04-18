@@ -15,8 +15,8 @@ export const updateUser: updateUser = async (_, { userId }) => {
   const result = await getItem({
     TableName: process.env.USER_TABLE!,
     Key: {
-      userId
-    }
+      userId,
+    },
   });
 
   let user = result.Item;
@@ -28,8 +28,8 @@ export const updateUser: updateUser = async (_, { userId }) => {
       Key: { userId },
       UpdateExpression: "SET lastSignedInAt = :lastSignedInAt",
       ExpressionAttributeValues: {
-        ":lastSignedInAt": new Date().toISOString()
-      }
+        ":lastSignedInAt": new Date().toISOString(),
+      },
     });
 
     user = result.Attributes;
@@ -42,8 +42,8 @@ export const updateUser: updateUser = async (_, { userId }) => {
         "SET createdAt = :createdAt, lastSignedInAt = :lastSignedInAt",
       ExpressionAttributeValues: {
         ":createdAt": new Date().toISOString(),
-        ":lastSignedInAt": new Date().toISOString()
-      }
+        ":lastSignedInAt": new Date().toISOString(),
+      },
     });
 
     user = result.Attributes;
@@ -52,6 +52,6 @@ export const updateUser: updateUser = async (_, { userId }) => {
   return {
     userId,
     createdAt: user ? user.createdAt : null,
-    lastSignedInAt: user ? user.lastSignedInAt : null
+    lastSignedInAt: user ? user.lastSignedInAt : null,
   };
 };

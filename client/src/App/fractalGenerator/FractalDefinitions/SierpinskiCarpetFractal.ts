@@ -25,24 +25,24 @@ const sierpinskiCarpetFractal = {
       min: 0,
       max: 7,
       default: 3,
-      step: true
+      step: true,
     },
     rotation: {
       name: "rotation",
       min: 0,
       max: Math.PI,
-      default: Math.PI / 2
-    }
+      default: Math.PI / 2,
+    },
   },
   renderingFunction: renderSierpinskiCarpetFractal,
-  branchingFactor: 8
+  branchingFactor: 8,
 };
 
 function renderSierpinskiCarpetFractal({
   pixiApp,
   treeElement,
   texture,
-  colorPicker
+  colorPicker,
 }: RenderFunctionParams) {
   const params = treeElement.params;
   if (endConditionFulfilled(params)) {
@@ -108,56 +108,56 @@ function renderChildren(
     ...params,
     x: -1,
     y: -1,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 
   element.children[1].params = {
     ...params,
     x: 0,
     y: -1,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 
   element.children[2].params = {
     ...params,
     x: 1,
     y: -1,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 
   element.children[3].params = {
     ...params,
     x: -1,
     y: 0,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 
   element.children[4].params = {
     ...params,
     x: 1,
     y: 0,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 
   element.children[5].params = {
     ...params,
     x: -1,
     y: 1,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 
   element.children[6].params = {
     ...params,
     x: 0,
     y: 1,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 
   element.children[7].params = {
     ...params,
     x: 1,
     y: 1,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 }
 

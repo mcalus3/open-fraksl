@@ -6,7 +6,7 @@ import {
   Slide,
   Typography,
   DialogTitle,
-  DialogContent
+  DialogContent,
 } from "@material-ui/core";
 import { TransitionProps } from "react-transition-group/Transition";
 

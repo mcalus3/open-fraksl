@@ -33,6 +33,6 @@ const fractalModels: FractalDefinition[] = [
   sierpinskiTreeFractal,
   cantorFractal,
   pythagorasTreeFractal,
-  spiralFractal
+  spiralFractal,
 ];
 export default fractalModels;

@@ -2,13 +2,13 @@ import * as PIXI from "pixi.js";
 import { depthExceedsZoomLevel } from "./common/sharedRenderingFunctions";
 import buildRenderFunction, {
   FractalFunctionDefinitions,
-  RenderFunctionParams
+  RenderFunctionParams,
 } from "./common/fractalRendererBuilder";
 
 const sierpinskiTreeRenderingFunctionDefinitions: FractalFunctionDefinitions = {
   isLastElement: depthExceedsZoomLevel,
   prepareTransformationAttributes,
-  applyPropsToChildren: renderChildren
+  applyPropsToChildren: renderChildren,
 };
 
 const sierpinskiTreeFractal = {
@@ -18,32 +18,32 @@ const sierpinskiTreeFractal = {
       name: "size",
       min: 0,
       max: 0.5,
-      default: 0.25
+      default: 0.25,
     },
     ratio: {
       name: "shrinking ratio",
       min: 0,
       max: 1,
-      default: 0.7
+      default: 0.7,
     },
     angle: {
       name: "angle",
       min: 0,
       max: Math.PI,
-      default: Math.PI / 4
+      default: Math.PI / 4,
     },
     zoom: {
       name: "depth",
       min: 0,
       max: 18,
       default: 6,
-      step: true
-    }
+      step: true,
+    },
   },
   renderingFunction: buildRenderFunction(
     sierpinskiTreeRenderingFunctionDefinitions
   ),
-  branchingFactor: 2
+  branchingFactor: 2,
 };
 
 export type SierpinskiTreeFractalParams =
@@ -74,7 +74,7 @@ function prepareTransformationAttributes(params: RenderFunctionParams) {
       : new PIXI.Point(scale, scale),
     rotation: p.depth === 1 ? 0 : p.currentAngle,
     x: p.depth === 1 ? p.width / 2 : p.x,
-    y: p.depth === 1 ? p.height : p.y
+    y: p.depth === 1 ? p.height : p.y,
   };
 }
 
@@ -86,7 +86,7 @@ function renderChildren(params: RenderFunctionParams) {
           ...pp,
           x: pp.width / 2,
           y: pp.height,
-          currentAngle: 0
+          currentAngle: 0,
         }
       : pp;
 
@@ -96,15 +96,15 @@ function renderChildren(params: RenderFunctionParams) {
       x: p.x + p.height * p.length * Math.sin(p.currentAngle),
       y: p.y - p.height * p.length * Math.cos(p.currentAngle),
       length: p.length * p.ratio,
-      depth: p.depth + 1
+      depth: p.depth + 1,
     },
     {
       currentAngle: p.currentAngle + p.angle,
       x: p.x + p.height * p.length * Math.sin(p.currentAngle),
       y: p.y - p.height * p.length * Math.cos(p.currentAngle),
       length: p.length * p.ratio,
-      depth: p.depth + 1
-    }
+      depth: p.depth + 1,
+    },
   ];
 }
 

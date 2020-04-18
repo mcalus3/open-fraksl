@@ -54,12 +54,12 @@ export function renderChildren(
       params.treeElement.children[i] = {
         sprite: newSprite,
         children: [],
-        params: { ...pp, ...childrenVariables[i] }
+        params: { ...pp, ...childrenVariables[i] },
       };
     } else {
       params.treeElement.children[i].params = {
         ...pp,
-        ...childrenVariables[i]
+        ...childrenVariables[i],
       };
     }
   }

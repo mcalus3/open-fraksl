@@ -7,7 +7,7 @@ import useDimensions from "react-use-dimensions";
 import FractalRenderer from "./FractalRenderer";
 import {
   useFractalReducer,
-  usePixiApp
+  usePixiApp,
 } from "../StateManagement/FractalContextProvider";
 import { FractalAction } from "../StateManagement/fractalActions";
 
@@ -16,8 +16,8 @@ const useStyles = makeStyles({
     flexGrow: 1,
     flexShrink: 1,
     minWidth: 0,
-    minHeight: 0
-  }
+    minHeight: 0,
+  },
 });
 
 function FractalStage() {
@@ -46,7 +46,7 @@ function usePixiAppResize(
     pixiApp.renderer.resize(width, height - 5);
     dispatch({
       type: "RESIZE_STAGE",
-      payload: { width, height }
+      payload: { width, height },
     });
   }, [width, height, pixiApp, dispatch]);
   return ref;

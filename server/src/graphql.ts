@@ -42,13 +42,13 @@ const schema = gql`
 
 const resolvers = {
   Query: {
-    savedFractals: getSavedFractals
+    savedFractals: getSavedFractals,
   },
   Mutation: {
     updateUser,
     updateSavedFractal,
-    likeSavedFractal
-  }
+    likeSavedFractal,
+  },
 };
 
 const server = new ApolloServer({ typeDefs: schema, resolvers });
@@ -56,6 +56,6 @@ const server = new ApolloServer({ typeDefs: schema, resolvers });
 export const handler = server.createHandler({
   cors: {
     origin: "*",
-    credentials: true
-  }
+    credentials: true,
+  },
 });

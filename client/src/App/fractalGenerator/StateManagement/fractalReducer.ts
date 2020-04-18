@@ -1,14 +1,14 @@
 import fractalModels, {
   FractalDefinition,
-  ParametersType
+  ParametersType,
 } from "../FractalDefinitions";
 import {
   ColorDefinition,
-  colorPalettes
+  colorPalettes,
 } from "../FractalDefinitions/common/ColorPalettes";
 import {
   fractalTextures,
-  FractalTexture
+  FractalTexture,
 } from "../FractalDefinitions/common/FractalTextures";
 import { FractalAction } from "./fractalActions";
 
@@ -80,7 +80,7 @@ function fractalReducer(state: FractalState, action: FractalAction) {
 
       //params
       let newParams = { ...state.parameters };
-      Object.entries(action.payload.data.parameters).forEach(param => {
+      Object.entries(action.payload.data.parameters).forEach((param) => {
         newParams[param[0]] = param[1];
       });
       newState.parameters = newParams;
@@ -123,7 +123,7 @@ function initializeFractal(fractalDef: FractalDefinition): FractalState {
     texture: fractalTextures[0],
     color: colorPalettes[0],
     totalElementsCount: calculateTotalElements(fractalDef, parameterObject),
-    currentElementsCount: 0
+    currentElementsCount: 0,
   };
 }
 
@@ -139,7 +139,7 @@ function calculateTotalElements(
 }
 
 function getFractalDefinition(name: string) {
-  return fractalModels.find(e => e.name === name) || fractalModels[0];
+  return fractalModels.find((e) => e.name === name) || fractalModels[0];
 }
 
 function transformParametersProportionally(
@@ -150,7 +150,7 @@ function transformParametersProportionally(
   const oldParamDefinitions = getFractalDefinition(oldName);
   const newParamDefinitions = getFractalDefinition(newName);
   const newParams = { ...parameters };
-  Object.keys(oldParamDefinitions.parameters).forEach(k => {
+  Object.keys(oldParamDefinitions.parameters).forEach((k) => {
     if (newParamDefinitions.parameters[k]) {
       const min = oldParamDefinitions.parameters[k].min;
       const max = oldParamDefinitions.parameters[k].max;
@@ -170,5 +170,5 @@ export {
   initializeFractal,
   fractalInitialState,
   getFractalDefinition,
-  transformParametersProportionally
+  transformParametersProportionally,
 };

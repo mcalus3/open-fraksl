@@ -12,8 +12,8 @@ import { transformParametersProportionally } from "../StateManagement/fractalRed
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      marginBottom: theme.spacing(3)
-    }
+      marginBottom: theme.spacing(3),
+    },
   })
 );
 
@@ -31,14 +31,14 @@ function FractalSelection() {
   ) {
     dispatch({
       type: "SET_PARAMETER",
-      payload: { name: "zoom", value: 0 }
+      payload: { name: "zoom", value: 0 },
     });
     setSelectedName(event.target.value as string);
 
     setTimeout(() => {
       dispatch({
         type: "SET_FRACTAL_TYPE",
-        payload: { name: event.target.value as string }
+        payload: { name: event.target.value as string },
       });
       dispatch({
         type: "SET_PARAMETER",
@@ -48,13 +48,13 @@ function FractalSelection() {
             state.parameters,
             selectedName,
             event.target.value as string
-          ).zoom
-        }
+          ).zoom,
+        },
       });
     }, 1000);
   }
 
-  const fractalSelectors = fractalModels.map(model => (
+  const fractalSelectors = fractalModels.map((model) => (
     <MenuItem value={model.name} key={model.name}>
       {model.name}
     </MenuItem>
@@ -68,7 +68,7 @@ function FractalSelection() {
         onChange={handleChange}
         inputProps={{
           name: "choose fractal",
-          id: "choose-fractal"
+          id: "choose-fractal",
         }}
       >
         {fractalSelectors}

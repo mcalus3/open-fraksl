@@ -23,7 +23,7 @@ const gumballPalette: ColorPicker = (order: number) => {
     0x911eb4,
     0x42d4f4,
     0xf032e6,
-    0xbfef45
+    0xbfef45,
   ];
   return colors[order % colors.length];
 };
@@ -36,7 +36,7 @@ const rainbowPalette: ColorPicker = (order: number) => {
     0x008000,
     0x0000ff,
     0x4b0082,
-    0xee82ee
+    0xee82ee,
   ];
   return colors[order % colors.length];
 };
@@ -50,5 +50,5 @@ export const colorPalettes: ColorDefinition[] = [
   { name: "black and white", pick: blackAndWhite },
   { name: "gumball", pick: gumballPalette },
   { name: "rainbow", pick: rainbowPalette },
-  { name: "none", pick: None }
+  { name: "none", pick: None },
 ];

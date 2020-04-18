@@ -13,8 +13,8 @@ const useStyles = makeStyles({
     flexFlow: "column",
     position: "absolute",
     width: "100%",
-    height: "100%"
-  }
+    height: "100%",
+  },
 });
 
 export const App = () => {

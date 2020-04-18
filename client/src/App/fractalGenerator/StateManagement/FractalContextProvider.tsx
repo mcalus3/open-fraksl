@@ -2,7 +2,7 @@ import * as React from "react";
 import * as PIXI from "pixi.js";
 import fractalReducer, {
   FractalState,
-  fractalInitialState
+  fractalInitialState,
 } from "./fractalReducer";
 import { FractalAction } from "./fractalActions";
 import { useTheme, Theme } from "@material-ui/core/styles";
@@ -49,7 +49,7 @@ function useCreatePixiApp() {
           theme.palette.secondary.main.replace("#", "0x")
         ),
         autoDensity: true,
-        resolution: window.devicePixelRatio
+        resolution: window.devicePixelRatio,
       })
   );
   const canvasRef = React.useCallback((node: HTMLDivElement) => {

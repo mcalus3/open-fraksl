@@ -5,7 +5,7 @@ import { FractalElementsTree } from "../FractalDefinitions";
 import { getFractalDefinition } from "../StateManagement/fractalReducer";
 import {
   useFractalReducer,
-  usePixiApp
+  usePixiApp,
 } from "../StateManagement/FractalContextProvider";
 import { gsap } from "gsap";
 //@ts-ignore
@@ -17,7 +17,7 @@ const getStarterElement = (pixiApp: PIXI.Application) => {
   const element = {
     sprite: new PIXI.Sprite(),
     children: [],
-    params: {}
+    params: {},
   };
 
   pixiApp.stage.addChild(element.sprite);
@@ -28,7 +28,7 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
   const { state: targetState, dispatch } = useFractalReducer();
   const throttledState = useThrottle(targetState, 50);
   const [previousParams, setPreviousParams] = useState({
-    ...throttledState.parameters
+    ...throttledState.parameters,
   });
   const lastCrawlId = useRef(0);
   let currentParams = previousParams;
@@ -47,7 +47,7 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
           ...currentParams,
           depth: 1,
           width: Math.floor(pixiApp.screen.width),
-          height: Math.floor(pixiApp.screen.height)
+          height: Math.floor(pixiApp.screen.height),
         };
         const render = getFractalDefinition(throttledState.name)
           .renderingFunction;
@@ -64,7 +64,7 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
           context: crawl.Context<FractalElementsTree>
         ) {
           if (performance.now() - startTime > 50) {
-            await new Promise(resolve =>
+            await new Promise((resolve) =>
               requestAnimationFrame(() => {
                 dispatchCurrentElementsCount(currentElements, dispatch);
                 if (lastCrawlId.current !== thisCrawlId) {
@@ -80,7 +80,7 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
             pixiApp,
             treeElement: node,
             texture: throttledState.texture.texture,
-            colorPicker: throttledState.color.pick
+            colorPicker: throttledState.color.pick,
           });
           // Currently, the fractal element creates its children even if it's at the last level. It's children (last level + 1), just don't render themselves and don't create their own. It's useful for recognizing first rendering of this element.
           if (node.children.length !== 0) {
@@ -89,13 +89,13 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
         }
 
         crawl(rootFractalElement.current, iterateeFunction, {
-          order: "bfs"
+          order: "bfs",
         }).then(() => {
           if (!preventDispatch) {
             dispatchCurrentElementsCount(currentElements, dispatch);
           }
         });
-      }
+      },
     };
     Object.assign(tweenTo, throttledState.parameters);
     gsap.ticker.lagSmoothing(0, 0);
@@ -108,7 +108,7 @@ function useFractalRenderer(pixiApp: PIXI.Application) {
     currentParams,
     pixiApp,
     lastCrawlId,
-    dispatch
+    dispatch,
   ]);
 }
 
@@ -118,7 +118,7 @@ function dispatchCurrentElementsCount(
 ) {
   dispatch({
     type: "SET_CURRENT_ELEMENTS_COUNT",
-    payload: { value: currentElements }
+    payload: { value: currentElements },
   });
 }
 

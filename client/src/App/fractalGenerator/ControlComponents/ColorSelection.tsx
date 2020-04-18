@@ -12,13 +12,13 @@ type MyChangeEvent = React.ChangeEvent<{
   value: unknown;
 }>;
 
-const useStyles = makeStyles(theme =>
+const useStyles = makeStyles((theme) =>
   createStyles({
     paper: {
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
     input: { width: "100px" },
-    selector: { width: "100%", height: "100%" }
+    selector: { width: "100%", height: "100%" },
   })
 );
 
@@ -35,11 +35,11 @@ function ColorSelection() {
 
   function handleChange(event: MyChangeEvent) {
     const palette =
-      colorPalettes.find(palette => palette.name === event.target.value) ||
+      colorPalettes.find((palette) => palette.name === event.target.value) ||
       colorPalettes[0];
     dispatch({
       type: "SET_FRACTAL_COLOR",
-      payload: { palette }
+      payload: { palette },
     });
   }
 
@@ -48,30 +48,30 @@ function ColorSelection() {
       <InputLabel htmlFor="color-palette">choose palette</InputLabel>
       <Select
         value={selectedPaletteName}
-        onChange={e => {
+        onChange={(e) => {
           setSelectedPaletteName(e.target.value as string);
           handleChange(e);
         }}
         onClose={() =>
           handleChange({
             target: {
-              value: selectedPaletteName
-            }
+              value: selectedPaletteName,
+            },
           } as MyChangeEvent)
         }
         inputProps={{
           name: "color palette",
-          id: "color-palette"
+          id: "color-palette",
         }}
         MenuProps={{ variant: "menu" }}
       >
-        {colorPalettes.map(palette => (
+        {colorPalettes.map((palette) => (
           <MenuItem
             value={palette.name}
             key={palette.name}
-            onMouseMove={e => {
+            onMouseMove={(e) => {
               handleChange({
-                target: { value: palette.name }
+                target: { value: palette.name },
               } as MyChangeEvent);
             }}
           >

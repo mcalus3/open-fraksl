@@ -10,8 +10,8 @@ const useStyles = makeStyles({
     flexGrow: 1,
     flexShrink: 1,
     minWidth: 0,
-    minHeight: 0
-  }
+    minHeight: 0,
+  },
 });
 
 export function FractalGenerator() {

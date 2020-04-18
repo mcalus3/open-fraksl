@@ -24,8 +24,8 @@ export const updateSavedFractal: UpdateSavedFractal = async (
   const result = await getItem({
     TableName: process.env.SAVED_FRACTALS_TABLE!,
     Key: {
-      savedFractalId
-    }
+      savedFractalId,
+    },
   });
 
   let savedFractal = result.Item;
@@ -39,8 +39,8 @@ export const updateSavedFractal: UpdateSavedFractal = async (
         "SET savedName = :savedName, fractalLoadData = :fractalLoadData",
       ExpressionAttributeValues: {
         ":savedName": savedName,
-        ":fractalLoadData": fractalLoadData
-      }
+        ":fractalLoadData": fractalLoadData,
+      },
     });
 
     savedFractal = result.Attributes;
@@ -55,8 +55,8 @@ export const updateSavedFractal: UpdateSavedFractal = async (
         ":createdAt": new Date().toISOString(),
         ":savedName": savedName,
         ":fractalLoadData": fractalLoadData,
-        ":createdBy": createdBy
-      }
+        ":createdBy": createdBy,
+      },
     });
 
     savedFractal = result.Attributes;
@@ -68,6 +68,6 @@ export const updateSavedFractal: UpdateSavedFractal = async (
     createdBy: savedFractal ? savedFractal.createdBy : null,
     savedName: savedFractal ? savedFractal.savedName : null,
     fractalLoadData: savedFractal ? savedFractal.fractalLoadData : null,
-    numberOfLikes: savedFractal ? savedFractal.numberOfLikes : null
+    numberOfLikes: savedFractal ? savedFractal.numberOfLikes : null,
   };
 };

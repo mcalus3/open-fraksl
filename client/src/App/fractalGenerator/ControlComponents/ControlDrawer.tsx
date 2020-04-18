@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
       overflowY: "auto",
       overflowX: "hidden",
       paddingTop: theme.spacing(2),
-      paddingBottom: theme.spacing(2)
-    }
+      paddingBottom: theme.spacing(2),
+    },
   })
 );
 

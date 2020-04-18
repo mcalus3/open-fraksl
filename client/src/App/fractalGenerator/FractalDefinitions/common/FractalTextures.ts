@@ -7,34 +7,34 @@ export type FractalTexture = {
 
 export const fullRectangle: FractalTexture = {
   name: "rectangle",
-  texture: PIXI.Texture.WHITE
+  texture: PIXI.Texture.WHITE,
 };
 
 export const ellipsis: FractalTexture = {
   name: "ring",
-  texture: getEllipsisTexture()
+  texture: getEllipsisTexture(),
 };
 
 export const rectangle: FractalTexture = {
   name: "rectangle",
-  texture: getRectangleTexture()
+  texture: getRectangleTexture(),
 };
 
 export const fullEllipsis: FractalTexture = {
   name: "circle",
-  texture: getFullEllipsisTexture()
+  texture: getFullEllipsisTexture(),
 };
 
 export const line: FractalTexture = {
   name: "line",
-  texture: getLineTexture()
+  texture: getLineTexture(),
 };
 
 export const fractalTextures: FractalTexture[] = [
   fullRectangle,
   ellipsis,
   fullEllipsis,
-  line
+  line,
 ];
 
 function getEllipsisTexture() {

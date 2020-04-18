@@ -4,7 +4,7 @@ import {
   hideChildren,
   TransformationParams,
   applySpriteAttributes,
-  renderChildren
+  renderChildren,
 } from "./sharedRenderingFunctions";
 
 export function buildRenderFunction(

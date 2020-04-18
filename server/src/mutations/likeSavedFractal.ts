@@ -19,8 +19,8 @@ export const likeSavedFractal: UpdateSavedFractal = async (
     Key: { savedFractalId },
     UpdateExpression: "ADD numberOfLikes :inc",
     ExpressionAttributeValues: {
-      ":inc": 1
-    }
+      ":inc": 1,
+    },
   });
   return { success: true };
 };

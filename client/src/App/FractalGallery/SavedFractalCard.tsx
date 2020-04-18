@@ -9,7 +9,7 @@ import {
   CardContent,
   CardActions,
   IconButton,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -29,18 +29,18 @@ const createFractalData = (loadDataString: string) => {
   return {
     name: loadData.name,
     parameters: loadData.parameters,
-    color: colorPalettes.find(c => c.name === loadData.color),
-    texture: fractalTextures.find(t => t.name === loadData.texture)
+    color: colorPalettes.find((c) => c.name === loadData.color),
+    texture: fractalTextures.find((t) => t.name === loadData.texture),
   } as FractalLoadData;
 };
 
 const useStyles = makeStyles({
   root: {
-    width: 170
+    width: 170,
   },
   media: {
-    height: 170
-  }
+    height: 170,
+  },
 });
 
 type Props = {
@@ -83,8 +83,8 @@ export const SavedFractalCard: React.FC<Props> = ({ savedFractal }) => {
           dispatch({
             type: "SET_FRACTAL",
             payload: {
-              data: createFractalData(savedFractal.fractalLoadData)
-            }
+              data: createFractalData(savedFractal.fractalLoadData),
+            },
           });
           history.push("/");
         }}
@@ -122,8 +122,8 @@ export const SavedFractalCard: React.FC<Props> = ({ savedFractal }) => {
                     try {
                       const result = await likeSavedFractal({
                         variables: {
-                          savedFractalId: savedFractal.savedFractalId
-                        }
+                          savedFractalId: savedFractal.savedFractalId,
+                        },
                       });
                       if (result.data.likeSavedFractal.success) {
                         setLikes(likes + 1);

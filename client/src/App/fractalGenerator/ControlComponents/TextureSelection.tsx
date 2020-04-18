@@ -6,7 +6,7 @@ import * as PIXI from "pixi.js";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import {
   fractalTextures,
-  FractalTexture
+  FractalTexture,
 } from "../FractalDefinitions/common/FractalTextures";
 
 type MyChangeEvent = React.ChangeEvent<{
@@ -17,9 +17,9 @@ type MyChangeEvent = React.ChangeEvent<{
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      marginBottom: theme.spacing(3)
+      marginBottom: theme.spacing(3),
     },
-    input: { width: "100px" }
+    input: { width: "100px" },
   })
 );
 
@@ -42,7 +42,7 @@ function TextureSelection() {
     }
     dispatch({
       type: "SET_FRACTAL_TEXTURE",
-      payload: event.target.value as FractalTexture
+      payload: event.target.value as FractalTexture,
     });
   }
 
@@ -51,32 +51,34 @@ function TextureSelection() {
       <InputLabel htmlFor="choose-texture"> choose texture</InputLabel>
       <Select
         value={selectedTextureName}
-        onChange={e => {
+        onChange={(e) => {
           setSelectedTextureName(e.target.value as string);
           handleChange({
             target: {
-              value: fractalTextures.find(t => t.name === e.target.value)
-            }
+              value: fractalTextures.find((t) => t.name === e.target.value),
+            },
           } as MyChangeEvent);
         }}
         onClose={() =>
           handleChange({
             target: {
-              value: fractalTextures.find(t => t.name === selectedTextureName)
-            }
+              value: fractalTextures.find(
+                (t) => t.name === selectedTextureName
+              ),
+            },
           } as MyChangeEvent)
         }
         inputProps={{
           name: "choose texture",
-          id: "choose-texture"
+          id: "choose-texture",
         }}
         MenuProps={{ variant: "menu" }}
       >
-        {fractalTextures.map(texture => (
+        {fractalTextures.map((texture) => (
           <MenuItem
             value={texture.name}
             key={texture.name}
-            onMouseMove={e => {
+            onMouseMove={(e) => {
               handleChange({ target: { value: texture } } as MyChangeEvent);
             }}
           >
@@ -104,13 +106,13 @@ function useImageLoad() {
     var file = e.target.files[0];
     var fileReader = new FileReader();
 
-    fileReader.onload = function(event: any) {
+    fileReader.onload = function (event: any) {
       dispatch({
         type: "SET_FRACTAL_TEXTURE",
         payload: {
           name: "custom",
-          texture: PIXI.Texture.from(event.target.result)
-        }
+          texture: PIXI.Texture.from(event.target.result),
+        },
       });
     };
 

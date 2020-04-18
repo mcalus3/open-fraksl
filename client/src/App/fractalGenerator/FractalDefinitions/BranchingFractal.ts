@@ -23,30 +23,30 @@ const branchingFractal = {
       name: "width",
       min: 0,
       max: 50,
-      default: 25
+      default: 25,
     },
     y: {
       name: "height",
       min: 0,
       max: 50,
-      default: 25
+      default: 25,
     },
     rotation: {
       name: "rotation",
       min: 0,
       max: Math.PI,
-      default: 0.1
+      default: 0.1,
     },
     zoom: {
       name: "depth",
       min: 0,
       max: 18,
       default: 5,
-      step: true
-    }
+      step: true,
+    },
   },
   renderingFunction: renderBranchingFractal,
-  branchingFactor: 2
+  branchingFactor: 2,
 };
 
 function renderBranchingFractal(
@@ -125,27 +125,27 @@ function renderChildren(
         ...params,
         x: params.x * -1,
         rotation: params.rotation * -1,
-        depth: params.depth + 1
-      }
+        depth: params.depth + 1,
+      },
     };
     element.children[1] = {
       sprite: newSprite2,
       children: [],
       params: {
         ...params,
-        depth: params.depth + 1
-      }
+        depth: params.depth + 1,
+      },
     };
   } else {
     element.children[0].params = {
       ...params,
       x: params.x * -1,
       rotation: params.rotation * -1,
-      depth: params.depth + 1
+      depth: params.depth + 1,
     };
     element.children[1].params = {
       ...params,
-      depth: params.depth + 1
+      depth: params.depth + 1,
     };
   }
 }

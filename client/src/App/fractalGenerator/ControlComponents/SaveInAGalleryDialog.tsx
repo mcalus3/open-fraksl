@@ -6,7 +6,7 @@ import {
   DialogContent,
   CircularProgress,
   Grid,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 import { getFractalDefinition } from "../StateManagement/fractalReducer";
@@ -46,7 +46,7 @@ export default function SaveInAGalleryDialog({ open, onClose }: DialogProps) {
   const [error, setError] = useState<string | null>(null);
   const [uploadFractal] = useMutation(UPDATE_SAVED_FRACTAL, {
     notifyOnNetworkStatusChange: true,
-    refetchQueries: ["savedFractals"]
+    refetchQueries: ["savedFractals"],
   });
   const { state } = useFractalReducer();
 
@@ -55,7 +55,7 @@ export default function SaveInAGalleryDialog({ open, onClose }: DialogProps) {
       getFractalDefinition(state.name).parameters
     );
     const relevantParams = Object.fromEntries(
-      Object.entries(state.parameters).filter(e =>
+      Object.entries(state.parameters).filter((e) =>
         relevantParamNames.includes(e[0])
       )
     );
@@ -63,7 +63,7 @@ export default function SaveInAGalleryDialog({ open, onClose }: DialogProps) {
       color: state.color.name,
       parameters: relevantParams,
       name: state.name,
-      texture: state.texture.name
+      texture: state.texture.name,
     };
   };
 
@@ -87,8 +87,8 @@ export default function SaveInAGalleryDialog({ open, onClose }: DialogProps) {
                 savedFractalId: uuidv4(),
                 savedName: values.name,
                 createdBy: values.author,
-                fractalLoadData: JSON.stringify(getFractalLoadData())
-              }
+                fractalLoadData: JSON.stringify(getFractalLoadData()),
+              },
             });
             console.log(result);
             if (result.data) {

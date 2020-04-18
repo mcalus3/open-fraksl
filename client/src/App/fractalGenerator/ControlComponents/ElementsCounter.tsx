@@ -8,8 +8,8 @@ import { useFractalReducer } from "../StateManagement/FractalContextProvider";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      marginBottom: theme.spacing(3)
-    }
+      marginBottom: theme.spacing(3),
+    },
   })
 );
 

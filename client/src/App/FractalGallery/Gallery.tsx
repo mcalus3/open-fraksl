@@ -5,7 +5,7 @@ import {
   Box,
   CircularProgress,
   Typography,
-  Button
+  Button,
 } from "@material-ui/core";
 import { makeStyles, fade } from "@material-ui/core/styles";
 import { useQuery } from "@apollo/react-hooks";
@@ -13,13 +13,13 @@ import { gql } from "apollo-boost";
 import clsx from "clsx";
 import { SavedFractalCard } from "./SavedFractalCard";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   toolbar: {
     border: "1px solid",
     borderColor: theme.palette.primary.main,
     borderRadius: 5,
     padding: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   button: {
     paddingLeft: theme.spacing(1),
@@ -28,12 +28,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: "1rem",
     textTransform: "none",
     "&:hover": {
-      backgroundColor: fade(theme.palette.secondary.contrastText, 0.04)
-    }
+      backgroundColor: fade(theme.palette.secondary.contrastText, 0.04),
+    },
   },
   activeLink: {
-    backgroundColor: fade(theme.palette.secondary.contrastText, 0.04)
-  }
+    backgroundColor: fade(theme.palette.secondary.contrastText, 0.04),
+  },
 }));
 
 type SortBy = "mostLikes" | "newest";
@@ -100,7 +100,7 @@ export const Gallery = () => {
               <Grid item>
                 <Button
                   className={clsx(classes.button, {
-                    [classes.activeLink]: sortBy === "mostLikes"
+                    [classes.activeLink]: sortBy === "mostLikes",
                   })}
                   onClick={() => setSortBy("mostLikes")}
                 >
@@ -110,7 +110,7 @@ export const Gallery = () => {
               <Grid item>
                 <Button
                   className={clsx(classes.button, {
-                    [classes.activeLink]: sortBy === "newest"
+                    [classes.activeLink]: sortBy === "newest",
                   })}
                   onClick={() => setSortBy("newest")}
                 >

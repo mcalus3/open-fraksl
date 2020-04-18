@@ -30,37 +30,37 @@ const cantorFractal = {
       name: "left width",
       min: 0,
       max: 1,
-      default: 0.4
+      default: 0.4,
     },
     z: {
       name: "right width",
       min: 0,
       max: 1,
-      default: 0.6
+      default: 0.6,
     },
     y: {
       name: "height",
       min: 0,
       max: 100,
-      default: 30
+      default: 30,
     },
     zoom: {
       name: "depth",
       min: 0,
       max: 18,
       default: 5,
-      step: true
-    }
+      step: true,
+    },
   },
   renderingFunction: renderCantorFractal,
-  branchingFactor: 2
+  branchingFactor: 2,
 };
 
 function renderCantorFractal({
   pixiApp,
   treeElement,
   texture,
-  colorPicker
+  colorPicker,
 }: RenderFunctionParams) {
   const params = treeElement.params;
   if (endConditionFulfilled(params)) {
@@ -123,8 +123,8 @@ function renderChildren(
       params: {
         ...params,
         side: -1,
-        depth: params.depth + 1
-      }
+        depth: params.depth + 1,
+      },
     };
     element.children[1] = {
       sprite: newSprite2,
@@ -132,21 +132,21 @@ function renderChildren(
       params: {
         ...params,
         side: 1,
-        depth: params.depth + 1
-      }
+        depth: params.depth + 1,
+      },
     };
   }
 
   element.children[0].params = {
     ...params,
     side: -1,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 
   element.children[1].params = {
     ...params,
     side: 1,
-    depth: params.depth + 1
+    depth: params.depth + 1,
   };
 }
 

@@ -15,7 +15,7 @@ function ParameterControl({
   parameter,
   value,
   variableName,
-  showNumeric
+  showNumeric,
 }: Props) {
   const { dispatch } = useFractalReducer();
   const [startTime, setStartTime] = useState(performance.now());
@@ -25,8 +25,8 @@ function ParameterControl({
       type: "SET_PARAMETER",
       payload: {
         name: variableName,
-        value: Array.isArray(value) ? value[0] : value
-      }
+        value: Array.isArray(value) ? value[0] : value,
+      },
     });
   };
 
@@ -70,7 +70,7 @@ function ParameterControl({
             min: parameter.min,
             step: parameter.step ? 1 : (parameter.max - parameter.min) / 200,
             type: "number",
-            "aria-labelledby": "input-slider"
+            "aria-labelledby": "input-slider",
           }}
         />
       ) : null}

@@ -12,7 +12,7 @@ const apiConfig = require(`../apiconfig.${process.env.NODE_ENV}.json`);
 const AnyAuthProvider = AuthProvider as any;
 
 const client = new ApolloClient({
-  uri: apiConfig.apiUrl
+  uri: apiConfig.apiUrl,
 });
 
 const theme = createMuiTheme({
@@ -21,18 +21,18 @@ const theme = createMuiTheme({
       main: grey[600],
       light: "#a4a4a4",
       dark: "#494949",
-      contrastText: "#fff"
+      contrastText: "#fff",
     },
     secondary: {
       main: cyan[600],
       light: "#5ddef4",
       dark: "#007c91",
-      contrastText: "#000"
-    }
-  }
+      contrastText: "#000",
+    },
+  },
 });
 
-export const Providers: React.FC = props => {
+export const Providers: React.FC = (props) => {
   const history = useHistory();
 
   return (

@@ -4,7 +4,7 @@ import {
   IconButton,
   Toolbar,
   Typography,
-  Hidden
+  Hidden,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,12 +14,12 @@ import { Navigation } from "./Navigation";
 const packageJson = require("../../../package.json");
 const name = packageJson.name;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   brand: {
     marginRight: "auto",
     fontWeight: 300,
-    flexShrink: 0
-  }
+    flexShrink: 0,
+  },
 }));
 
 export function AppBar() {

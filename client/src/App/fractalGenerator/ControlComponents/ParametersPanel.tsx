@@ -10,8 +10,8 @@ import { useState } from "react";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
-      marginBottom: theme.spacing(3)
-    }
+      marginBottom: theme.spacing(3),
+    },
   })
 );
 
@@ -23,7 +23,7 @@ function ParametersPanel() {
   const [showNumeric, setShowNumeric] = useState(false);
 
   const renderSliders = () => {
-    const sliders = Object.keys(parameterDefinitions).map(key => {
+    const sliders = Object.keys(parameterDefinitions).map((key) => {
       const def = parameterDefinitions[key];
       const val: number = parameterValues[key];
       return (

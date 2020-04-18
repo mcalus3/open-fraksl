@@ -3,13 +3,13 @@ import * as PIXI from "pixi.js";
 import { depthExceedsZoomLevel } from "./common/sharedRenderingFunctions";
 import buildRenderFunction, {
   RenderFunctionParams,
-  FractalFunctionDefinitions
+  FractalFunctionDefinitions,
 } from "./common/fractalRendererBuilder";
 
 const pythagorasTreeRenderingFunctionDefinitions: FractalFunctionDefinitions = {
   isLastElement: depthExceedsZoomLevel,
   prepareTransformationAttributes,
-  applyPropsToChildren: renderChildren
+  applyPropsToChildren: renderChildren,
 };
 
 export type PythagorasTreeFractalParams =
@@ -35,26 +35,26 @@ const pythagorasTreeFractal = {
       name: "size",
       min: 0,
       max: 0.5,
-      default: 0.25
+      default: 0.25,
     },
     angle: {
       name: "angle",
       min: 0,
       max: Math.PI / 2,
-      default: Math.PI / 4
+      default: Math.PI / 4,
     },
     zoom: {
       name: "depth",
       min: 0,
       max: 18,
       default: 5,
-      step: true
-    }
+      step: true,
+    },
   },
   renderingFunction: buildRenderFunction(
     pythagorasTreeRenderingFunctionDefinitions
   ),
-  branchingFactor: 2
+  branchingFactor: 2,
 };
 
 function calculateNewCoords(
@@ -105,7 +105,7 @@ function prepareTransformationAttributes(params: RenderFunctionParams) {
       : new PIXI.Point(scale, scale),
     rotation: p.depth === 1 ? 0 : p.currentAngle,
     x: p.depth === 1 ? p.width / 2 - (p.height * p.length) / 2 : p.x,
-    y: p.depth === 1 ? p.height : p.y
+    y: p.depth === 1 ? p.height : p.y,
   };
 }
 
@@ -118,7 +118,7 @@ function renderChildren(params: RenderFunctionParams) {
           x: pp.width / 2 - (pp.height * pp.length) / 2,
           y: pp.height,
           currentAngle: 0,
-          anchor: 0
+          anchor: 0,
         }
       : pp;
 
@@ -134,7 +134,7 @@ function renderChildren(params: RenderFunctionParams) {
       y: y1,
       length: p.length * Math.cos(p.angle),
       depth: p.depth + 1,
-      anchor: 0
+      anchor: 0,
     },
     {
       currentAngle: p.currentAngle + Math.PI / 2 - p.angle,
@@ -142,8 +142,8 @@ function renderChildren(params: RenderFunctionParams) {
       y: y2,
       length: p.length * Math.sin(p.angle),
       depth: p.depth + 1,
-      anchor: 1
-    }
+      anchor: 1,
+    },
   ];
 }
 

@@ -6,7 +6,7 @@ import {
   IconButton,
   Link,
   Menu,
-  MenuItem
+  MenuItem,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink as RouterLink } from "react-router-dom";
@@ -18,7 +18,7 @@ import { fade } from "@material-ui/core/styles/colorManipulator";
 import { useAuth } from "react-use-auth";
 import About from "./About";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   navigation: {},
   button: {
     paddingLeft: theme.spacing(1),
@@ -28,21 +28,21 @@ const useStyles = makeStyles(theme => ({
     textTransform: "none",
     "&:hover": {
       textDecoration: "underline",
-      backgroundColor: fade(theme.palette.primary.contrastText, 0.04)
-    }
+      backgroundColor: fade(theme.palette.primary.contrastText, 0.04),
+    },
   },
   profileButton: {
     fontWeight: 300,
     fontSize: "1rem",
     textTransform: "none",
     "&:hover": {
-      backgroundColor: fade(theme.palette.primary.contrastText, 0.04)
-    }
+      backgroundColor: fade(theme.palette.primary.contrastText, 0.04),
+    },
   },
   activeLink: {
-    backgroundColor: fade(theme.palette.primary.contrastText, 0.04)
+    backgroundColor: fade(theme.palette.primary.contrastText, 0.04),
   },
-  light: {}
+  light: {},
 }));
 
 export const Navigation = () => {

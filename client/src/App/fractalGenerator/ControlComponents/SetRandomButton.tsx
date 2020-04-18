@@ -28,8 +28,8 @@ export const getRandomFractal = () => {
           const randValue = Math.random() * (param.max - param.min) + param.min;
           return param.step ? Math.round(randValue) : randValue;
         }
-      )
-    }
+      ),
+    },
   };
 };
 
@@ -40,12 +40,12 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(3),
       textTransform: "none",
       lineHeight: 1,
-      fontSize: "1rem"
+      fontSize: "1rem",
     },
     icon: {
       marginRight: theme.spacing(1),
-      marginLeft: theme.spacing(1)
-    }
+      marginLeft: theme.spacing(1),
+    },
   })
 );
 
@@ -60,13 +60,13 @@ export default function SetRandomButton() {
       onClick={() => {
         dispatch({
           type: "SET_PARAMETER",
-          payload: { name: "zoom", value: 0 }
+          payload: { name: "zoom", value: 0 },
         });
         setTimeout(
           () =>
             dispatch({
               type: "SET_FRACTAL",
-              payload: getRandomFractal()
+              payload: getRandomFractal(),
             }),
           1000
         );
