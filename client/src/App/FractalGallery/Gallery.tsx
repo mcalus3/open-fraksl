@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
     border: "1px solid",
     borderColor: theme.palette.primary.main,
     borderRadius: 5,
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    marginBottom: theme.spacing(1)
   },
   button: {
     paddingLeft: theme.spacing(1),
@@ -119,11 +120,9 @@ export const Gallery = () => {
             </Grid>
           </Grid>
         </Box>
-        <Box p={1}>
-          <Grid container wrap="wrap" spacing={4} justify="center">
-            {dataComponent}
-          </Grid>
-        </Box>
+        <Grid container wrap="wrap" spacing={4} justify="center">
+          {dataComponent}
+        </Grid>
       </Box>
     </Container>
   );
