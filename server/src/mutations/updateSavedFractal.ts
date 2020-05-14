@@ -6,6 +6,7 @@ type SavedFractalParams = {
   savedName: string;
   fractalLoadData: string;
   createdBy: string;
+  imageUrl: string;
 };
 
 type UpdateSavedFractal = (
@@ -15,7 +16,7 @@ type UpdateSavedFractal = (
 
 export const updateSavedFractal: UpdateSavedFractal = async (
   _,
-  { savedFractalId, savedName, fractalLoadData, createdBy }
+  { savedFractalId, savedName, fractalLoadData, createdBy, imageUrl }
 ) => {
   // see if user exists
   // if not: update createdAt
@@ -36,10 +37,11 @@ export const updateSavedFractal: UpdateSavedFractal = async (
       TableName: process.env.SAVED_FRACTALS_TABLE!,
       Key: { savedFractalId },
       UpdateExpression:
-        "SET savedName = :savedName, fractalLoadData = :fractalLoadData",
+        "SET savedName = :savedName, fractalLoadData = :fractalLoadData, imageUrl = :imageUrl",
       ExpressionAttributeValues: {
         ":savedName": savedName,
         ":fractalLoadData": fractalLoadData,
+        ":imageUrl": imageUrl,
       },
     });
 
@@ -50,12 +52,13 @@ export const updateSavedFractal: UpdateSavedFractal = async (
       TableName: process.env.SAVED_FRACTALS_TABLE!,
       Key: { savedFractalId },
       UpdateExpression:
-        "SET createdAt = :createdAt, savedName = :savedName, fractalLoadData = :fractalLoadData, createdBy = :createdBy",
+        "SET createdAt = :createdAt, savedName = :savedName, fractalLoadData = :fractalLoadData, createdBy = :createdBy, imageUrl = :imageUrl",
       ExpressionAttributeValues: {
         ":createdAt": new Date().toISOString(),
         ":savedName": savedName,
         ":fractalLoadData": fractalLoadData,
         ":createdBy": createdBy,
+        ":imageUrl": imageUrl,
       },
     });
 

@@ -7,6 +7,9 @@ provider:
   environment:
     USER_TABLE: ${self:service}-users-${self:provider.stage}
     SAVED_FRACTALS_TABLE: ${self:service}-saved-fractals-${self:provider.stage}
+    S3_BUCKET:
+      Ref: FractalImagesBucket
+    S3_REGION: ${self:provider.region}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -67,3 +70,27 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.SAVED_FRACTALS_TABLE}
+    FractalImagesBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicReadWrite
+        # Set the CORS policy
+        CorsConfiguration:
+          CorsRules:
+            - AllowedOrigins:
+                - "*"
+              AllowedHeaders:
+                - "*"
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
+
+  # Print out the name of the bucket that is created
+  Outputs:
+    SharedPhotosBucketName:
+      Value:
+        Ref: FractalImagesBucket

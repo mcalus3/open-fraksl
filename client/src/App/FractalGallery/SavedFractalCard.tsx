@@ -51,6 +51,7 @@ type Props = {
     savedName: string;
     fractalLoadData: string;
     numberOfLikes: number;
+    imageUrl: string;
   };
 };
 
@@ -91,7 +92,7 @@ export const SavedFractalCard: React.FC<Props> = ({ savedFractal }) => {
       >
         <CardMedia
           className={classes.media}
-          image="favicon/android-icon-192x192.png"
+          image={savedFractal.imageUrl || "favicon/android-icon-192x192.png"}
           title="fractal image"
         />
         <CardContent>

@@ -51,6 +51,7 @@ export const Gallery = () => {
           savedName
           fractalLoadData
           numberOfLikes
+          imageUrl
         }
       }
     `,

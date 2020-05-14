@@ -23,6 +23,10 @@
     "serverless": "^1.67.0",
     "simple-dynamodb": "^1.0.0",
     "typescript": "^3.8.3",
-    "uuid": "^7.0.3"
+    "uuid": "^7.0.3",
+    "date-fns": "^2.13.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^7.0.3"
   }
 }
